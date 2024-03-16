@@ -1,0 +1,18 @@
+name: TheEvent580-2
+version: '${version}'
+main: fr.thefox580.theevent5802.TheEvent580_2
+api-version: '1.20'
+authors: [TheFox580]
+
+commands:
+  starttp:
+    description: Tp after start
+    permission: op
+  gametp:
+    description: Tp after games
+    permission: op
+  pronouns:
+    description: Changes player's pronouns
+  damage:
+    description: Toggles damage
+    permission: op
