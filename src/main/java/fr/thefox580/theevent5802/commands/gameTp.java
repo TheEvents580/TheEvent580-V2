@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -17,7 +16,7 @@ public class gameTp implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
         Component message = Component.text('[')
-                .append(Component.text("TheEvent580 - Admin", TextColor.color(7, 30, 34), TextDecoration.BOLD))
+                .append(Component.text("TheEvent580 - Admin", TextColor.color(21, 89, 102), TextDecoration.BOLD))
                 .append(Component.text("] This command is only used to teleport ", TextColor.color(255, 255, 255)))
                 .append(Component.text("ALL OF THE PLAYERS", TextColor.color(103, 146, 137), TextDecoration.BOLD, TextDecoration.UNDERLINED))
                 .append(Component.text(" to the decision crystal, please retry without any arguments !", TextColor.color(255, 255, 255)));
@@ -54,7 +53,7 @@ public class gameTp implements CommandExecutor {
                 }
             }
             message = Component.text('[')
-                    .append(Component.text("TheEvent580 - Admin", TextColor.color(7, 30, 34), TextDecoration.BOLD))
+                    .append(Component.text("TheEvent580 - Admin", TextColor.color(21, 89, 102), TextDecoration.BOLD))
                     .append(Component.text("] This command is only used to teleport ", TextColor.color(255, 255, 255)))
                     .append(Component.text("ALL PLAYERS", TextColor.color(103, 146, 137), TextDecoration.BOLD, TextDecoration.UNDERLINED))
                     .append(Component.text(" to the decision crystal !", TextColor.color(255, 255, 255)));

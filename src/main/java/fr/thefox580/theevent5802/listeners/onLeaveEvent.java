@@ -68,7 +68,7 @@ public class onLeaveEvent implements Listener {
             for (Player p : Bukkit.getOnlinePlayers()) { //Loop all players
                 if (p.hasPermission("theevent580.staff")) { //If the looped player is in the staff
                     Component newPlayer = Component.text('[')
-                            .append(Component.text("TheEvent580 - Staff", TextColor.color(7, 30, 34),
+                            .append(Component.text("TheEvent580 - Staff", TextColor.color(21, 89, 102),
                                     TextDecoration.BOLD)) //Setup part 2
                             .append(Component.text("] Player \" //Send a message to staff" + player.getName() +
                                     " has left the server but isn't assigned to a color (1st time playing / New color" +

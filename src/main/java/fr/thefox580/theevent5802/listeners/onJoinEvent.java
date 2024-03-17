@@ -5,7 +5,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -78,7 +77,7 @@ public class onJoinEvent implements Listener {
             for (Player p : Bukkit.getOnlinePlayers()) { //Loop all players
                 if (p.hasPermission("theevent580.staff")) { //If the looped player is in the staff
                     Component newPlayer = Component.text('[')
-                            .append(Component.text("TheEvent580 - Staff", TextColor.color(7, 30, 34),
+                            .append(Component.text("TheEvent580 - Staff", TextColor.color(21, 89, 102),
                                     TextDecoration.BOLD)) //Setup part 2
                             .append(Component.text("] Player \" //Send a message to staff" + player.getName() +
                                     " has joined the server but isn't assigned to a color (1st time playing / New color" +
@@ -94,7 +93,7 @@ public class onJoinEvent implements Listener {
         if (System.currentTimeMillis() / 1000 < 1711825200) { //If the time is before March 30, 2024, at 8:PM CET
             if (player.isWhitelisted()){ //If the player is whitelisted
                 if (!player.hasPermission("theevent580.tester")){ //If the player is not a tester
-                    player.kickPlayer("Sorry, but you're not allowed to join the server yet !"); //Kick the player for the following reason
+                    player.kick(Component.text("Sorry, but you're not allowed to join the server yet !", TextColor.color(243, 249, 210), TextDecoration.BOLD)); //Kick the player for the following reason
                 }
             }
         }
