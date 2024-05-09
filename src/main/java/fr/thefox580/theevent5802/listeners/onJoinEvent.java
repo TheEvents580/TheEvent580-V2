@@ -25,7 +25,7 @@ public class onJoinEvent implements Listener {
     @EventHandler
     public void playerJoinsEvent(PlayerJoinEvent event){ //When a player joins the server
 
-        event.setJoinMessage(""); //Clear join message
+        event.joinMessage(Component.text("")); //Clear join message
         Player player = event.getPlayer(); //Get the player
 
         //plugin.rlSB().setSB(player);

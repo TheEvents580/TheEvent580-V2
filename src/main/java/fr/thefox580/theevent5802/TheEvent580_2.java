@@ -7,6 +7,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TheEvent580_2 extends JavaPlugin {
 
+    //private Audience adventure;
+
+    //public @NonNull Audience adventure() {
+    //    if(this.adventure == null) {
+    //        throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+    //    }
+    //    return this.adventure;
+    //}
+
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -19,6 +28,7 @@ public final class TheEvent580_2 extends JavaPlugin {
         getCommand("gametp").setExecutor(new gameTp()); //Add the /gametp command to the plugin
         getCommand("damage").setExecutor(new damage(this)); //Add the /damage command to the plugin
         getCommand("pronouns").setExecutor(new pronouns()); //Add the /pronouns command to the plugin
+        getCommand("showpronouns").setExecutor(new showPronouns(this)); //Add the /pronouns command to the plugin
 
         getServer().getPluginManager().registerEvents(new onJoinEvent(this), this); //Registers the join message on player join to the plugin
         getServer().getPluginManager().registerEvents(new onLeaveEvent(this), this); //Registers the leave message on player leave to the plugin

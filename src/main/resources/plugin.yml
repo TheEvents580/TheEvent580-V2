@@ -16,3 +16,6 @@ commands:
   damage:
     description: Toggles damage
     permission: op
+  showpronouns:
+    description: Toggles pronouns in a message
+    permission: op

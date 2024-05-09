@@ -1,19 +1,21 @@
-timer_mode : false
-timer : "0"
-timer_minutes : 0
-timer_seconds : 0
+#timer_mode : false
+#timer : "0"
+#timer_minutes : 0
+#timer_seconds : 0
 
-online_players : 0
-alive_players_sg : 0
-damage_enabled : true
+#online_players : 0
+#alive_players_sg : 0
+#damage_enabled : true
 
-game_counter : 1
-old_last_game : "None"
-old_last_game_color : "&f"
-last_game : "None"
-last_game_color : "&f"
-game_world : "Hub"
-game_color : "&f"
+muted_chat : false
+
+#game_counter : 1
+#old_last_game : "None"
+#old_last_game_color : "&f"
+#last_game : "None"
+#last_game_color : "&f"
+#game_world : "Hub"
+#game_color : "&f"
 
 #scoreboard.pos : false
 #sg.height : 300
@@ -286,6 +288,15 @@ pronoun_1.24e94701-c27e-45f4-a58a-2a82108f5f0b: "[N-A"
 pronoun_1.b9e8cdfb-a532-4398-956d-a49fb6bfa9f1: "[N-A"
 pronoun_1.aba34626-90e3-498f-b70c-8314e0bb4277: "[N-A"
 pronoun_1.e701d8fc-b26f-4362-8c88-07300a3f1a36: "[N-A"
+pronoun_1.af5c243a-0dfc-4eca-a1d0-6c62ecbae10a: "[N-A"
+pronoun_1.c677bbaf-1aa6-4a9c-896c-ca76aae83c8d: "[N-A"
+pronoun_1.d806e539-b327-499b-99d8-cd41cfefce49: "[N-A"
+pronoun_1.e6a25a6e-7d33-4d65-a1a3-f014e95e00bd: "[N-A"
+pronoun_1.4c948549-78bd-48b6-a47d-551a249e905d: "[N-A"
+pronoun_1.163120b9-1f24-4957-9c2b-9b7a880b892a: "[N-A"
+pronoun_1.85279072-5699-4a82-bb7c-2ded4d6deda2: "[N-A"
+pronoun_1.13e97dc8-20d4-46f7-b445-26f393f77076: "[N-A"
+pronoun_1.2aaaa93c-42cd-4b24-aa6b-f68a3a3c7fc6: "[N-A"
 
 pronoun_2.dc833b85-3cba-4ebd-8f4d-febc09f02422: "N-A]"
 pronoun_2.252fda4d-bb94-4449-876d-fec8d172dda0: "N-A]"
@@ -310,6 +321,48 @@ pronoun_2.24e94701-c27e-45f4-a58a-2a82108f5f0b: "N-A]"
 pronoun_2.b9e8cdfb-a532-4398-956d-a49fb6bfa9f1: "N-A]"
 pronoun_2.aba34626-90e3-498f-b70c-8314e0bb4277: "N-A]"
 pronoun_2.e701d8fc-b26f-4362-8c88-07300a3f1a36: "N-A]"
+pronoun_2.af5c243a-0dfc-4eca-a1d0-6c62ecbae10a: "N-A]"
+pronoun_2.c677bbaf-1aa6-4a9c-896c-ca76aae83c8d: "N-A]"
+pronoun_2.d806e539-b327-499b-99d8-cd41cfefce49: "N-A]"
+pronoun_2.e6a25a6e-7d33-4d65-a1a3-f014e95e00bd: "N-A]"
+pronoun_2.4c948549-78bd-48b6-a47d-551a249e905d: "N-A]"
+pronoun_2.163120b9-1f24-4957-9c2b-9b7a880b892a: "N-A]"
+pronoun_2.85279072-5699-4a82-bb7c-2ded4d6deda2: "N-A]"
+pronoun_2.13e97dc8-20d4-46f7-b445-26f393f77076: "N-A]"
+pronoun_2.2aaaa93c-42cd-4b24-aa6b-f68a3a3c7fc6: "N-A]"
+
+showPronouns.dc833b85-3cba-4ebd-8f4d-febc09f02422: false
+showPronouns.252fda4d-bb94-4449-876d-fec8d172dda0: false
+showPronouns.a5b68cfe-e546-4b63-a87d-26f065710dc1: false
+showPronouns.a0f5d8c3-3248-42f5-a2ef-b216e5d6d898: false
+showPronouns.4b5526fd-97ae-4303-aeb1-ef9d642b94b6: false
+showPronouns.c6ef5a1b-be62-40d2-a156-beffe050c36e: false
+showPronouns.128c5102-ce00-4945-8653-c41f4ddefbe7: false
+showPronouns.82d1eccf-d5a7-4636-8374-891f0d67fcc3: false
+showPronouns.cadb7cce-fdae-44ee-9426-ec08cdb6798c: false
+showPronouns.0eab4b9d-596e-4d28-ac75-b934d53f3f2b: false
+showPronouns.1ba03542-0da6-4981-bc25-1c303dd2f940: false
+showPronouns.cfffe406-66be-4eb9-b72e-dca11de4836b: false
+showPronouns.95451223-350a-47e5-929f-67ca4a412cc6: false
+showPronouns.c65a31f2-f0a1-4bc9-9f09-16cb533c78da: false
+showPronouns.19fcc862-7e4b-4d42-a258-98a6723ea948: false
+showPronouns.fedb60d7-ecb9-4c74-8630-c95aa1692b7d: false
+showPronouns.750f5ea8-e31b-4581-8db6-d213a755651b: false
+showPronouns.81ff6334-7c28-4159-8b92-8395d00308f1: false
+showPronouns.3d09fa7f-be05-4f23-ae1b-a32d2567fd6d: false
+showPronouns.24e94701-c27e-45f4-a58a-2a82108f5f0b: false
+showPronouns.b9e8cdfb-a532-4398-956d-a49fb6bfa9f1: false
+showPronouns.aba34626-90e3-498f-b70c-8314e0bb4277: false
+showPronouns.e701d8fc-b26f-4362-8c88-07300a3f1a36: false
+showPronouns.af5c243a-0dfc-4eca-a1d0-6c62ecbae10a: false
+showPronouns.c677bbaf-1aa6-4a9c-896c-ca76aae83c8d: false
+showPronouns.d806e539-b327-499b-99d8-cd41cfefce49: false
+showPronouns.e6a25a6e-7d33-4d65-a1a3-f014e95e00bd: false
+showPronouns.4c948549-78bd-48b6-a47d-551a249e905d: false
+showPronouns.163120b9-1f24-4957-9c2b-9b7a880b892a: false
+showPronouns.85279072-5699-4a82-bb7c-2ded4d6deda2: false
+showPronouns.13e97dc8-20d4-46f7-b445-26f393f77076: false
+showPronouns.2aaaa93c-42cd-4b24-aa6b-f68a3a3c7fc6: false
 
 #finished.dc833b85-3cba-4ebd-8f4d-febc09f02422: 0
 #finished.252fda4d-bb94-4449-876d-fec8d172dda0: 0
