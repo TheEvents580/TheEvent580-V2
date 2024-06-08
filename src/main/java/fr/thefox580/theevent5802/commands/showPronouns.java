@@ -31,6 +31,7 @@ public class showPronouns implements CommandExecutor {
                         .append(Component.text("TheEvent580", TextColor.color(21, 89, 102)))
                         .append(Component.text("] You no longer display your pronouns", TextColor.color(255, 255, 255))));
             }
+            advMain.saveConfig();
 
         }
 
