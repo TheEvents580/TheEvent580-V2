@@ -1,5 +1,6 @@
 package fr.thefox580.theevent5802.commands;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -23,7 +24,7 @@ public class pronouns implements CommandExecutor {
 
         if (commandSender instanceof Player player){
 
-            Inventory gui = Bukkit.createInventory(player, 54, "Set your pronouns");
+            Inventory gui = Bukkit.createInventory(player, 54, Component.text("Set your pronouns"));
 
             ItemStack he = new ItemStack(Material.RED_CONCRETE);
             ItemStack she = new ItemStack(Material.ORANGE_CONCRETE);
