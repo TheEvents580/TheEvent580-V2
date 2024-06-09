@@ -29,6 +29,8 @@ public final class TheEvent580_2 extends JavaPlugin {
         getCommand("damage").setExecutor(new damage(this)); //Add the /damage command to the plugin
         getCommand("pronouns").setExecutor(new pronouns()); //Add the /pronouns command to the plugin
         getCommand("showpronouns").setExecutor(new showPronouns(this)); //Add the /pronouns command to the plugin
+        getCommand("announcement").setExecutor(new announcement()); //Add the /announcement command to the plugin
+        getCommand("minecraftle").setExecutor(new minecraftle(this)); //Add the /minecraftle command to the plugin
 
         getServer().getPluginManager().registerEvents(new onJoinEvent(this), this); //Registers the join message on player join to the plugin
         getServer().getPluginManager().registerEvents(new onLeaveEvent(this), this); //Registers the leave message on player leave to the plugin
@@ -37,6 +39,7 @@ public final class TheEvent580_2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new onGUIClick(this), this); //Registers when a players click in an inventory to the plugin
         getServer().getPluginManager().registerEvents(new onNoxesiumJoinEvent(), this); //Registers when a player joins the server to remove trident / boat collisions
         getServer().getPluginManager().registerEvents(new onDamage(this), this); //Registers when damage is dealt
+        getServer().getPluginManager().registerEvents(new onInventoryClose(), this); //Registers when an inventory is closed
 
     }
 

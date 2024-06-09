@@ -8,14 +8,35 @@ commands:
   starttp:
     description: Tp after start
     permission: op
+    permission-message: "&cYou do not have the required permissions to teleport the players in the decision crystal"
+
   gametp:
     description: Tp after games
     permission: op
+    permission-message: "&cYou do not have the required permissions to teleport the players in the decision crystal after a game"
+
   pronouns:
     description: Changes player's pronouns
+
   damage:
     description: Toggles damage
     permission: op
+    permission-message: "&cYou do not have the required permissions to toggle damages"
+
   showpronouns:
-    description: Toggles pronouns in a message
+    description: Toggles pronouns before a message
+
+  minecraftle:
+    description: Starts a Minecraftle
+
+  announcement:
+    description: Makes an announcement in the chat
+    aliases:
+      - "bc"
+      - "broadcast"
+      - "announce"
+      - "announcements"
+      - "alert"
+      - "alerts"
     permission: op
+    permission-message: "&cYou do not have the required permissions to make an announcement in the chat"
