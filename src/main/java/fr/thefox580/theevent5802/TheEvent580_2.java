@@ -2,8 +2,10 @@ package fr.thefox580.theevent5802;
 
 import fr.thefox580.theevent5802.commands.*;
 import fr.thefox580.theevent5802.listeners.*;
+import fr.thefox580.theevent5802.tasks.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 public final class TheEvent580_2 extends JavaPlugin {
 
@@ -39,7 +41,12 @@ public final class TheEvent580_2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new onGUIClick(this), this); //Registers when a players click in an inventory to the plugin
         getServer().getPluginManager().registerEvents(new onNoxesiumJoinEvent(), this); //Registers when a player joins the server to remove trident / boat collisions
         getServer().getPluginManager().registerEvents(new onDamage(this), this); //Registers when damage is dealt
-        getServer().getPluginManager().registerEvents(new onInventoryClose(), this); //Registers when an inventory is closed
+        getServer().getPluginManager().registerEvents(new onInventoryClose(this), this); //Registers when an inventory is closed
+        getServer().getPluginManager().registerEvents(new onItemDrop(), this); //Registers when an item is dropped
+        getServer().getPluginManager().registerEvents(new onBlockPlace(), this); //Registers when a block is placed in the world
+        getServer().getPluginManager().registerEvents(new onEntityDamageByEntity(), this); //Registers when an entity gets damages by another entity
+
+        BukkitTask beaconBeamTask = new beaconBeamTask().runTaskTimer(this , 0L, 100L);
 
     }
 
