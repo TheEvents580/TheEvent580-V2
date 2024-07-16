@@ -1,4 +1,4 @@
-package fr.thefox580.theevent5802.commands.utils;
+package fr.thefox580.theevent5802.utils;
 
 import net.kyori.adventure.text.format.TextColor;
 

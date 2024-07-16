@@ -1,7 +1,7 @@
 package fr.thefox580.theevent5802.commands;
 
-import fr.thefox580.theevent5802.commands.utils.ColorType;
-import fr.thefox580.theevent5802.commands.utils.Colors;
+import fr.thefox580.theevent5802.utils.ColorType;
+import fr.thefox580.theevent5802.utils.Colors;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

@@ -1,8 +1,8 @@
 package fr.thefox580.theevent5802.listeners;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
-import fr.thefox580.theevent5802.commands.utils.ColorType;
-import fr.thefox580.theevent5802.commands.utils.Colors;
+import fr.thefox580.theevent5802.utils.ColorType;
+import fr.thefox580.theevent5802.utils.Colors;
 import io.papermc.paper.chat.ChatRenderer;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.audience.Audience;
