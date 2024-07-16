@@ -1,6 +1,8 @@
 package fr.thefox580.theevent5802.listeners;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
+import fr.thefox580.theevent5802.commands.utils.ColorType;
+import fr.thefox580.theevent5802.commands.utils.Colors;
 import io.papermc.paper.chat.ChatRenderer;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.audience.Audience;
@@ -28,7 +30,7 @@ public class onMessage implements Listener, ChatRenderer {
         if (isBannedWordInMessage(PlainTextComponentSerializer.plainText().serialize(event.originalMessage()))){
             int time = 10000;
             while (time > 0){
-                event.getPlayer().sendActionBar(Component.text("One word in your message is banned due to not being PG", TextColor.color(29, 120, 116), TextDecoration.UNDERLINED, TextDecoration.BOLD));
+            event.getPlayer().sendActionBar(Component.text("One word in your message is banned due to not being PG", Colors.getColor(ColorType.SUBTITLE), TextDecoration.UNDERLINED, TextDecoration.BOLD));
                 time--;
             }
         }
@@ -69,42 +71,42 @@ public class onMessage implements Listener, ChatRenderer {
         FileConfiguration config = this.advMain.getConfig();
 
         Component componentPlayer = Component.translatable("%nox_uuid%" + player.getUniqueId() + ",false,0,-1,1", "\uD83D\uDC64"); //Setup custom player head
-        TextColor colorPlayer = TextColor.color(255, 255, 255); //Set color of text to white (base for if the player doesn't have a team)
+        TextColor colorPlayer = Colors.getColor(ColorType.TEXT); //Set color of text to white (base for if the player doesn't have a team)
         String teamPlayer = "タ"; //Set the tag of the player's team
 
         if (player.hasPermission("group.spectators")){
-            colorPlayer = TextColor.color(85, 85, 85); //Set color of text to red
+            colorPlayer = Colors.getColor(ColorType.MC_GRAY); //Set color of text to red
             teamPlayer = "露"; //Set the tag of the player's team
         } else if (player.hasPermission("group.rouge")) { //If the player is in team red
-            colorPlayer = TextColor.color(255, 85, 85); //Set color of text to red
+            colorPlayer = Colors.getColor(ColorType.MC_RED); //Set color of text to red
             teamPlayer = "ラ"; //Set the tag of the player's team
 
         } else if (player.hasPermission("group.orange")) { //If the player is in team orange
-            colorPlayer = TextColor.color(255, 170, 0); //Set color of text to orange
+            colorPlayer = Colors.getColor(ColorType.MC_ORANGE); //Set color of text to orange
             teamPlayer = "ャ"; //Set the tag of the player's team
 
         } else if (player.hasPermission("group.jaune")) { //If the player is in team yellow
-            colorPlayer = TextColor.color(255, 255, 85); //Set color of text to yellow
+            colorPlayer = Colors.getColor(ColorType.MC_YELLOW); //Set color of text to yellow
             teamPlayer = "ギ"; //Set the tag of the player's team
 
         } else if (player.hasPermission("group.vert")) { //If the player is in team lime / green
-            colorPlayer = TextColor.color(85, 255, 85); //Set color of text to lime / green
+            colorPlayer = Colors.getColor(ColorType.MC_LIME); //Set color of text to lime / green
             teamPlayer = "画"; //Set the tag of the player's team
 
         } else if (player.hasPermission("group.bleu_clair")) { //If the player is in team light blue
-            colorPlayer = TextColor.color(85, 255, 255); //Set color of text to light blue
+            colorPlayer = Colors.getColor(ColorType.MC_AQUA); //Set color of text to light blue
             teamPlayer = "動"; //Set the tag of the player's team
 
         } else if (player.hasPermission("group.bleu")) { //If the player is in team blue
-            colorPlayer = TextColor.color(0, 0, 170); //Set color of text to blue
+            colorPlayer = Colors.getColor(ColorType.MC_BLUE); //Set color of text to blue
             teamPlayer = "像"; //Set the tag of the player's team
 
         } else if (player.hasPermission("group.violet")) { //If the player is in team purple
-            colorPlayer = TextColor.color(170, 0, 170); //Set color of text to purple
+            colorPlayer = Colors.getColor(ColorType.MC_PURPLE); //Set color of text to purple
             teamPlayer = "の"; //Set the tag of the player's team
 
         } else if (player.hasPermission("group.rose")) { //If the player is in team pink
-            colorPlayer = TextColor.color(255, 85, 255); //Set color of text to pink
+            colorPlayer = Colors.getColor(ColorType.MC_PINK); //Set color of text to pink
             teamPlayer = "目"; //Set the tag of the player's team
         }
 
@@ -119,279 +121,279 @@ public class onMessage implements Listener, ChatRenderer {
 
                 if (advMain.getConfig().getBoolean("showPronouns." + player.getUniqueId())) {
 
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + config.getString("pronoun_1." + player.getUniqueId()) + '/' + config.getString("pronoun_2." + player.getUniqueId())))
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('☠', TextColor.color(255, 255, 255)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('☠', Colors.getColor(ColorType.TEXT)));
                 } else {
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('☠', TextColor.color(255, 255, 255)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('☠', Colors.getColor(ColorType.TEXT)));
                 }
             }
             case ":darkredlove:" -> {
 
                 if (advMain.getConfig().getBoolean("showPronouns." + player.getUniqueId())) {
 
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + config.getString("pronoun_1." + player.getUniqueId()) + '/' + config.getString("pronoun_2." + player.getUniqueId())))
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(170, 0, 0)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_DARK_RED)));
                 } else {
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(170, 0, 0)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_DARK_RED)));
                 }
             }
             case ":redlove:" -> {
 
                 if (advMain.getConfig().getBoolean("showPronouns." + player.getUniqueId())) {
 
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + config.getString("pronoun_1." + player.getUniqueId()) + '/' + config.getString("pronoun_2." + player.getUniqueId())))
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(255, 85, 85)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_RED)));
                 } else {
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(255, 85, 85)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_RED)));
                 }
             }
             case ":orangelove:" -> {
 
                 if (advMain.getConfig().getBoolean("showPronouns." + player.getUniqueId())) {
 
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + config.getString("pronoun_1." + player.getUniqueId()) + '/' + config.getString("pronoun_2." + player.getUniqueId())))
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(255, 170, 0)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_ORANGE)));
                 } else {
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(255, 170, 0)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_ORANGE)));
                 }
             }
             case ":yellowlove:" -> {
 
                 if (advMain.getConfig().getBoolean("showPronouns." + player.getUniqueId())) {
 
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + config.getString("pronoun_1." + player.getUniqueId()) + '/' + config.getString("pronoun_2." + player.getUniqueId())))
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(255, 255, 85)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_YELLOW)));
                 } else {
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(255, 255, 85)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_YELLOW)));
                 }
             }
             case ":limelove:" -> {
 
                 if (advMain.getConfig().getBoolean("showPronouns." + player.getUniqueId())) {
 
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + config.getString("pronoun_1." + player.getUniqueId()) + '/' + config.getString("pronoun_2." + player.getUniqueId())))
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(85, 255, 85)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_LIME)));
                 } else {
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(85, 255, 85)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_LIME)));
                 }
             }
             case ":greenlove:" -> {
 
                 if (advMain.getConfig().getBoolean("showPronouns." + player.getUniqueId())) {
 
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + config.getString("pronoun_1." + player.getUniqueId()) + '/' + config.getString("pronoun_2." + player.getUniqueId())))
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(0, 170, 0)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_GREEN)));
                 } else {
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(0, 170, 0)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_GREEN)));
                 }
             }
             case ":cyanlove:" -> {
 
                 if (advMain.getConfig().getBoolean("showPronouns." + player.getUniqueId())) {
 
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + config.getString("pronoun_1." + player.getUniqueId()) + '/' + config.getString("pronoun_2." + player.getUniqueId())))
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(0, 170, 170)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_CYAN)));
                 } else {
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(0, 170, 170)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_CYAN)));
                 }
             }
             case ":lightbluelove:" -> {
 
                 if (advMain.getConfig().getBoolean("showPronouns." + player.getUniqueId())) {
 
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + config.getString("pronoun_1." + player.getUniqueId()) + '/' + config.getString("pronoun_2." + player.getUniqueId())))
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(85, 255, 255)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_AQUA)));
                 } else {
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(85, 255, 255)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_AQUA)));
                 }
             }
             case ":bluelove:" -> {
 
                 if (advMain.getConfig().getBoolean("showPronouns." + player.getUniqueId())) {
 
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + config.getString("pronoun_1." + player.getUniqueId()) + '/' + config.getString("pronoun_2." + player.getUniqueId())))
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(85, 85, 255)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_BLUE)));
                 } else {
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(85, 85, 255)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_BLUE)));
                 }
             }
             case ":darkbluelove:" -> {
 
                 if (advMain.getConfig().getBoolean("showPronouns." + player.getUniqueId())) {
 
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + config.getString("pronoun_1." + player.getUniqueId()) + '/' + config.getString("pronoun_2." + player.getUniqueId())))
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(0, 0, 170)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_DARK_BLUE)));
                 } else {
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(0, 0, 170)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_DARK_BLUE)));
                 }
             }
             case ":purplelove:" -> {
 
                 if (advMain.getConfig().getBoolean("showPronouns." + player.getUniqueId())) {
 
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + config.getString("pronoun_1." + player.getUniqueId()) + '/' + config.getString("pronoun_2." + player.getUniqueId())))
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(170, 0, 170)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_PURPLE)));
                 } else {
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(170, 0, 170)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_PURPLE)));
                 }
             }
             case ":pinklove:" -> {
 
                 if (advMain.getConfig().getBoolean("showPronouns." + player.getUniqueId())) {
 
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + config.getString("pronoun_1." + player.getUniqueId()) + '/' + config.getString("pronoun_2." + player.getUniqueId())))
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(255, 85, 255)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_PINK)));
                 } else {
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
-                            .append(Component.text('❤', TextColor.color(255, 85, 255)));
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
+                            .append(Component.text('❤', Colors.getColor(ColorType.MC_PINK)));
                 }
             }
             default -> {
 
                 if (advMain.getConfig().getBoolean("showPronouns." + player.getUniqueId())) {
 
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + config.getString("pronoun_1." + player.getUniqueId()) + '/' + config.getString("pronoun_2." + player.getUniqueId())))
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
                             .append(Component.text(messageFR));
                 } else {
-                    message = Component.text(teamPlayer, TextColor.color(255, 255, 255))
+                    message = Component.text(teamPlayer, Colors.getColor(ColorType.TEXT))
                             .append(Component.text(' '))
                             .append(componentPlayer)
                             .append(Component.text(' ' + player.getName(), colorPlayer))
-                            .append(Component.text(" > ", TextColor.color(255, 255, 255)))
+                            .append(Component.text(" > ", Colors.getColor(ColorType.TEXT)))
                             .append(Component.text(messageFR));
                 }
             }

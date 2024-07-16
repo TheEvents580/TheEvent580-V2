@@ -29,6 +29,9 @@ commands:
   minecraftle:
     description: Starts a Minecraftle
 
+  craft:
+    description: Opens the crafting table
+
   announcement:
     description: Makes an announcement in the chat
     aliases:

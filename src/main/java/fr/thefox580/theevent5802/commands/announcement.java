@@ -1,7 +1,8 @@
 package fr.thefox580.theevent5802.commands;
 
+import fr.thefox580.theevent5802.commands.utils.ColorType;
+import fr.thefox580.theevent5802.commands.utils.Colors;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,10 +14,10 @@ public class announcement implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
 
-        Component bars = Component.text("------------------------", TextColor.color(226, 240, 147));
+        Component bars = Component.text("------------------------", Colors.getColor(ColorType.SPECIAL_2));
 
         Bukkit.broadcast(bars);
-        Bukkit.broadcast(Component.text("⚠ Announcement ⚠", TextColor.color(140, 215, 29)));
+        Bukkit.broadcast(Component.text("⚠ Announcement ⚠", Colors.getColor(ColorType.SPECIAL_ORANGE)));
 
         String message = String.join(" ", strings);
 

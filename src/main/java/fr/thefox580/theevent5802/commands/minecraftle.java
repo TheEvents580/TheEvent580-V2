@@ -1,8 +1,9 @@
 package fr.thefox580.theevent5802.commands;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
+import fr.thefox580.theevent5802.commands.utils.ColorType;
+import fr.thefox580.theevent5802.commands.utils.Colors;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -33,7 +34,7 @@ public class minecraftle implements CommandExecutor {
 
                 FileConfiguration config = this.plugin.getConfig();
 
-                player.openWorkbench(null, plugin.isEnabled());
+                player.openWorkbench(null, true);
 
                 Material[] materialsInInv = {Material.OAK_PLANKS, Material.COBBLESTONE, Material.STONE, Material.GLASS,
                         Material.WHITE_WOOL, Material.STICK, Material.DIAMOND, Material.GOLD_INGOT, Material.IRON_INGOT,
@@ -47,7 +48,7 @@ public class minecraftle implements CommandExecutor {
                 for (Player loopedPlayer : Bukkit.getOnlinePlayers()){
                     if (loopedPlayer.isOp()){
                         loopedPlayer.sendMessage(Component.text(player.getName()+" started a Minecraftle and needs to find : ")
-                                .append(Component.translatable(randomItem.getItemTranslationKey(), TextColor.color(188, 215, 29), TextDecoration.BOLD)));
+                                .append(Component.translatable(randomItem.getItemTranslationKey(), Colors.getColor(ColorType.SPECIAL_1), TextDecoration.BOLD)));
                     }
                 }
 
@@ -68,7 +69,7 @@ public class minecraftle implements CommandExecutor {
 
     public static Material[] getPossibleItems(){
 
-        Material[] possibleItems = {Material.STICK, Material.TORCH, Material.CRAFTING_TABLE, Material.FURNACE,
+        return new Material[]{Material.STICK, Material.TORCH, Material.CRAFTING_TABLE, Material.FURNACE,
                 Material.CHEST, Material.LADDER, Material.OAK_FENCE, Material.OAK_BOAT, Material.OAK_SLAB,
                 Material.COBBLESTONE_SLAB, Material.STONE_SLAB, Material.OAK_SIGN, Material.OAK_DOOR,
                 Material.IRON_DOOR, Material.OAK_WOOD, Material.NOTE_BLOCK, Material.DIAMOND_BLOCK,
@@ -76,7 +77,7 @@ public class minecraftle implements CommandExecutor {
                 Material.OAK_STAIRS, Material.COBBLESTONE_STAIRS, Material.STONE_STAIRS, Material.COBBLESTONE_WALL,
                 Material.REDSTONE_BLOCK, Material.QUARTZ_BLOCK, Material.DIORITE, Material.CHISELED_BOOKSHELF,
                 Material.WOODEN_PICKAXE, Material.STONE_PICKAXE, Material.IRON_PICKAXE, Material.GOLDEN_PICKAXE,
-                Material.DIAMOND_PICKAXE, Material. WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE,
+                Material.DIAMOND_PICKAXE, Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE,
                 Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.WOODEN_SHOVEL, Material.STONE_SHOVEL,
                 Material.IRON_SHOVEL, Material.GOLDEN_SHOVEL, Material.DIAMOND_SHOVEL, Material.WOODEN_HOE,
                 Material.STONE_HOE, Material.IRON_HOE, Material.GOLDEN_HOE, Material.DIAMOND_HOE,
@@ -99,7 +100,5 @@ public class minecraftle implements CommandExecutor {
                 Material.WHITE_BANNER, Material.CAMPFIRE, Material.BARREL, Material.COMPOSTER,
                 Material.SMITHING_TABLE, Material.STONECUTTER, Material.GRINDSTONE, Material.LOOM, Material.CHAIN,
                 Material.WHITE_WOOL, Material.GLASS_BOTTLE, Material.CAULDRON};
-
-        return possibleItems;
     }
 }

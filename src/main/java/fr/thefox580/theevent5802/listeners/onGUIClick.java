@@ -1,7 +1,8 @@
 package fr.thefox580.theevent5802.listeners;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
-import fr.thefox580.theevent5802.commands.minecraftle;
+import fr.thefox580.theevent5802.commands.utils.ColorType;
+import fr.thefox580.theevent5802.commands.utils.Colors;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -15,8 +16,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -76,34 +75,34 @@ public class onGUIClick implements Listener {
                                     if (player.getWorld().getName().equals("world")) {
                                         Bukkit.broadcast(Component.text("Minecraftle : ")
                                                 .append(Component.text(player.getName() + " found "))
-                                                .append(Component.translatable(config.getString("minecraftle_game." + player.getUniqueId()), TextColor.color(188, 215, 29), TextDecoration.BOLD))
-                                                .append(Component.text(" in ", TextColor.color(255, 255, 255)))
-                                                .append(Component.text(config.getInt("minecraftle_game_tries." + player.getUniqueId()), TextColor.color(188, 215, 29), TextDecoration.BOLD))
-                                                .append(Component.text(" try.", TextColor.color(255, 255, 255))));
+                                                .append(Component.translatable(config.getString("minecraftle_game." + player.getUniqueId()), Colors.getColor(ColorType.SPECIAL_1), TextDecoration.BOLD))
+                                                .append(Component.text(" in ", Colors.getColor(ColorType.TEXT)))
+                                                .append(Component.text(config.getInt("minecraftle_game_tries." + player.getUniqueId()), Colors.getColor(ColorType.SPECIAL_1), TextDecoration.BOLD))
+                                                .append(Component.text(" try.", Colors.getColor(ColorType.TEXT))));
                                     } else {
                                         player.sendMessage(Component.text("Minecraftle : ")
                                                 .append(Component.text(player.getName() + " found "))
-                                                .append(Component.translatable(config.getString("minecraftle_game." + player.getUniqueId()), TextColor.color(188, 215, 29), TextDecoration.BOLD))
-                                                .append(Component.text(" in ", TextColor.color(255, 255, 255)))
-                                                .append(Component.text(config.getInt("minecraftle_game_tries." + player.getUniqueId()), TextColor.color(188, 215, 29), TextDecoration.BOLD))
-                                                .append(Component.text(" try.", TextColor.color(255, 255, 255)))
+                                                .append(Component.translatable(config.getString("minecraftle_game." + player.getUniqueId()), Colors.getColor(ColorType.SPECIAL_1), TextDecoration.BOLD))
+                                                .append(Component.text(" in ", Colors.getColor(ColorType.TEXT)))
+                                                .append(Component.text(config.getInt("minecraftle_game_tries." + player.getUniqueId()), Colors.getColor(ColorType.SPECIAL_1), TextDecoration.BOLD))
+                                                .append(Component.text(" try.", Colors.getColor(ColorType.TEXT)))
                                                 .append(Component.text("Sadly, your message hasn't been broadcasted to the whole server as some player are still playing.")));
                                     }
                                 } else {
                                     if (player.getWorld().getName().equals("world")) {
                                         Bukkit.broadcast(Component.text("Minecraftle : ")
                                                 .append(Component.text(player.getName() + " found "))
-                                                .append(Component.translatable(config.getString("minecraftle_game." + player.getUniqueId()), TextColor.color(188, 215, 29), TextDecoration.BOLD))
-                                                .append(Component.text(" in ", TextColor.color(255, 255, 255)))
-                                                .append(Component.text(config.getInt("minecraftle_game_tries." + player.getUniqueId()), TextColor.color(188, 215, 29), TextDecoration.BOLD))
-                                                .append(Component.text(" try.", TextColor.color(255, 255, 255))));
+                                                .append(Component.translatable(config.getString("minecraftle_game." + player.getUniqueId()), Colors.getColor(ColorType.SPECIAL_1), TextDecoration.BOLD))
+                                                .append(Component.text(" in ", Colors.getColor(ColorType.TEXT)))
+                                                .append(Component.text(config.getInt("minecraftle_game_tries." + player.getUniqueId()), Colors.getColor(ColorType.SPECIAL_1), TextDecoration.BOLD))
+                                                .append(Component.text(" try.", Colors.getColor(ColorType.TEXT))));
                                     } else {
                                         player.sendMessage(Component.text("Minecraftle : ")
                                                 .append(Component.text(player.getName() + " found "))
-                                                .append(Component.translatable(config.getString("minecraftle_game." + player.getUniqueId()), TextColor.color(188, 215, 29), TextDecoration.BOLD))
-                                                .append(Component.text(" in ", TextColor.color(255, 255, 255)))
-                                                .append(Component.text(config.getInt("minecraftle_game_tries." + player.getUniqueId()), TextColor.color(188, 215, 29), TextDecoration.BOLD))
-                                                .append(Component.text(" try.", TextColor.color(255, 255, 255)))
+                                                .append(Component.translatable(config.getString("minecraftle_game." + player.getUniqueId()), Colors.getColor(ColorType.SPECIAL_1), TextDecoration.BOLD))
+                                                .append(Component.text(" in ", Colors.getColor(ColorType.TEXT)))
+                                                .append(Component.text(config.getInt("minecraftle_game_tries." + player.getUniqueId()), Colors.getColor(ColorType.SPECIAL_1), TextDecoration.BOLD))
+                                                .append(Component.text(" try.", Colors.getColor(ColorType.TEXT)))
                                                 .append(Component.text("Sadly, your message hasn't been broadcasted to the whole server as some player are still playing.")));
                                     }
                                 }
