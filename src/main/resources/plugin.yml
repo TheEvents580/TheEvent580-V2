@@ -21,7 +21,7 @@ commands:
   damage:
     description: Toggles damage
     permission: op
-    permission-message: "&cYou do not have the required permissions to toggle damages"
+    permission-message: "&cYou do not have the required permissions to toggle damage"
 
   showpronouns:
     description: Toggles pronouns before a message

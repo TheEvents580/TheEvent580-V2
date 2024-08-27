@@ -19,6 +19,8 @@ public class Colors {
             return TextColor.color(226, 240, 147);
         } else if (type == ColorType.SPECIAL_3){
             return TextColor.color(103, 146, 137);
+        } else if (type == ColorType.SPECIAL_ORANGE){
+            return TextColor.color(140, 215, 29);
         } else if (type == ColorType.MC_DARK_RED){
             return TextColor.color(170, 0, 0);
         } else if (type == ColorType.MC_RED){
