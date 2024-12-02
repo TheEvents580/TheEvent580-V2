@@ -40,7 +40,7 @@ public final class TheEvent580_2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new onDeathEvent(), this); //Registers the death message on player death to the plugin
         getServer().getPluginManager().registerEvents(new onMessage(this), this); //Registers the custom message on player message to the plugin
         getServer().getPluginManager().registerEvents(new onGUIClick(this), this); //Registers when a players click in an inventory to the plugin
-        getServer().getPluginManager().registerEvents(new onNoxesiumJoinEvent(), this); //Registers when a player joins the server to remove trident / boat collisions
+        //getServer().getPluginManager().registerEvents(new onNoxesiumJoinEvent(), this); //Registers when a player joins the server to remove trident / boat collisions
         getServer().getPluginManager().registerEvents(new onDamage(this), this); //Registers when damage is dealt
         getServer().getPluginManager().registerEvents(new onInventoryClose(this), this); //Registers when an inventory is closed
         getServer().getPluginManager().registerEvents(new onItemDrop(), this); //Registers when an item is dropped

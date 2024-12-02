@@ -86,7 +86,7 @@ public class onJoinEvent implements Listener {
         }
         Component message = getPlayerJoinComponent(component, player, color);
         event.joinMessage(message); //Setup join message
-        if (System.currentTimeMillis() / 1000 < 1726941600) { //If the time is before September 21st 2024, at 8PM CET
+        if (System.currentTimeMillis() < 1733684400000L) { //If the time is before December 8th 2024, at 8PM CET
             if (player.isWhitelisted()){ //If the player is whitelisted
                 if (!player.hasPermission("theevent580.tester")){ //If the player is not a tester
                     player.kick(Component.text("Sorry, but you're not allowed to join the server yet !", Colors.getColor(ColorType.SPECIAL_2), TextDecoration.BOLD)); //Kick the player for the following reason
