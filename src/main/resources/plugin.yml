@@ -1,7 +1,7 @@
 name: TheEvent580-2
 version: '${version}'
 main: fr.thefox580.theevent5802.TheEvent580_2
-api-version: '1.20'
+api-version: '1.21'
 authors: [TheFox580]
 
 commands:

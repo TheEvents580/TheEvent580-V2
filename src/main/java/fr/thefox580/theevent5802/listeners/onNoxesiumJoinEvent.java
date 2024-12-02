@@ -1,3 +1,4 @@
+/*
 package fr.thefox580.theevent5802.listeners;
 
 import com.noxcrew.noxesium.api.protocol.rule.ServerRuleIndices;
@@ -27,3 +28,4 @@ public class onNoxesiumJoinEvent implements Listener {
     }
 
 }
+*/
