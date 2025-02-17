@@ -32,6 +32,11 @@ commands:
   craft:
     description: Opens the crafting table
 
+  toast:
+    description: Creates a toast for everyone to see on their screen
+    permission: op
+    permission-message: "&cYou do not have the required permissions to show a toast to everyone"
+
   announcement:
     description: Makes an announcement in the chat
     aliases:

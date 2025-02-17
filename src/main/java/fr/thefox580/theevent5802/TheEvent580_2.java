@@ -34,6 +34,7 @@ public final class TheEvent580_2 extends JavaPlugin {
         getCommand("announcement").setExecutor(new announcement()); //Add the /announcement command to the plugin
         getCommand("minecraftle").setExecutor(new minecraftle(this)); //Add the /minecraftle command to the plugin
         getCommand("craft").setExecutor(new craft()); //Add the /craft command to the plugin
+        getCommand("toast").setExecutor(new toast()); //Add the /toast command to the plugin
 
         getServer().getPluginManager().registerEvents(new onJoinEvent(this), this); //Registers the join message on player join to the plugin
         getServer().getPluginManager().registerEvents(new onLeaveEvent(this), this); //Registers the leave message on player leave to the plugin
