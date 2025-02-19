@@ -22,22 +22,28 @@ public class toast implements CommandExecutor, TabCompleter{
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
 
-        if (strings.length < 3){
-            commandSender.sendMessage("Please enter at least 3 arguments");
+        if (strings.length < 4){
+            commandSender.sendMessage("Please enter at least 4 arguments");
             return false;
+        }
+
+        if (Bukkit.getPlayer(strings[0]) == null){
+            commandSender.sendMessage(Component.text("Player not found", Colors.getColor(ColorType.MC_RED)));
+
+            return true;
         }
 
         final Toast.Style style;
 
         try {
-            style = Toast.Style.valueOf(strings[0].toUpperCase());
+            style = Toast.Style.valueOf(strings[1].toUpperCase());
         } catch (final Throwable t){
-            commandSender.sendMessage(Component.text("Invalid style :" + strings[0], Colors.getColor(ColorType.MC_RED)));
+            commandSender.sendMessage(Component.text("Invalid style :" + strings[1], Colors.getColor(ColorType.MC_RED)));
 
             return true;
         }
 
-        final String materialName = strings[1];
+        final String materialName = strings[2];
 
         try{
             Material.valueOf(materialName.toUpperCase());
@@ -49,7 +55,7 @@ public class toast implements CommandExecutor, TabCompleter{
 
         StringBuilder message = new StringBuilder();
 
-        for (int i= 2; i < strings.length; i++){
+        for (int i= 3; i < strings.length; i++){
             message.append(strings[i]).append(" ");
         }
 
@@ -57,9 +63,7 @@ public class toast implements CommandExecutor, TabCompleter{
 
         messageString = ChatColor.translateAlternateColorCodes('&', messageString.trim());
 
-        for (Player loopPlayer : Bukkit.getOnlinePlayers()){
-            Toast.displayTo(loopPlayer, materialName, messageString, style);
-        }
+        Toast.displayTo(Bukkit.getPlayer(strings[0]), materialName, messageString, style);
 
         return true;
     }
@@ -70,12 +74,17 @@ public class toast implements CommandExecutor, TabCompleter{
 
         switch (strings.length){
             case 1:
+                for (final Player loopPlayer : Bukkit.getOnlinePlayers()){
+                    tab.add(loopPlayer.getName());
+                }
+                break;
+            case 2:
                 for (final Toast.Style style : Toast.Style.values()){
                     tab.add(style.toString());
                 }
                 break;
 
-            case 2:
+            case 3:
                 for (final Material material : Material.values()){
                     tab.add(material.toString().toLowerCase());
                 }
