@@ -3,17 +3,13 @@ plugins {
 }
 
 group = 'fr.thefox580'
-version = '1.7.2'
+version = '1.7.3'
 
 repositories {
     mavenCentral()
     maven {
-        name = "papermc-repo"
-        url = "https://repo.papermc.io/repository/maven-public/"
-    }
-    maven {
-        name = "sonatype"
-        url = "https://oss.sonatype.org/content/groups/public/"
+        name = 'papermc'
+        url = 'https://repo.papermc.io/repository/maven-public/'
     }
     maven {
         name = "Noxcrew Public Maven Repository"
@@ -28,7 +24,7 @@ repositories {
 dependencies {
     implementation "me.superneon4ik:NoxesiumUtils:2.0.0"
     implementation "com.noxcrew.noxesium:api:2.5.0"
-    compileOnly 'io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT'
+    compileOnly 'io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT'
 }
 
 def targetJavaVersion = 21
