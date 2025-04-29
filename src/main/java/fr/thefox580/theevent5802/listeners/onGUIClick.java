@@ -18,7 +18,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.*;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -39,7 +38,7 @@ public class onGUIClick implements Listener {
         UUID playerUUID = player.getUniqueId();
 
         if (event.getClickedInventory() == null){
-            Bukkit.getLogger().warning("Player " + player.getName() + "clicked outside of an inventory");
+            Bukkit.getLogger().warning("Player " + player.getName() + " clicked outside of an inventory");
         }   else {
 
             if (event.getClickedInventory().getType() != null) {

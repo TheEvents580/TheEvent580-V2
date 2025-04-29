@@ -16,6 +16,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class onMessage implements Listener, ChatRenderer {
 
     private final TheEvent580_2 advMain;
@@ -112,6 +114,10 @@ public class onMessage implements Listener, ChatRenderer {
 
         if (player.hasPermission("op")){
             teamPlayer += "リ"; //Set the tag of the player's team
+        }
+
+        if (!Objects.equals(config.getString("color." + player.getUniqueId()), "TEXT")){
+            colorPlayer = Colors.getColor(ColorType.valueOf(config.getString("color."+player.getUniqueId())));
         }
 
         Component message;

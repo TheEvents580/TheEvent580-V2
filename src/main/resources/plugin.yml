@@ -18,6 +18,11 @@ commands:
   pronouns:
     description: Changes player's pronouns
 
+  customcolor:
+    description: Gives a player a custom color
+    permission: op
+    permission-message: "&cYou do not have the required permissions to give someone a custom color"
+
   damage:
     description: Toggles damage
     permission: op

@@ -33,6 +33,7 @@ public class onJoinEvent implements Listener {
         Component component = Component.translatable("%nox_uuid%"+player.getUniqueId()+",false,0,-1,1","\uD83D\uDC64"); //Setup custom player head
 
         FileConfiguration config = this.plugin.getConfig();
+        config.set("color."+ player.getUniqueId(), "TEXT");
         config.set("online_players", config.getInt("online_players") + 1);
 
         if (player.hasPermission("group.spectators")){ //If the player is a spectator

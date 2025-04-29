@@ -9,15 +9,6 @@ import org.bukkit.scheduler.BukkitTask;
 
 public final class TheEvent580_2 extends JavaPlugin {
 
-    //private Audience adventure;
-
-    //public @NonNull Audience adventure() {
-    //    if(this.adventure == null) {
-    //        throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
-    //    }
-    //    return this.adventure;
-    //}
-
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -35,13 +26,13 @@ public final class TheEvent580_2 extends JavaPlugin {
         getCommand("minecraftle").setExecutor(new minecraftle(this)); //Add the /minecraftle command to the plugin
         getCommand("craft").setExecutor(new craft()); //Add the /craft command to the plugin
         getCommand("toast").setExecutor(new toast()); //Add the /toast command to the plugin
+        getCommand("customcolor").setExecutor(new customColor(this)); //Add the /customcolor command to the plugin
 
         getServer().getPluginManager().registerEvents(new onJoinEvent(this), this); //Registers the join message on player join to the plugin
         getServer().getPluginManager().registerEvents(new onLeaveEvent(this), this); //Registers the leave message on player leave to the plugin
         getServer().getPluginManager().registerEvents(new onDeathEvent(), this); //Registers the death message on player death to the plugin
         getServer().getPluginManager().registerEvents(new onMessage(this), this); //Registers the custom message on player message to the plugin
         getServer().getPluginManager().registerEvents(new onGUIClick(this), this); //Registers when a players click in an inventory to the plugin
-        //getServer().getPluginManager().registerEvents(new onNoxesiumJoinEvent(), this); //Registers when a player joins the server to remove trident / boat collisions
         getServer().getPluginManager().registerEvents(new onDamage(this), this); //Registers when damage is dealt
         getServer().getPluginManager().registerEvents(new onInventoryClose(this), this); //Registers when an inventory is closed
         getServer().getPluginManager().registerEvents(new onItemDrop(), this); //Registers when an item is dropped

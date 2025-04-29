@@ -49,6 +49,30 @@ public class Colors {
             return TextColor.color(170, 170, 170);
         } else if (type == ColorType.MC_GRAY){
             return TextColor.color(85, 85, 85);
+        } else if (type == ColorType.RAINBOW){
+            return TextColor.color(240, 240, 28);
+        } else if (type == ColorType.RAINBOW_WAVE){
+            return TextColor.color(240, 240, 132);
+        } else if (type == ColorType.RAINBOW_ITER){
+            return TextColor.color(240, 240, 136);
+        } else if (type == ColorType.LESBIAN){
+            return TextColor.color(240, 240, 64);
+        } else if (type == ColorType.GAY){
+            return TextColor.color(240, 240, 68);
+        } else if (type == ColorType.BISEXUAL){
+            return TextColor.color(240, 240, 72);
+        } else if (type == ColorType.TRANSGENDER){
+            return TextColor.color(240, 240, 76);
+        } else if (type == ColorType.PRIDE){
+            return TextColor.color(240, 240, 80);
+        } else if (type == ColorType.PANSEXUAL){
+            return TextColor.color(240, 240, 84);
+        } else if (type == ColorType.ASEXUAL){
+            return TextColor.color(240, 240, 88);
+        } else if (type == ColorType.AROMANTIC){
+            return TextColor.color(240, 240, 92);
+        } else if (type == ColorType.NON_BINARY){
+            return TextColor.color(240, 240, 96);
         }
         return TextColor.color(0, 0, 0);
     }

@@ -22,5 +22,17 @@ public enum ColorType {
     MC_PURPLE,
     MC_PINK,
     MC_LIGHT_GRAY,
-    MC_GRAY
+    MC_GRAY,
+    RAINBOW,
+    RAINBOW_WAVE,
+    RAINBOW_ITER,
+    LESBIAN,
+    GAY,
+    BISEXUAL,
+    TRANSGENDER,
+    PRIDE,
+    PANSEXUAL,
+    ASEXUAL,
+    AROMANTIC,
+    NON_BINARY
 }
