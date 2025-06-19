@@ -1,9 +1,10 @@
 plugins {
     id 'java'
+    id 'com.gradleup.shadow' version '9.0.0-beta7'
 }
 
 group = 'fr.thefox580'
-version = '1.7.4'
+version = '1.7.5'
 
 repositories {
     mavenCentral()
@@ -19,12 +20,21 @@ repositories {
         name = "neonRepositoryReleases"
         url = "https://repo.superneon4ik.me/releases"
     }
+    maven {
+        url 'https://jitpack.io'
+    }
 }
 
 dependencies {
+    compileOnly 'io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT'
+    compileOnly "com.github.ZockerAxel:CrazyAdvancementsAPI:v2.1.21"
+
     implementation "me.superneon4ik:NoxesiumUtils:2.0.0"
     implementation "com.noxcrew.noxesium:api:2.5.0"
-    compileOnly 'io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT'
+    implementation 'org.mongodb:mongodb-driver-sync:5.5.1'
+    implementation 'org.mongodb:bson:5.5.1'
+
+    //runtimeOnly 'org.mongodb:mongodb-driver-reactivestreams:4.5.1'
 }
 
 def targetJavaVersion = 21
@@ -52,4 +62,18 @@ processResources {
     filesMatching('plugin.yml') {
         expand props
     }
+}
+
+shadowJar {
+    archiveBaseName.set('TheEvent580 V2')
+    archiveClassifier.set('') // Ensure no classifier is added to the name
+    relocate 'com.mongodb', 'fr.thefox580.theevent5802.libs.mongodb'
+}
+
+tasks.build {
+    dependsOn shadowJar
+}
+
+tasks.jar {
+    enabled = false
 }

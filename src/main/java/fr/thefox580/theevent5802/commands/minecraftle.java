@@ -2,7 +2,6 @@ package fr.thefox580.theevent5802.commands;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.utils.ColorType;
-import fr.thefox580.theevent5802.utils.Colors;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
@@ -28,7 +27,7 @@ public class minecraftle implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String @NotNull [] strings) {
 
         if (commandSender instanceof Player player){
 
@@ -50,8 +49,8 @@ public class minecraftle implements CommandExecutor {
                 for (Player loopedPlayer : Bukkit.getOnlinePlayers()){
                     if (loopedPlayer.isOp()){
                         loopedPlayer.sendMessage(Component.text(player.getName()+" started a Minecraftle and needs to find : ")
-                                .append(Component.translatable(randomItem.getItemTranslationKey(),
-                                        Colors.getColor(ColorType.SPECIAL_1), TextDecoration.BOLD)));
+                                .append(Component.translatable(Objects.requireNonNull(randomItem.getItemTranslationKey()),
+                                        ColorType.SPECIAL_1.getColor(), TextDecoration.BOLD)));
                     }
                 }
 
@@ -119,19 +118,10 @@ public class minecraftle implements CommandExecutor {
         // The recipe of each item in getPossibleItems() is saved as (i.e. Diamond Sword):
         //[Material.AIR, Material.DIAMOND, Material.AIR, Material.AIR, Material.DIAMOND, Material.AIR, Material.AIR, Material.STICK, Material.AIR]
 
-        List<Character> chrList = new ArrayList<>();
-        chrList.add('a');
-        chrList.add('b');
-        chrList.add('c');
-        chrList.add('d');
-        chrList.add('e');
-        chrList.add('f');
-        chrList.add('g');
-        chrList.add('h');
-        chrList.add('i');
+        Character[] chrList = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'};
 
         for (Material material : getPossibleItems()){
-            ArrayList<Material> ingredients = new ArrayList<Material>();
+            ArrayList<Material> ingredients = new ArrayList<>();
             ItemStack item = new ItemStack(material);
             for (Recipe recipe : Bukkit.getServer().getRecipesFor(item)){
                 if (recipe instanceof ShapedRecipe shapedRecipe){

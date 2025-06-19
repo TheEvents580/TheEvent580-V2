@@ -37,11 +37,6 @@ commands:
   craft:
     description: Opens the crafting table
 
-  toast:
-    description: Creates a toast for everyone to see on their screen
-    permission: op
-    permission-message: "&cYou do not have the required permissions to show a toast to everyone"
-
   announcement:
     description: Makes an announcement in the chat
     aliases:
@@ -53,3 +48,16 @@ commands:
       - "alerts"
     permission: op
     permission-message: "&cYou do not have the required permissions to make an announcement in the chat"
+
+  stats:
+    description: Creates/Shows a statistic for a player
+
+  db:
+    description: Modifies database infos
+    permission: op
+    permission-message: "&cYou do not have the required permissions to interact with the database"
+
+  toast:
+    description: Creates a toast for a/all player/s
+    permission: op
+    permission-message: "&cYou do not have the required permissions to create a toast"

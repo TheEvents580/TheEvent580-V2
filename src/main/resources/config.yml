@@ -1,5 +1,10 @@
 muted_chat : false
 
+mongobd_username : ""
+mongodb_password : ""
+
+episode : "Episode 7"
+
 pronoun_1.dc833b85-3cba-4ebd-8f4d-febc09f02422: "[N-A"
 pronoun_1.252fda4d-bb94-4449-876d-fec8d172dda0: "[N-A"
 pronoun_1.a5b68cfe-e546-4b63-a87d-26f065710dc1: "[N-A"

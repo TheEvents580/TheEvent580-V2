@@ -26,7 +26,7 @@ public class customColor implements CommandExecutor {
             FileConfiguration config = this.plugin.getConfig();
             config.set("color."+ player.getUniqueId(), strings[1]);
         } else {
-            Bukkit.getLogger().warning("Player " + playerName + " doesn't exist");
+            TheEvent580_2.getPlugin(TheEvent580_2.class).getLogger().warning("Player " + playerName + " doesn't exist");
         }
 
         return true;
