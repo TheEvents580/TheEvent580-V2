@@ -11,7 +11,7 @@ import java.util.UUID;
 public class PlayerStats {
 
     private UUID player_uuid;
-    private List<Score> scores = List.of(new Score(Game.TRIALS));
+    private List<Score> scores;
 
     public PlayerStats(UUID player_uuid){
         this.player_uuid = player_uuid;
@@ -33,7 +33,7 @@ public class PlayerStats {
         this.scores = scores;
     }
 
-    public Document getScoreStarts(){
+    public Document getScoreStats(){
         Document doc = new Document();
 
         for (Score score : this.scores){
@@ -47,7 +47,7 @@ public class PlayerStats {
         return new Document()
                 .append("_id", this.player_uuid.toString())
                 .append("username", Bukkit.getOfflinePlayer(this.player_uuid).getName())
-                .append("scores", this.getScoreStarts());
+                .append("scores", this.getScoreStats());
     }
 
     @Override

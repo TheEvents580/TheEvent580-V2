@@ -49,12 +49,12 @@ public class db implements CommandExecutor, TabCompleter {
             case "get":
                 OfflinePlayer player = Bukkit.getOfflinePlayer(strings[1]);
                 PlayerStats stats = plugin.getDatabase().getStats(player.getUniqueId());
-                if (stats.getScores().size() == 6){
+                if (!stats.getScores().isEmpty()){
                     Component message = getMessage(player, stats);
                     commandSender.sendMessage(message);
                     return true;
                 }
-                commandSender.sendMessage(Component.text("No stats were found for " + strings[1] + " in Season 1 - " + plugin.getConfig().getString("episode") + ".", ColorType.MC_RED.getColor(), TextDecoration.BOLD));
+                commandSender.sendMessage(Component.text("No stats were found for " + strings[0] + " in Season 1 - " + plugin.getConfig().getString("episode") + ".", ColorType.MC_RED.getColor(), TextDecoration.BOLD));
                 return false;
             default:
                 commandSender.sendMessage(Component.text(strings[0] + " is not a correct argument.", ColorType.MC_RED.getColor(), TextDecoration.BOLD));
@@ -66,13 +66,18 @@ public class db implements CommandExecutor, TabCompleter {
     private @NotNull Component getMessage(OfflinePlayer player, PlayerStats stats) {
         Component message = Component.text("Stats for ", ColorType.MC_LIME.getColor())
                         .append(Component.text(Objects.requireNonNull(player.getName()), ColorType.MC_LIME.getColor(), TextDecoration.BOLD));
+        double totalPoints = 0;
         message = message.append(Component.text(" in Season 1 - " + plugin.getConfig().getString("episode") + " :", ColorType.MC_LIME.getColor()));
         for (Score score : stats.getScores()){
             message = message.append(Component.text("\n\n" + score.getGame().getIcon() + " ", ColorType.NO_SHADOW.getColor())
-                            .append(Component.text(score.getGame().getName(), score.getGame().getColor(), TextDecoration.BOLD))
+                            .append(Component.text(score.getGame().getName(), score.getGame().getColorType().getColor(), TextDecoration.BOLD))
                             .append(Component.text(" : " + score.getPoints(), ColorType.SUBTEXT.getColor()))
                             .append(Component.text(" 工", ColorType.NO_SHADOW.getColor())));
+            totalPoints += score.getPoints();
         }
+        message = message.append(Component.text("\n\nTotal : ", ColorType.MC_LIME.getColor())
+                .append(Component.text(totalPoints, ColorType.MC_LIME.getColor(), TextDecoration.BOLD)));
+        message = message.append(Component.text(" 工", ColorType.NO_SHADOW.getColor()));
         return message;
     }
 

@@ -48,7 +48,7 @@ public class Database {
         this.stats = this.database.getCollection(Objects.requireNonNull(plugin.getConfig().getString("episode")));
     }
 
-    public void addStats(UUID playerUUID, Map<String, Integer> scoresMap){
+    public void addStats(UUID playerUUID, Map<String, Double> scoresMap){
         // Send a ping to confirm a successful connection
         this.database.runCommand(new Document("ping", 1));
         plugin.getLogger().info("Pinged your deployment. You successfully connected to MongoDB!");
@@ -66,6 +66,9 @@ public class Database {
     }
 
     public PlayerStats getStats(UUID playerUUID){
+        // Send a ping to confirm a successful connection
+        this.database.runCommand(new Document("ping", 1));
+        plugin.getLogger().info("Pinged your deployment. You successfully connected to MongoDB!");
         Document doc = this.stats.find(new Document("_id", playerUUID.toString())).first();
         if (doc == null){
             return new PlayerStats(playerUUID);
@@ -76,7 +79,7 @@ public class Database {
 
             for (String game : docScores.keySet()){
                 Score score = new Score(Game.valueOf(game.toUpperCase()));
-                score.setPoints(docScores.getInteger(game));
+                score.setPoints(docScores.getDouble(game));
                 scores.add(score);
             }
 

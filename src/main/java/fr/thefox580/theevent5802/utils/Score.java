@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Score {
 
     private Game game;
-    private int points = 0;
+    private double points = 0;
 
     public Score(Game game){
         this.game = game;
@@ -19,11 +19,11 @@ public class Score {
         this.game = game;
     }
 
-    public int getPoints() {
+    public double getPoints() {
         return this.points;
     }
 
-    public void setPoints(int points) {
+    public void setPoints(double points) {
         this.points = points;
     }
 

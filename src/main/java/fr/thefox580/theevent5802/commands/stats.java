@@ -31,15 +31,16 @@ public class stats implements CommandExecutor, TabCompleter {
 
         if (commandSender.isOp()){
 
-            if (strings.length != 13){
+            if (strings.length < 3){
                 return false;
             } else {
                 UUID playerUUID = Bukkit.getOfflinePlayer(strings[0]).getUniqueId();
-                Map<String, Integer> scoresMap = new HashMap<>();
-                for (int size = 1; size < (strings.length+1)/2; size++){
-                    scoresMap.put(strings[size*2-1], Integer.parseInt(strings[size*2]));
+                Map<String, Double> scoresMap = new HashMap<>();
+                for (int size = 1; size < (strings.length+1)/2; size++) {
+                    scoresMap.put(strings[size * 2 - 1], Double.valueOf(strings[size * 2]));
                 }
                 plugin.getDatabase().addStats(playerUUID, scoresMap);
+                commandSender.sendMessage(Component.text("Stats for "+Bukkit.getOfflinePlayer(playerUUID).getName()+" have been saved!", ColorType.MC_LIME.getColor()));
                 return true;
             }
         } else {
@@ -48,7 +49,7 @@ public class stats implements CommandExecutor, TabCompleter {
             plugin.getDatabase().updateCollection();
             OfflinePlayer player = Bukkit.getOfflinePlayer(strings[0]);
             PlayerStats stats = plugin.getDatabase().getStats(player.getUniqueId());
-            if (stats.getScores().size() == 6){
+            if (!stats.getScores().isEmpty()){
                 Component message = getMessage(player, stats);
                 commandSender.sendMessage(message);
                 return true;
@@ -62,12 +63,17 @@ public class stats implements CommandExecutor, TabCompleter {
         Component message = Component.text("Stats for ", ColorType.MC_LIME.getColor())
                 .append(Component.text(Objects.requireNonNull(player.getName()), ColorType.MC_LIME.getColor(), TextDecoration.BOLD));
         message = message.append(Component.text(" in Season 1 - " + plugin.getConfig().getString("episode") + " :", ColorType.MC_LIME.getColor()));
+        double totalPoints = 0;
         for (Score score : stats.getScores()){
             message = message.append(Component.text("\n\n" + score.getGame().getIcon() + " ", ColorType.NO_SHADOW.getColor())
-                    .append(Component.text(score.getGame().getName(), score.getGame().getColor(), TextDecoration.BOLD))
+                    .append(Component.text(score.getGame().getName(), score.getGame().getColorType().getColor(), TextDecoration.BOLD))
                     .append(Component.text(" : " + score.getPoints(), ColorType.SUBTEXT.getColor()))
                     .append(Component.text(" 工", ColorType.NO_SHADOW.getColor())));
+            totalPoints += score.getPoints();
         }
+        message = message.append(Component.text("\n\nTotal : ", ColorType.MC_LIME.getColor())
+                .append(Component.text(totalPoints, ColorType.MC_LIME.getColor(), TextDecoration.BOLD)));
+        message = message.append(Component.text(" 工", ColorType.NO_SHADOW.getColor()));
         return message;
     }
 
@@ -84,22 +90,12 @@ public class stats implements CommandExecutor, TabCompleter {
                     }
                     break;
                 case 2, 4, 6, 8, 10, 12:
-                    String startGame = args[0].toLowerCase();
-
-                    List<String> games = new ArrayList<>();
-
                     for (Game game : Game.values()){
-                        games.add(game.toString().toLowerCase());
+                        tab.add(game.toString().toLowerCase());
                     }
-
-                    games.forEach(game -> {
-                        if (game.startsWith(startGame)){
-                            tab.add(game);
-                        }
-                    });
                     break;
                 case 3, 5, 7, 9, 11, 13:
-                    for (int i = 0; i < 1000000; i++){
+                    for (double i = 0.5; i < 10000; i+=0.5){
                         tab.add(String.valueOf(i));
                     }
                     break;
