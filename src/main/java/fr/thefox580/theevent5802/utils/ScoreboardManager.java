@@ -148,7 +148,7 @@ public class ScoreboardManager {
                             .append(Component.text(Finder.getPlayerItemsFound(player) + "/" + Finder.getTotalItemsFound())));
                 }
             }
-            case null, default -> {
+            default -> {
                 if (Players.getPlayerCount() < Players.getMaxPlayerCount()) {
                     int playersMissing = Players.getMaxPlayerCount() - Players.getPlayerCount();
 
