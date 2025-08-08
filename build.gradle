@@ -1,10 +1,10 @@
 plugins {
     id 'java'
-    id 'com.gradleup.shadow' version '9.0.0-beta7'
+    id 'com.gradleup.shadow' version '8.3.0'
 }
 
 group = 'fr.thefox580'
-version = '1.7.6'
+version = '1.7.7'
 
 repositories {
     mavenCentral()
@@ -20,21 +20,34 @@ repositories {
         name = "neonRepositoryReleases"
         url = "https://repo.superneon4ik.me/releases"
     }
+    maven { url 'https://jitpack.io' }
     maven {
-        url 'https://jitpack.io'
+        name = 'citizens-repo'
+        url = 'https://maven.citizensnpcs.co/repo'
+    }
+    maven {
+        url = 'https://repo.extendedclip.com/releases/'
+    }
+    maven {
+        url = "https://repo.onarandombox.com/content/groups/public/"
     }
 }
 
 dependencies {
     compileOnly 'io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT'
     compileOnly "com.github.ZockerAxel:CrazyAdvancementsAPI:v2.1.21"
+    compileOnly 'net.luckperms:api:5.4'
+    compileOnly 'org.mvplugins.multiverse.core:multiverse-core:5.0.0'
+    compileOnly 'me.clip:placeholderapi:2.11.6'
+    compileOnly 'net.citizensnpcs:citizens-main:2.0.37-SNAPSHOT'
+    compileOnly 'com.github.decentsoftware-eu:decentholograms:2.9.3'
 
-    implementation "me.superneon4ik:NoxesiumUtils:2.0.0"
+
+    //implementation "me.superneon4ik:NoxesiumUtils:2.0.0"
     implementation "com.noxcrew.noxesium:api:2.5.0"
     implementation 'org.mongodb:mongodb-driver-sync:5.5.1'
     implementation 'org.mongodb:bson:5.5.1'
-
-    //runtimeOnly 'org.mongodb:mongodb-driver-reactivestreams:4.5.1'
+    implementation 'fr.mrmicky:fastboard:2.1.5'
 }
 
 def targetJavaVersion = 21
@@ -68,6 +81,7 @@ shadowJar {
     archiveBaseName.set('TheEvent580 V2')
     archiveClassifier.set('') // Ensure no classifier is added to the name
     relocate 'com.mongodb', 'fr.thefox580.theevent5802.libs.mongodb'
+    relocate 'fr.mrmicky.fastboard', 'fr.thefox580.theevent5802.fastboard'
 }
 
 tasks.build {

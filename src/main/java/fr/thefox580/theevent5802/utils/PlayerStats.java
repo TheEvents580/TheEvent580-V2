@@ -11,7 +11,7 @@ import java.util.UUID;
 public class PlayerStats {
 
     private UUID player_uuid;
-    private List<Score> scores;
+    private List<Score> scores = List.of();
 
     public PlayerStats(UUID player_uuid){
         this.player_uuid = player_uuid;

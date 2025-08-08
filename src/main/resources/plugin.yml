@@ -5,10 +5,13 @@ api-version: '1.21'
 authors: [TheFox580]
 
 commands:
-  starttp:
-    description: Tp after start
+  start:
+    description: Starts the event
     permission: op
-    permission-message: "&cYou do not have the required permissions to teleport the players in the decision crystal"
+    permission-message: "&cYou do not have the required permissions to START THE EVENT"
+
+  spawn:
+    description: Teleports the player to spawn
 
   gametp:
     description: Tp after games
@@ -19,9 +22,7 @@ commands:
     description: Changes player's pronouns
 
   customcolor:
-    description: Gives a player a custom color
-    permission: op
-    permission-message: "&cYou do not have the required permissions to give someone a custom color"
+    description: Gives yourself a custom color
 
   damage:
     description: Toggles damage
@@ -57,7 +58,45 @@ commands:
     permission: op
     permission-message: "&cYou do not have the required permissions to interact with the database"
 
-  toast:
-    description: Creates a toast for a/all player/s
+  points:
+    description: Gets / modifies a player's points
     permission: op
-    permission-message: "&cYou do not have the required permissions to create a toast"
+    permission-message: "&cYou do not have the required permissions to interact with points"
+
+  test:
+    description: Executes the test
+    permission: op
+    permission-message: "&cYou do not have the required permissions to test stuff, what did you think?"
+
+  finder:
+    description: Starts Finder
+    permission: op
+    permission-message: "&cYou do not have the required permissions to start this game"
+
+  variables:
+    description: Perform operations on variables
+    permission: op
+    permission-message: "&cYou do not have the required permissions to perform operations on variables"
+
+  version:
+    description: Shows in chat the plugin version
+
+  players:
+    description: Gets / Modifies the player list
+    permission: op
+    permission-message: "&cYou do not have the required permission to modify the player list"
+
+  spectators:
+    description: Gets / Modifies the spectator list
+    permission: op
+    permission-message: "&cYou do not have the required permission to modify the spectator list"
+
+  reloadcfg:
+    description: Reloads the config
+    permission: op
+    permission-message: "&cYou cannot reload the config"
+
+  timer:
+    description: Interacts with the timer
+    permission: op
+    permission-message: "&cYou cannot interact with the timer"
