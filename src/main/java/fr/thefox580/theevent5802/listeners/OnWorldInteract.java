@@ -5,17 +5,23 @@ import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
 import fr.thefox580.theevent5802.utils.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Fox;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -70,33 +76,55 @@ public class OnWorldInteract implements Listener {
 
         if (event.getMaterial() == Material.FEATHER) {
             assert event.getItem() != null;
-            if (event.getItem().displayName().equals(Component.text("Change your fly speed"))) {
+            ItemStack feather = event.getItem();
+            if (Objects.equals(feather.getItemMeta().customName(), Component.text("Change your fly speed", ColorType.SUBTEXT.getColor())
+                    .decoration(TextDecoration.BOLD, false)
+                    .decoration(TextDecoration.ITALIC, false))){
                 if (player.getAllowFlight()){
-                    if (event.getAction() == Action.LEFT_CLICK_AIR && player.getFlySpeed() > 0.1){
+
+                    float before = player.getFlySpeed();
+                    int percentageBefore = Math.round(player.getFlySpeed()*1000)-Math.round((player.getFlySpeed()-0.1f)*500);
+
+                    if (event.getAction() == Action.LEFT_CLICK_AIR && player.getFlySpeed() < 0.5f){
                         player.setFlySpeed(player.getFlySpeed()+0.1f);
-                    } else if (event.getAction() == Action.RIGHT_CLICK_AIR && player.getFlySpeed() < 0.5){
+                    } else if (event.getAction() == Action.RIGHT_CLICK_AIR && player.getFlySpeed() >= 0.2f){
                         player.setFlySpeed(player.getFlySpeed()-0.1f);
                     }
-                    player.sendMessage(Component.text("[")
-                            .append(Component.text("Fly", ColorType.TITLE.getColor(), TextDecoration.BOLD))
-                            .append(Component.text("] Fly speed is now set to ", ColorType.TEXT.getColor()))
-                            .append(Component.text( (int) player.getFlySpeed()*100 + "%", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)));
+                    int percentageAfter = Math.round(player.getFlySpeed()*1000)-Math.round((player.getFlySpeed()-0.1f)*500);
+
+                    ItemMeta featherMeta = feather.getItemMeta();
+                    featherMeta.lore(List.of(Component.text("Right-click to reduce fly speed by 50%", ColorType.SPECIAL_2.getColor()).decoration(TextDecoration.ITALIC, false),
+                            Component.text("Left-click to increase fly speed by 50%", ColorType.SPECIAL_2.getColor()).decoration(TextDecoration.ITALIC, false),
+                            Component.text("Current fly speed : " + percentageAfter + "%", ColorType.SPECIAL_2.getColor()).decoration(TextDecoration.ITALIC, false)));
+                    feather.setItemMeta(featherMeta);
+                    player.getInventory().setItemInMainHand(feather);
+
+                    if (before != player.getFlySpeed()){
+                        Component message = getFlySpeedMessage(percentageAfter, percentageBefore);
+
+                        player.sendMessage(message);
+                    } else {
+
+                        if (percentageAfter == 100){
+                            player.sendMessage(Component.text("You reached the minimum speed limit!", ColorType.MC_RED.getColor()));
+                        } else {
+                            player.sendMessage(Component.text("You reached the maximum speed limit!", ColorType.MC_RED.getColor()));
+                        }
+                    }
                 } else {
                     player.sendMessage(Component.text("You cannot change your fly speed!", ColorType.MC_RED.getColor()));
                 }
             }
         } else if (event.getMaterial() == Material.MINECART){
             assert event.getItem() != null;
-            if (Timer.getEnum() == TimerEnum.VOTING){
+            if (Timer.getEnum() == Timer.TimerEnum.VOTING){
                 if (player.getTargetEntity(5) instanceof Player grabbed){
                     player.getInventory().remove(Material.MINECART);
                     player.addPassenger(player);
 
-                    PlayerManager playerManager = Players.getPlayerManager(player);
-                    assert playerManager != null;
+                    PlayerManager playerManager = Online.getPlayerManager(player);
 
-                    PlayerManager grabbedManager = Players.getPlayerManager(grabbed);
-                    assert grabbedManager != null;
+                    PlayerManager grabbedManager = Online.getPlayerManager(grabbed);
 
                     player.sendMessage(Component.text("You grabbed " + grabbedManager.getTeam().getIcon())
                             .append(Component.text(grabbed.getName(), grabbedManager.getColorType().getColor())));
@@ -105,19 +133,100 @@ public class OnWorldInteract implements Listener {
                             .append(Component.text(player.getName(), playerManager.getColorType().getColor())));
                 }
             }
+        } else if (event.getMaterial() == Material.FOX_SPAWN_EGG){
+            assert event.getItem() != null;
+            if (Timer.getEnum() == Timer.TimerEnum.VOTING){
+                event.setCancelled(true);
+                player.getInventory().remove(Material.FOX_SPAWN_EGG);
+                if (event.getClickedBlock() != null && event.getClickedBlock().getType() != Material.AIR){
+                    PlayerManager playerManager = Online.getPlayerManager(player);
+
+                    Location blockAbove = event.getClickedBlock().getLocation().add(0, 1, 0);
+                    Entity fox = blockAbove.getWorld().spawn(blockAbove, Fox.class, CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
+
+                    fox.customName(Component.text(playerManager.getTeam().getIcon(), ColorType.TEXT.getColor()).decoration(TextDecoration.ITALIC, false)
+                            .append(Component.text(player.getName() + "'s Fox", playerManager.getColorType().getColor()).decoration(TextDecoration.ITALIC, false)));
+
+                    Objects.requireNonNull(player.getScoreboard().getPlayerTeam(player)).addEntities(fox);
+
+                    fox.setGlowing(true);
+                }
+            }
+        } else if (event.getMaterial() == Material.NETHERITE_SWORD || event.getMaterial() == Material.CROSSBOW){
+            assert event.getItem() != null;
+            if (Timer.getEnum() == Timer.TimerEnum.VOTING){
+                if ((event.getMaterial() == Material.NETHERITE_SWORD && event.getAction().isLeftClick()) || (event.getMaterial() == Material.CROSSBOW && event.getAction().isRightClick())){
+                    player.getInventory().remove(event.getMaterial());
+                }
+            }
+        } else if (event.getMaterial() == Material.CARROT_ON_A_STICK) {
+            assert event.getItem() != null;
+            if (Timer.getEnum() == Timer.TimerEnum.VOTING){
+                PlayerManager playerManager = Online.getPlayerManager(player);
+
+                switch (event.getItem().getItemMeta().getCustomModelDataComponent().getStrings().getFirst()){
+                    case "swap_players_and_spec" -> {
+                        player.getInventory().remove(Material.CARROT_ON_A_STICK);
+                        for (Entity entity : player.getWorld().getNearbyEntities(player.getLocation(), 30, 10, 30)){
+                            if (entity instanceof Fox){
+                                entity.remove();
+                            } else if (entity instanceof Player loopPlayer){
+                                if (Players.isPlayer(loopPlayer)){
+                                    Spectators.readySpectatorDecision(Online.getPlayerManager(loopPlayer));
+                                } else {
+                                    Spectators.readySpectatorLobby(Online.getPlayerManager(loopPlayer));
+                                }
+                            }
+                        }
+
+                        Bukkit.broadcast((Component.text('[')
+                                .append(Component.text("Decision Crystal", ColorType.TITLE.getColor(), TextDecoration.BOLD))
+                                .append(Component.text("] ", ColorType.TEXT.getColor()))
+                                .append(Component.text(playerManager.getName(), playerManager.getColorType().getColor()))
+                                .append(Component.text(" used the Players <> Spectators swap!", ColorType.TEXT.getColor()))));
+                    }
+                    case "you_choose_the_game" -> {
+                        player.getInventory().remove(Material.CARROT_ON_A_STICK);
+                        for (Entity entity : player.getWorld().getNearbyEntities(player.getLocation(), 30, 10, 30)){
+                            if (entity instanceof Fox){
+                                entity.remove();
+                            } else if (entity instanceof Player loopPlayer){
+                                if (player.getUniqueId() != loopPlayer.getUniqueId()){
+                                    if (Players.isPlayer(loopPlayer)){
+                                        Spectators.readySpectatorDecision(Online.getPlayerManager(loopPlayer));
+                                    }
+                                }
+                            }
+                        }
+
+                        Bukkit.broadcast((Component.text('[')
+                                .append(Component.text("Decision Crystal", ColorType.TITLE.getColor(), TextDecoration.BOLD))
+                                .append(Component.text("] ", ColorType.TEXT.getColor()))
+                                .append(Component.text(playerManager.getName(), playerManager.getColorType().getColor()))
+                                .append(Component.text(" is choosing the next game!", ColorType.TEXT.getColor()))));
+                    }
+                    case "block_a_game" -> {
+                        player.getInventory().remove(Material.CARROT_ON_A_STICK);
+                        Location blockLoc = player.getLocation().clone();
+                        blockLoc.setY(249);
+                        BlockGame.block(blockLoc.getBlock().getType(), playerManager);
+                    }
+                }
+            }
         } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK){
             if (event.getClickedBlock() == null){
                 TheEvent580_2.getPlugin(TheEvent580_2.class).getLogger().warning(player.getName() + " clicked on air");
             }
             else if (event.getClickedBlock().getType() == Material.WHITE_CONCRETE || event.getClickedBlock().getType() == Material.YELLOW_CONCRETE){
-                player.give(new ItemStack(Material.EGG));
+                player.give(new ItemStack(Material.EGG, 1));
+                player.getInventory().remove(new ItemStack(Material.EGG, 1));
             }
             else if (event.getClickedBlock().getType() == Material.PALE_OAK_BUTTON){
                 Location loc = event.getClickedBlock().getLocation();
 
                 PlayerManager playerManager = Players.getPlayerManager(player);
 
-                if (playerManager != null){
+                if (playerManager == null){
                     playerManager = Spectators.getPlayerManager(player);
                 }
 
@@ -172,5 +281,19 @@ public class OnWorldInteract implements Listener {
                         .append(Component.text(" on your head!", ColorType.TEXT.getColor())));
             }
         }
+    }
+
+    private static @NotNull Component getFlySpeedMessage(int percentageAfter, int percentageBefore) {
+        Component message = Component.text("[")
+                .append(Component.text("Fly", ColorType.TITLE.getColor(), TextDecoration.BOLD))
+                .append(Component.text("] Fly speed is now set to ", ColorType.TEXT.getColor()))
+                .append(Component.text( percentageAfter + "%", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
+
+        if (percentageAfter < percentageBefore){
+            message = message.append(Component.text(" (-50%)", ColorType.TEXT.getColor()).decoration(TextDecoration.BOLD, false));
+        } else {
+            message = message.append(Component.text(" (+50%)", ColorType.TEXT.getColor()).decoration(TextDecoration.BOLD, false));
+        }
+        return message;
     }
 }

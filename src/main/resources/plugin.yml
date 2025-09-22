@@ -100,3 +100,18 @@ commands:
     description: Interacts with the timer
     permission: op
     permission-message: "&cYou cannot interact with the timer"
+
+  mute:
+    description: Mutes the whole server / a specific player
+    permission: op
+    permission-message: "&cYou cannot mute anyone"
+
+  lb:
+    description: shows a player the whole event leaderboard
+    aliases:
+      - "leaderboard"
+      - "leaderb"
+      - "leadb"
+
+  specmenu:
+    description: opens the spectator menu to teleport to a player

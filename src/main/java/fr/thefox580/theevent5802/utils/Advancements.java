@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 public enum Advancements {
     LASTSECONDSBM(0, "Last seconds in Build Masters", "You managed to finish the game with less than 30 seconds on your timer!"),
+    @Deprecated
     FINALBATTLESG(1, "Final Battle : Survival Games", "You survived until the final battle in Survival Games!"),
     SECRETBASE(2, "Hub Secret Base", "You found the secret base in the hub!"),
     HEROBRINE(3, "Herobrine", "You discovered Herobrine!"),

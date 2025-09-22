@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -28,11 +27,7 @@ public class Announcement implements CommandExecutor {
 
         String message = String.join(" ", strings);
 
-        if (commandSender instanceof Player sender){
-            Bukkit.broadcast(Component.text(message).append(Component.text(" - Sent by " +  sender.getName())));
-        } else {
-            Bukkit.broadcast(Component.text(message).append(Component.text(" - Sent by Console")));
-        }
+        Bukkit.broadcast(Component.text(message));
         Bukkit.broadcast(bars);
 
         return true;

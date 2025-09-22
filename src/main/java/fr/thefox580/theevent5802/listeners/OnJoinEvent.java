@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -43,6 +44,10 @@ public class OnJoinEvent implements Listener {
             }
         }
 
+        SpawnParkour.updateText();
+
+        player.setFlySpeed(0.1f);
+
         player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, PotionEffect.INFINITE_DURATION, 255, false, false, false));
 
         PersistentDataContainer playerContainer = player.getPersistentDataContainer();
@@ -50,6 +55,8 @@ public class OnJoinEvent implements Listener {
         if (!playerContainer.has(new NamespacedKey(plugin, "points"))){
             Points.initialisePoints(player);
         }
+
+        playerContainer.set(new NamespacedKey(plugin, "alive"), PersistentDataType.BOOLEAN, true);
 
         if (Objects.equals(Variables.getVariable("jeu"), 0)){
             Points.resetPoints(player);
@@ -69,48 +76,60 @@ public class OnJoinEvent implements Listener {
 
         if (playerManager == null){
 
+            plugin.getLogger().info("Player Manager for " + player.getName() + " wasn't found, creating one");
+
+            boolean isStaff = false;
+            boolean isAdmin = false;
+
+            if (player.hasPermission("group.admin")){
+                isAdmin = true;
+                isStaff = true;
+            } else if (player.hasPermission("group.staff")){
+                isStaff = true;
+            }
+
             if (player.hasPermission("group.spectators")){ //If the player is a spectator
-                Spectators.addSpectator(player);
+                Spectators.addSpectator(player, isStaff, isAdmin);
                 playerManager = Spectators.getPlayerManager(player);
             }
 
             else if (player.hasPermission("group.rouge")) { //If the player is in red team
-                Players.addPlayer(player, Team.RED);
+                Players.addPlayer(player, Team.RED, isStaff, isAdmin);
                 playerManager = Players.getPlayerManager(player);
 
             }
             else if (player.hasPermission("group.orange")) { //If the player is in orange team
-                Players.addPlayer(player, Team.ORANGE);
+                Players.addPlayer(player, Team.ORANGE, isStaff, isAdmin);
                 playerManager = Players.getPlayerManager(player);
 
             }
             else if (player.hasPermission("group.jaune")) { //If the player is in yellow team
-                Players.addPlayer(player, Team.YELLOW);
+                Players.addPlayer(player, Team.YELLOW, isStaff, isAdmin);
                 playerManager = Players.getPlayerManager(player);
 
             }
             else if (player.hasPermission("group.vert")) { //If the player is in lime / green team
-                Players.addPlayer(player, Team.LIME);
+                Players.addPlayer(player, Team.LIME, isStaff, isAdmin);
                 playerManager = Players.getPlayerManager(player);
 
             }
             else if (player.hasPermission("group.bleu_clair")) { //If the player is in light blue team
-                Players.addPlayer(player, Team.LIGHT_BLUE);
+                Players.addPlayer(player, Team.LIGHT_BLUE, isStaff, isAdmin);
                 playerManager = Players.getPlayerManager(player);
 
             }
             else if (player.hasPermission("group.bleu")) { //If the player is in blue team
-                Players.addPlayer(player, Team.BLUE);
+                Players.addPlayer(player, Team.BLUE, isStaff, isAdmin);
                 playerManager = Players.getPlayerManager(player);
 
             }
             else if (player.hasPermission("group.violet")) { //If the player is in purple team
-                Players.addPlayer(player, Team.PURPLE);
+                Players.addPlayer(player, Team.PURPLE, isStaff, isAdmin);
                 playerManager = Players.getPlayerManager(player);
 
             }
             else if (player.hasPermission("group.rose")) { //If the player is in pink team
-                Players.addPlayer(player, Team.PINK);
+                Players.addPlayer(player, Team.PINK, isStaff, isAdmin);
                 playerManager = Players.getPlayerManager(player);
 
             }
@@ -129,25 +148,40 @@ public class OnJoinEvent implements Listener {
         }
 
         if (Spectators.isSpectator(player)){
-            assert playerManager != null;
-
-            if (Objects.equals(Variables.getVariable("jeu_condi"), 0)){
-                Spectators.readySpectatorLobby(playerManager);
+            plugin.getLogger().info("Player " + player.getName() + " is a spectator");
+            if (playerManager != null){
+                if (Variables.equals("jeu_condi", 0)){
+                    Spectators.readySpectatorLobby(playerManager);
+                } else {
+                    Spectators.readySpectatorGame(playerManager);
+                }
             } else {
-                Spectators.readySpectatorGame(playerManager);
+                plugin.getLogger().severe("PLAYER MANAGER FOR " + player.getName() + " WAS NOT FOUND!!!");
+            }
+        } else {
+            plugin.getLogger().info("Player " + player.getName() + " is a player");
+            if (Variables.equals("jeu_condi", 0)){
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        player.performCommand("spawn");
+                    }
+                }.runTaskLater(plugin, 2*20L);
             }
         }
 
         TextColor color = Objects.requireNonNull(playerManager).getColorType().getColor();
+
+        if (color == playerManager.getTeam().getColorType().getColor()){
+            if (player.hasPermission("group.admin")){
+                color = Team.ADMIN.getColorType().getColor();
+            } else if (player.hasPermission("group.staff")){
+                color = Team.STAFF.getColorType().getColor();
+            }
+        }
+
         Component message = getPlayerJoinComponent(component, player, color);
         event.joinMessage(message); //Setup join message
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                player.performCommand("spawn");
-            }
-        }.runTaskLater(plugin, 2*20L);
     }
 
     @NotNull

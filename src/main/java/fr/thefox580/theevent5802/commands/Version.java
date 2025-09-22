@@ -19,7 +19,7 @@ public class Version implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String @NotNull [] strings) {
 
-        commandSender.sendMessage(Component.text("TheEvent580 (version 1.7.7) is running on Paper API 1.21.4", ColorType.SUBTEXT.getColor()));
+        commandSender.sendMessage(Component.text("TheEvent580 (version 1.7.8) is running on Paper API 1.21.8", ColorType.SUBTEXT.getColor()));
 
         return true;
     }

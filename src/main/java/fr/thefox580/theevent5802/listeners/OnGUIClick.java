@@ -2,9 +2,9 @@ package fr.thefox580.theevent5802.listeners;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.commands.Minecraftle;
+import fr.thefox580.theevent5802.games.finder.Finder;
 import fr.thefox580.theevent5802.tasks.timer.Mode1;
 import fr.thefox580.theevent5802.utils.*;
-import fr.thefox580.theevent5802.utils.Timer;
 import me.clip.placeholderapi.libs.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -18,8 +18,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.*;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.*;
 
@@ -204,10 +206,6 @@ public class OnGUIClick implements Listener {
                     assert countBossbar != null;
                     BossbarManager.setBossbarVisibility(countBossbar, true);
 
-                    Timer.setSeconds(2*60+59);
-                    Timer.setMaxSeconds(2*60+59);
-                    Timer.setEnum(TimerEnum.START);
-
                     new Mode1(plugin);
 
                     player.closeInventory();
@@ -215,9 +213,32 @@ public class OnGUIClick implements Listener {
                     player.closeInventory();
                 }
             }
-            else if (event.getView().getType() == player.getInventory().getType() && Objects.equals(Variables.getVariable("jeu_condi"), 0)) {
+            else if (event.getView().title().equals(Component.text(Finder.getCurrentItemSetName() + "'s Items"))){
+                event.setCancelled(true);
+            }
+            else if (event.getView().title().equals(Component.text("Spectator TP Menu"))){
+                event.setCancelled(true);
+                if (event.getCurrentItem() != null){
+                    if (Objects.requireNonNull(event.getCurrentItem()).getType() == Material.PLAYER_HEAD){
+                        player.closeInventory(InventoryCloseEvent.Reason.TELEPORT);
+                        SkullMeta playerHeadMeta = (SkullMeta) event.getCurrentItem().getItemMeta();
+                        Player playerToTpTo = Bukkit.getPlayer(Objects.requireNonNull(Objects.requireNonNull(playerHeadMeta.getPlayerProfile()).getId()));
+                        if (playerToTpTo != null){
+                            player.teleport(playerToTpTo);
+                        } else {
+                            player.sendMessage(Component.text("This player does not exist", ColorType.MC_RED.getColor()));
+                        }
+                    } else if (event.getCurrentItem().getType() == Material.LIME_CARPET){
+                        player.closeInventory(InventoryCloseEvent.Reason.TELEPORT);
+                        Bukkit.dispatchCommand(player, "specmenu 2");
+                    } else if (event.getCurrentItem().getType() == Material.ORANGE_CARPET){
+                        player.closeInventory(InventoryCloseEvent.Reason.TELEPORT);
+                        Bukkit.dispatchCommand(player, "specmenu");
+                    }
+                }
+            }
+            else if (event.getClickedInventory().getType() == player.getInventory().getType() && Objects.equals(Variables.getVariable("jeu_condi"), 0)) {
                 if (event.getSlotType() == InventoryType.SlotType.ARMOR){
-                    player.sendMessage("You clicked slot " + event.getSlot() + " --> " + event.getCurrentItem());
                     event.setCancelled(true);
                 }
             }

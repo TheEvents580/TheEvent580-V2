@@ -1,7 +1,5 @@
 package fr.thefox580.theevent5802.commands;
 
-import eu.endercentral.crazy_advancements.JSONMessage;
-import eu.endercentral.crazy_advancements.advancement.*;
 import fr.thefox580.theevent5802.utils.ColorType;
 import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -24,7 +22,7 @@ public class Toast implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String @NotNull [] strings) {
 
-        if (strings.length != 4){
+        /*if (strings.length != 4){
 
             Player player = Bukkit.getPlayer("TheFox580");
 
@@ -60,7 +58,8 @@ public class Toast implements CommandExecutor, TabCompleter {
         } else {
             commandSender.sendMessage(Component.text("[Error] An incorrect amount of arguments were entered, please try with 4 arguments"));
             return false;
-        }
+        }*/
+        return true;
     }
 
     @Override
@@ -68,7 +67,7 @@ public class Toast implements CommandExecutor, TabCompleter {
 
         final List<String> tab = new ArrayList<>();
 
-        switch (strings.length){
+        /*switch (strings.length){
             case 1:
                 for (Player loopPlayer : Bukkit.getOnlinePlayers()){
                     tab.add(loopPlayer.getName());
@@ -85,7 +84,7 @@ public class Toast implements CommandExecutor, TabCompleter {
                     tab.add(frame.toString());
                 }
                 break;
-        }
+        }*/
 
         return tab.stream().filter(completion -> completion.startsWith(strings[strings.length - 1])).toList();
     }

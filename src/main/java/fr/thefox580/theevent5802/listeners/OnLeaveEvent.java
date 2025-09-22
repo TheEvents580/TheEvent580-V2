@@ -24,21 +24,25 @@ public class OnLeaveEvent implements Listener {
 
         ScoreboardManager.deleteBoard(player);
 
-        PlayerManager playerManager;
+        PlayerManager playerManager = Online.getPlayerManager(player);
 
         if (Players.isPlayer(player)){
-            playerManager = Players.getPlayerManager(player);
             if (Timer.getSeconds() <= 30 && Objects.equals(Variables.getVariable("jeu_condi"), 0)){
                 Timer.setPaused(true);
             }
-        } else {
-            playerManager = Spectators.getPlayerManager(player);
         }
-        assert playerManager != null;
 
-        TextColor color = playerManager.getColorType().getColor(); //Set color of text to white (base for if the player doesn't have a team)
+        TextColor color = playerManager.getColorType().getColor();
+
+        if (color == playerManager.getTeam().getColorType().getColor()){
+            if (playerManager.isAdmin()){
+                color = Team.ADMIN.getColorType().getColor();
+            } else if (playerManager.isStaff()){
+                color = Team.STAFF.getColorType().getColor();
+            }
+        }
         Component component = Component.translatable("%nox_uuid%"+player.getUniqueId()+",true,0,-1,1","\uD83D\uDC64"); //Setup custom player head
-        Component message = getPlayerLeaveComponent(component, player, color);//Setup leaving message
+        Component message = getPlayerLeaveComponent(component, player, color); //Setup leaving message
 
         event.quitMessage(message);
     }

@@ -18,7 +18,7 @@ public class RemoveTime implements Runnable {
 
     @Override
     public void run() {
-        if (!Timer.isPaused() && !List.of(TimerEnum.NONE, TimerEnum.STARTING_SOON, TimerEnum.END).contains(Timer.getEnum())){
+        if (!Timer.isPaused() && !List.of(Timer.TimerEnum.NONE, Timer.TimerEnum.STARTING_SOON, Timer.TimerEnum.END).contains(Timer.getEnum()) && Timer.getSeconds() > -1){
             Timer.remove1Second();
 
             BossBar countBossbar = BossbarManager.getBossbar("count");

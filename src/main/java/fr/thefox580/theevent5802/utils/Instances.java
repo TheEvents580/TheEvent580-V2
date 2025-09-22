@@ -14,11 +14,12 @@ public class Instances {
     private BossbarManager bossbars;
     private Points points;
     private Players players;
+    private BlockGame blockGame;
+    private TheEvent580Expansion placeholderAPIExpansion;
 
     public Instances(TheEvent580_2 plugin){
         this.plugin = plugin;
         initializeDatabases();
-        initialize();
     }
 
     private void initializeDatabases(){
@@ -26,13 +27,17 @@ public class Instances {
         this.statsDatabase = new StatsDatabase(plugin);
     }
 
-    private void initialize(){
+    public void initialize(){
         this.economicsInstance = new FinderInstance();
         this.spectators = new Spectators(plugin);
         this.variables = new Variables();
         this.bossbars = new BossbarManager(plugin);
         this.points = new Points(plugin);
         this.players = new Players(plugin);
+        this.blockGame = new BlockGame(plugin);
+        this.placeholderAPIExpansion = new TheEvent580Expansion(plugin);
+
+        placeholderAPIExpansion.register();
     }
 
     public VariablesDatabase getVariablesDatabase(){
@@ -63,6 +68,10 @@ public class Instances {
 
     public Players getPlayers(){
         return players;
+    }
+
+    public BlockGame getBlockGame(){
+        return blockGame;
     }
 
 }

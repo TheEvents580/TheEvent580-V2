@@ -3,7 +3,6 @@ package fr.thefox580.theevent5802.listeners;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.utils.Spectators;
 import fr.thefox580.theevent5802.utils.Timer;
-import fr.thefox580.theevent5802.utils.TimerEnum;
 import fr.thefox580.theevent5802.utils.Variables;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -31,7 +30,7 @@ public class OnItemInteract implements Listener {
             event.setCancelled(true);
         } else if (List.of(5, 8, 9, 12).contains((int) Variables.getVariable("jeu_condi"))){
             event.setCancelled(true);
-        } else if (Timer.getEnum() == TimerEnum.VOTING){
+        } else if (Timer.getEnum() == Timer.TimerEnum.VOTING){
             event.setCancelled(true);
         }
     }

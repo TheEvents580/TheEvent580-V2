@@ -4,7 +4,6 @@ import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.utils.BossbarManager;
 import fr.thefox580.theevent5802.utils.ColorTypeAlt;
 import fr.thefox580.theevent5802.utils.Timer;
-import fr.thefox580.theevent5802.utils.TimerEnum;
 import me.clip.placeholderapi.libs.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
@@ -42,7 +41,7 @@ public class TimerCommand implements CommandExecutor, TabCompleter {
                 case "resume" -> Timer.setPaused(false);
                 case "mode" -> {
                     if (args.length == 2){
-                        Timer.setEnum(TimerEnum.getEnumFromMode(Integer.parseInt(args[1])));
+                        Timer.setEnum(Timer.TimerEnum.getEnumFromMode(Integer.parseInt(args[1])));
                     } else {
                         sender.sendMessage(Component.text("Current mode : " + Timer.getEnum().getMeaning()));
                     }

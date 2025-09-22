@@ -23,8 +23,8 @@ public class Players implements CommandExecutor, TabCompleter {
         Objects.requireNonNull(plugin.getCommand("players")).setExecutor(this);
     }
 
-    public static void addPlayer(OfflinePlayer player, Team team){
-        PlayerManager playerManager = new PlayerManager(player, team);
+    public static void addPlayer(OfflinePlayer player, Team team, boolean isStaff, boolean isAdmin){
+        PlayerManager playerManager = new PlayerManager(player, team, isStaff, isAdmin);
         playerList.add(playerManager);
         Online.addPlayer(playerManager);
     }
@@ -41,7 +41,7 @@ public class Players implements CommandExecutor, TabCompleter {
 
     public static @Nullable PlayerManager getPlayerManager(OfflinePlayer player){
         for (PlayerManager playerManager : playerList){
-            if (playerManager.getOfflinePlayer() == player){
+            if (Objects.equals(playerManager.getUniqueId().toString(), player.getUniqueId().toString())){
                 return playerManager;
             }
         }

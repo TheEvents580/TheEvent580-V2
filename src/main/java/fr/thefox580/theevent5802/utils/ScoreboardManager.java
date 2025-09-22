@@ -142,7 +142,7 @@ public class ScoreboardManager {
             case 13 -> {
                 if (player.hasPermission("group.spectators")) {
                     board.updateLine(5, Component.text("Current Item Set : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
-                            .append(Component.text(Finder.getCurrentItemSet(), ColorType.SUBTEXT.getColor())));
+                            .append(Component.text(Finder.getCurrentItemSetName(), ColorType.SUBTEXT.getColor())));
                 } else {
                     board.updateLine(5, Component.text("Items found : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
                             .append(Component.text(Finder.getPlayerItemsFound(player) + "/" + Finder.getTotalItemsFound())));

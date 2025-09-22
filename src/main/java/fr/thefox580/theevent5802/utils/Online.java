@@ -1,5 +1,7 @@
 package fr.thefox580.theevent5802.utils;
 
+import org.bukkit.entity.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,14 @@ public class Online {
 
     public static List<PlayerManager> getOnlinePlayers(){
         return onlinePlayers;
+    }
+
+    public static PlayerManager getPlayerManager(Player player){
+        if (Players.isPlayer(player)) {
+            return Players.getPlayerManager(player);
+        }
+
+        return Spectators.getPlayerManager(player);
     }
 
 }

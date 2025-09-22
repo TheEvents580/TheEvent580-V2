@@ -30,6 +30,10 @@ public class Mode1 implements Runnable {
     public Mode1(TheEvent580_2 plugin){
         this.plugin = plugin;
         this.task = Bukkit.getScheduler().runTaskTimer(plugin, this, 0L, 20L);
+
+        Timer.setSeconds(2*60+59);
+        Timer.setMaxSeconds(2*60+59);
+        Timer.setEnum(Timer.TimerEnum.START);
     }
 
     @Override
@@ -162,13 +166,16 @@ public class Mode1 implements Runnable {
                         Component.text("NOW", ColorType.MC_GREEN.getColor()),
                         Title.Times.times(Duration.ofSeconds(0), Duration.ofSeconds(3), Duration.ofSeconds(2))));
             }
-            Timer.setSeconds(30);
-            Timer.setMaxSeconds(30);
-            Timer.setEnum(TimerEnum.STARTING_SOON);
             for (PlayerManager loopPlayer : Online.getOnlinePlayers()){
                 Objects.requireNonNull(loopPlayer.getOnlinePlayer()).teleport(new Location(Bukkit.getWorld("world"), 0.5, 251, 0.5));
                 loopPlayer.getOnlinePlayer().setGameMode(GameMode.ADVENTURE);
+                for (PlayerManager player : Players.getOnlinePlayerList()){
+                    if (loopPlayer.getUniqueId() != player.getUniqueId()){
+                        Objects.requireNonNull(player.getOnlinePlayer()).hidePlayer(plugin, Objects.requireNonNull(loopPlayer.getOnlinePlayer()));
+                    }
+                }
             }
+
             Spectators.readySpectatorsDecision();
             Component message = Component.text('[')
                     .append(Component.text("TheEvent580 - Admin", ColorType.TITLE.getColor(), TextDecoration.BOLD))
@@ -180,7 +187,7 @@ public class Mode1 implements Runnable {
                     loopPlayer.getOnlinePlayer().sendMessage(message);
                 }
             }
-            //new Mode2(plugin).runTaskTimer(plugin, 0L, 1L);
+            new Mode2(plugin);
             task.cancel();
         }
     }

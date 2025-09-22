@@ -8,26 +8,55 @@ import java.util.UUID;
 
 public class PlayerManager{
 
+    private final OfflinePlayer player;
+    private final String name;
+    private final Team team;
+    private final UUID uuid;
     private final PlayerStats  stats;
     private final PlayerAdvancement advancement;
     private final PlayerTimer timer;
-    private final OfflinePlayer player;
-    private final Team team;
-    private final UUID uuid;
-    private final String name;
+    private int parkourCompletion;
     private boolean muted;
     private ColorType color;
+    private final boolean staff;
+    private final boolean admin;
 
-    public PlayerManager(OfflinePlayer player, Team team){
+    public PlayerManager(OfflinePlayer player, Team team, boolean staff, boolean admin){
         this.player = player;
         this.name = player.getName();
-        this.uuid = player.getUniqueId();
         this.team = team;
+        this.uuid = player.getUniqueId();
         this.stats = new PlayerStats(uuid);
         this.advancement = new PlayerAdvancement(uuid);
         this.timer = new PlayerTimer(uuid);
-        this.color = team.getColorType();
+        this.parkourCompletion = 0;
         this.muted = false;
+        this.color = team.getColorType();
+        this.staff = staff;
+        this.admin = admin;
+    }
+
+    public OfflinePlayer getOfflinePlayer() {
+        return player;
+    }
+
+    public @Nullable Player getOnlinePlayer() {
+        if (player.isOnline()){
+            return player.getPlayer();
+        }
+        return null;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public UUID getUniqueId(){
+        return uuid;
     }
 
     public PlayerStats getStats() {
@@ -42,30 +71,15 @@ public class PlayerManager{
         return timer;
     }
 
-    public OfflinePlayer getOfflinePlayer() {
-        return player;
+    public int getParkourCompletion(){
+        return parkourCompletion;
     }
 
-    public @Nullable Player getOnlinePlayer() {
-        if (player.isOnline()){
-            return player.getPlayer();
-        }
-        return null;
+    public void setParkourCompletion(int parkourCompletion) {
+        this.parkourCompletion = parkourCompletion;
     }
 
-    public Team getTeam() {
-        return team;
-    }
-
-    public UUID getUniqueId(){
-        return uuid;
-    }
-
-    public String getName(){
-        return name;
-    }
-
-    public boolean getMuted(){
+    public boolean isMuted(){
         return muted;
     }
 
@@ -79,5 +93,13 @@ public class PlayerManager{
 
     public void setColorType(ColorType color){
         this.color =  color;
+    }
+
+    public boolean isStaff(){
+        return staff;
+    }
+
+    public boolean isAdmin() {
+        return admin;
     }
 }

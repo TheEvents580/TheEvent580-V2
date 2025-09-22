@@ -21,6 +21,9 @@ public final class TheEvent580_2 extends JavaPlugin {
         start.createCommands();
         start.createListeners();
         start.createTasks();
+
+        instances.initialize();
+
         this.audience = BukkitAudiences.create(this);
 
         this.getLogger().info("TheEvent580's plugin started"); //Send a message on plugin start

@@ -1,11 +1,11 @@
 package fr.thefox580.theevent5802.listeners;
 
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
+import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
-import fr.thefox580.theevent5802.utils.ColorType;
-import fr.thefox580.theevent5802.utils.Timer;
-import fr.thefox580.theevent5802.utils.TimerEnum;
-import fr.thefox580.theevent5802.utils.Variables;
+import fr.thefox580.theevent5802.games.trials.Trials;
+import fr.thefox580.theevent5802.games.trials.TrialsTasks;
+import fr.thefox580.theevent5802.utils.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Location;
@@ -20,9 +20,14 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.time.Duration;
+import java.util.Map;
 import java.util.Objects;
 
 public class OnPlayerMove implements Listener {
+
+    public OnPlayerMove(TheEvent580_2 plugin){
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+    }
 
     @EventHandler
     public void onPlayerSneakEvent(PlayerToggleSneakEvent event){
@@ -33,7 +38,7 @@ public class OnPlayerMove implements Listener {
                     && player.getY() >= 60){
                 player.teleport(new Location(player.getWorld(), 315.5, -4.5, 323.5, -90, 0));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, PotionEffect.INFINITE_DURATION, 255, false, false, false));
-            } else if (Timer.getEnum() == TimerEnum.VOTING){
+            } else if (Timer.getEnum() == Timer.TimerEnum.VOTING){
                 Entity passengerOf = null;
 
                 for (Entity entity : player.getWorld().getEntities()){
@@ -49,6 +54,34 @@ public class OnPlayerMove implements Listener {
                             Component.text("You're stuck here until voting is over.",
                                     ColorType.MC_RED.getColor()), Title.Times.times(Duration.ZERO, Duration.ofSeconds(3), Duration.ZERO)));
                 }
+            } else if (Variables.equals("jeu_condi", Game.TRIALS.getGameCondition())){
+
+                Map<Player, Integer> sneaks = TrialsTasks.getStats();
+
+                sneaks.put(player, sneaks.get(player)+1);
+
+                switch (TrialsTasks.getCurrentTrial()){
+                    case 3 -> {
+                        if (!Trials.hasPlayerCompleted(player) && sneaks.get(player) == 1){
+                            Trials.setRoundPoints(player, Math.round(TrialsTasks.getCurrentTrialPoints()));
+                        } else if (Trials.hasPlayerCompleted(player) && sneaks.get(player) != 1){
+                            Trials.setRoundPoints(player, 0);
+                        }
+                    }
+                    case 4 -> {
+                        if (!Trials.hasPlayerCompleted(player) && sneaks.get(player) == 2){
+                            Trials.setRoundPoints(player, Math.round(TrialsTasks.getCurrentTrialPoints()));
+                        } else if (Trials.hasPlayerCompleted(player) && sneaks.get(player) != 2){
+                            Trials.setRoundPoints(player, 0);
+                        }
+                    }
+
+                    case 23 -> {
+                        if (Trials.hasPlayerCompleted(player) && sneaks.get(player) > 0){
+                            Trials.setRoundPoints(player, 0);
+                        }
+                    }
+                }
             }
         }
     }
@@ -62,6 +95,34 @@ public class OnPlayerMove implements Listener {
                     && player.getY() <= 0){
                 player.teleport(new Location(player.getWorld(), 328.5, 69.5, 316.5, 150, 0));
                 player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+            }
+        } else if (Variables.equals("jeu_condi", Game.TRIALS.getGameCondition())){
+
+            Map<Player, Integer> jumps = TrialsTasks.getStats();
+
+            jumps.put(player, jumps.get(player)+1);
+
+            switch (TrialsTasks.getCurrentTrial()){
+                case 1 -> {
+                    if (!Trials.hasPlayerCompleted(player) && jumps.get(player) == 1){
+                        Trials.setRoundPoints(player, Math.round(TrialsTasks.getCurrentTrialPoints()));
+                    } else if (Trials.hasPlayerCompleted(player) && jumps.get(player) != 1){
+                        Trials.setRoundPoints(player, 0);
+                    }
+                }
+                case 2 -> {
+                    if (!Trials.hasPlayerCompleted(player) && jumps.get(player) == 2){
+                        Trials.setRoundPoints(player, Math.round(TrialsTasks.getCurrentTrialPoints()));
+                    } else if (Trials.hasPlayerCompleted(player) && jumps.get(player) != 2){
+                        Trials.setRoundPoints(player, 0);
+                    }
+                }
+
+                case 22 -> {
+                    if (Trials.hasPlayerCompleted(player) && jumps.get(player) > 0){
+                        Trials.setRoundPoints(player, 0);
+                    }
+                }
             }
         } else if (player.getWorld().getName().equals("Build_Masters")){
             if (player.getX() > 3000){

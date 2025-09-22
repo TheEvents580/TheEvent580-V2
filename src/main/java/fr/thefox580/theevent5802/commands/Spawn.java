@@ -51,6 +51,7 @@ public class Spawn implements CommandExecutor {
                         new BukkitRunnable() {
                             @Override
                             public void run() {
+                                player.setGameMode(GameMode.ADVENTURE);
                                 Spectators.readySpectatorLobby(Objects.requireNonNull(Spectators.getPlayerManager(player)));
                             }
                         }.runTaskLater(plugin, 2*20L);
@@ -70,4 +71,17 @@ public class Spawn implements CommandExecutor {
 
         return true;
     }
+
+    public static void tp(Player player){
+        if (Players.isPlayer(player)){
+            player.setAllowFlight(false);
+            player.setFlying(false);
+            player.teleport(new Location(Bukkit.getWorld("world"), 310.5, 66, 323.5, 180, 0));
+        } else {
+            player.teleport(new Location(Bukkit.getWorld("world"), 321.5, 75, 340.5, 147.25f, 25));
+            Spectators.readySpectatorLobby(Objects.requireNonNull(Spectators.getPlayerManager(player)));
+        }
+        player.setGameMode(GameMode.ADVENTURE);
+    }
+
 }

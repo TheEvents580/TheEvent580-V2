@@ -17,8 +17,8 @@ public class TabListManager {
 
             Component header = Component.text("");
 
-            Component title = Component.text("\n\n\n\n      TheEvent580 • Season 1 - Episode 7      ", ColorType.TITLE.getColor(), TextDecoration.BOLD);
-            title = title.append(Component.text("").decoration(TextDecoration.BOLD, false));
+            Component title = Component.text("\n\n      TheEvent580 • Season 1 - Episode 7      ", ColorType.TITLE.getColor(), TextDecoration.BOLD);
+            title = title.append(Component.text("\n\n\n").decoration(TextDecoration.BOLD, false));
 
             header = header.append(title);
 
@@ -35,10 +35,17 @@ public class TabListManager {
                 if (spectator.isOnline()){
                     PlayerManager playerManager = Spectators.getPlayerManager(spectator);
                     assert playerManager != null;
-                    spectatorComponent = spectatorComponent.append(Component.text("\n" + Team.SPECTATORS.getIcon() + " ", ColorType.TEXT.getColor()))
+                    spectatorComponent = spectatorComponent.append(Component.text("\n" + Team.SPECTATORS.getIcon() + " ", ColorType.NO_SHADOW.getColor()))
                             .append(Component.text(Objects.requireNonNull(playerManager.getName()), playerManager.getColorType().getColor()));
+
+                    if (playerManager.isAdmin()){
+                        spectatorComponent = spectatorComponent.append(Component.text(" " + Team.ADMIN.getIcon(), ColorType.NO_SHADOW.getColor()));
+                    } else if (playerManager.isStaff()){
+                        spectatorComponent = spectatorComponent.append(Component.text(" " + Team.STAFF.getIcon(), ColorType.NO_SHADOW.getColor()));
+                    }
+
                 } else {
-                    spectatorComponent = spectatorComponent.append(Component.text("\n" + Team.OFFLINE.getIcon() + " ", ColorType.TEXT.getColor()))
+                    spectatorComponent = spectatorComponent.append(Component.text("\n" + Team.OFFLINE.getIcon() + " ", ColorType.NO_SHADOW.getColor()))
                             .append(Component.text(Objects.requireNonNull(spectator.getName()), Team.OFFLINE.getColorType().getColor()));
                 }
 
@@ -56,8 +63,14 @@ public class TabListManager {
                 if (loopPlayer.isOnline()){
                     PlayerManager playerManager = Players.getPlayerManager(loopPlayer);
                     assert playerManager != null;
-                    playerComponent = playerComponent.append(Component.text(playerManager.getTeam().getIcon() + " ", ColorType.TEXT.getColor()))
+                    playerComponent = playerComponent.append(Component.text(playerManager.getTeam().getIcon() + " ", ColorType.NO_SHADOW.getColor()))
                             .append(Component.text(Objects.requireNonNull(loopPlayer.getName()) + " ", playerManager.getColorType().getColor()));
+
+                    if (playerManager.isAdmin()){
+                        playerComponent = playerComponent.append(Component.text(" " + Team.ADMIN.getIcon(), ColorType.NO_SHADOW.getColor()));
+                    } else if (playerManager.isStaff()){
+                        playerComponent = playerComponent.append(Component.text(" " + Team.STAFF.getIcon(), ColorType.NO_SHADOW.getColor()));
+                    }
 
                     if (Points.getTotalPointsPreEvent(Objects.requireNonNull(playerManager.getOfflinePlayer().getPlayer())) <= 0){
                         playerComponent = playerComponent.append(Component.text("[NEW!] ", ColorType.RAINBOW.getColor()));
@@ -72,9 +85,11 @@ public class TabListManager {
                     }
 
                 } else {
-                    playerComponent = playerComponent.append(Component.text(Team.OFFLINE.getIcon() + " ", ColorType.TEXT.getColor()))
+                    playerComponent = playerComponent.append(Component.text(Team.OFFLINE.getIcon() + " ", ColorType.NO_SHADOW.getColor()))
                             .append(Component.text(Objects.requireNonNull(loopPlayer.getName()), Team.OFFLINE.getColorType().getColor()));
+
                 }
+
 
                 players = players.append(playerComponent.decoration(TextDecoration.BOLD, false));
             }

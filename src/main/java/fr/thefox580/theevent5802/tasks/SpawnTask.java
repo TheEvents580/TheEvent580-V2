@@ -1,12 +1,11 @@
 package fr.thefox580.theevent5802.tasks;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
+import fr.thefox580.theevent5802.commands.Spawn;
 import fr.thefox580.theevent5802.utils.*;
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -37,12 +36,14 @@ public class SpawnTask implements Runnable{
                     if (block.getType() == Material.STRUCTURE_BLOCK){
                         player.spawnParticle(Particle.END_ROD, player.getLocation(), 3, 0.1 , 0, 0.1, 0.1);
                         player.removePotionEffect(PotionEffectType.LEVITATION);
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 2, 3, false, false, false));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 2, 2, false, false, false));
                     }
                 }
 
                 if (player.getLocation().getBlock().getType() == Material.WATER){
-                    player.performCommand("spawn");
+                    if (player.getGameMode() ==  GameMode.ADVENTURE){
+                        Spawn.tp(player);
+                    }
                 }
 
                 Location location_under = player.getLocation().clone().add(0, -0.5, 0);
@@ -50,26 +51,34 @@ public class SpawnTask implements Runnable{
                 if (location_under.getBlock().getType() == Material.VERDANT_FROGLIGHT) {
                     player.teleport(new Location(player.getWorld(), 193.5, 69, -381.5, 0, 0));
                 } else if (location_under.getBlock().getType() == Material.OCHRE_FROGLIGHT){
-                  player.performCommand("spawn");
+                  Spawn.tp(player);
                 } else if (location_under.getBlock().getType() == Material.DIRT_PATH || location_under.getBlock().getType() == Material.PETRIFIED_OAK_SLAB){
                     player.removePotionEffect(PotionEffectType.SPEED);
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, 2, false, false, false));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 15, 1, false, false, false));
                 } else if (location_under.getBlock().getType() == Material.JIGSAW){
                     if (player.getInventory().getHelmet() != null && player.getInventory().getHelmet().getType() == Material.CARROT_ON_A_STICK){
                         player.sendActionBar(Component.text("Your ", ColorType.TEXT.getColor())
                                 .append(player.getInventory().getHelmet().displayName())
                                 .append(Component.text(" has been removed!", ColorType.TEXT.getColor())));
                         player.getInventory().setHelmet(new ItemStack(Material.AIR));
-                        if (Players.isPlayer(player)){
-                            PlayerManager pManager = Players.getPlayerManager(player);
-                            assert pManager != null;
-                            pManager.setColorType(pManager.getTeam().getColorType());
+                        PlayerManager pManager = Online.getPlayerManager(player);
+                        if (pManager.isAdmin()){
+                            pManager.setColorType(Team.ADMIN.getColorType());
+                        } else if (pManager.isStaff()){
+                            pManager.setColorType(Team.STAFF.getColorType());
                         } else {
-                            PlayerManager pManager = Spectators.getPlayerManager(player);
-                            assert pManager != null;
                             pManager.setColorType(pManager.getTeam().getColorType());
                         }
                     }
+                } else if (location_under.getBlock().getType() == Material.TARGET){
+                    PlayerManager pManager = Online.getPlayerManager(player);
+                    pManager.setParkourCompletion(pManager.getParkourCompletion()+1);
+                    Spawn.tp(player);
+
+                    player.sendMessage(Component.text(PlaceholderAPI.setPlaceholders(player, "%theevent580_parkour.solo%"), ColorType.SUBTEXT.getColor()));
+
+                    SpawnParkour.updateText();
+
                 }
             }
         } else {

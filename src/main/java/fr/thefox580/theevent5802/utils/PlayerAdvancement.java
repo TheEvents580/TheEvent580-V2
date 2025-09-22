@@ -13,7 +13,6 @@ public class PlayerAdvancement {
     public PlayerAdvancement(UUID player_uuid){
         this.player_uuid = player_uuid;
         this.advancements.put(Advancements.LASTSECONDSBM, false);
-        this.advancements.put(Advancements.FINALBATTLESG, false);
         this.advancements.put(Advancements.SECRETBASE, false);
         this.advancements.put(Advancements.HEROBRINE, false);
         this.advancements.put(Advancements.HUBPARKOUR, false);
@@ -34,9 +33,7 @@ public class PlayerAdvancement {
     private Document formatAdvancementsDoc(){
         Document doc = new Document();
 
-        this.advancements.forEach((Advancements adv, Boolean completion) -> {
-            doc.append(adv.getId().toString(), completion);
-        });
+        this.advancements.forEach((Advancements adv, Boolean completion) -> doc.append(adv.getId().toString(), completion));
 
         return doc;
     }

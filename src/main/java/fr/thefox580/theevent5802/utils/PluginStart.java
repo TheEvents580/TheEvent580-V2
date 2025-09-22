@@ -13,16 +13,11 @@ import org.bukkit.scheduler.BukkitTask;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PluginStart {
+public record PluginStart(TheEvent580_2 plugin) {
 
-    private final TheEvent580_2 plugin;
     private static final List<BukkitTask> tasks = new ArrayList<>();
 
-    public PluginStart(TheEvent580_2 plugin){
-        this.plugin = plugin;
-    }
-
-    public void createCommands(){
+    public void createCommands() {
         new Start(plugin);
         new GameTp(plugin);
         new Damage(plugin);
@@ -38,16 +33,15 @@ public class PluginStart {
         new FinderCommand(plugin);
         new Version(plugin);
         new VariablesCommand(plugin);
-        new Points(plugin);
-        new Players(plugin);
-        new Spectators(plugin);
         new ReloadCfg(plugin);
         new TimerCommand(plugin);
         new Spawn(plugin);
         new Mute(plugin);
+        new Leaderboard(plugin);
+        new SpecMenu(plugin);
     }
 
-    public void createListeners(){
+    public void createListeners() {
         new OnJoinEvent(plugin);
         new OnLeaveEvent(plugin);
         new OnMessage(plugin);
@@ -57,10 +51,11 @@ public class PluginStart {
         new OnItemInteract(plugin);
         new OnWorldInteract(plugin);
         new OnServerListPing(plugin);
+        new OnPlayerMove(plugin);
         new FinderListeners(plugin);
     }
 
-    public void createTasks(){
+    public void createTasks() {
         new BeaconBeamTask(plugin);
         new RetrieveVariablesAPITask(plugin);
         new UpdateBoardAndTab(plugin);
@@ -68,11 +63,11 @@ public class PluginStart {
         new SpawnTask(plugin);
     }
 
-    public static void stopTasks(){
+    public static void stopTasks() {
         tasks.forEach(BukkitTask::cancel);
     }
 
-    public static void addTaskToList(BukkitTask task){
+    public static void addTaskToList(BukkitTask task) {
         tasks.add(task);
     }
 
