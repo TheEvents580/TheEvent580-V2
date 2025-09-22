@@ -22,7 +22,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class OnMessage implements Listener, ChatRenderer {
 
@@ -116,7 +115,7 @@ public class OnMessage implements Listener, ChatRenderer {
 
         Component message = getMessage(teamPlayer, componentPlayer, player, colorPlayer, messageFR);
 
-        if ((int) Objects.requireNonNull(Variables.getVariable("jeu_condi")) == Game.TRIALS.getGameCondition() && List.of(7, 8, 9, 26, 27, 28, 41, 42, 43, 44, 45, 46, 47, 48).contains(TrialsTasks.getCurrentTrial())){
+        if (Variables.equals("jeu_condi", Game.TRIALS.getGameCondition()) && List.of(7, 8, 9, 26, 27, 28, 41, 42, 43, 44, 45, 46, 47, 48).contains(TrialsTasks.getCurrentTrial())){
 
             switch (TrialsDecision.getLastTrial()){
                 case 7 -> {

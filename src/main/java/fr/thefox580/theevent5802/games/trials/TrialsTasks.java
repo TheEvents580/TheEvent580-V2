@@ -255,6 +255,7 @@ public class TrialsTasks {
                                         }
                                     }
                                 }
+                                break;
                             }
 
                             case 10: {
@@ -274,6 +275,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 11: {
@@ -293,6 +295,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 12: {
@@ -312,6 +315,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 13: {
@@ -331,6 +335,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 14: {
@@ -350,6 +355,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 15: {
@@ -369,6 +375,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 16: {
@@ -388,6 +395,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 17: {
@@ -407,6 +415,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 18: {
@@ -426,6 +435,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 19: {
@@ -445,6 +455,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 20: {
@@ -464,6 +475,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 21: {
@@ -483,6 +495,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 25: {
@@ -504,6 +517,7 @@ public class TrialsTasks {
                                         }
                                     }
                                 }
+                                break;
                             }
 
                             case 29: {
@@ -522,6 +536,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 30: {
@@ -540,6 +555,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 31: {
@@ -558,6 +574,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 32: {
@@ -576,6 +593,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 33: {
@@ -594,6 +612,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 34: {
@@ -612,6 +631,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 35: {
@@ -630,6 +650,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 36: {
@@ -648,6 +669,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 37: {
@@ -666,6 +688,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 38: {
@@ -684,6 +707,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 39: {
@@ -702,6 +726,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 40: {
@@ -720,6 +745,7 @@ public class TrialsTasks {
                                         );
                                     }
                                 }
+                                break;
                             }
 
                             case 49: {
@@ -742,6 +768,7 @@ public class TrialsTasks {
                                         playerLocation.put(player.getOnlinePlayer(), player.getOnlinePlayer().getLocation());
                                     }
                                 }
+                                break;
                             }
 
                             case 50: {
@@ -764,6 +791,7 @@ public class TrialsTasks {
                                     }
                                 }
                             }
+                            break;
                         }
                     }
 

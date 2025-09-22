@@ -22,11 +22,11 @@ public class RemoveTime implements Runnable {
             Timer.remove1Second();
 
             BossBar countBossbar = BossbarManager.getBossbar("count");
-            assert countBossbar != null;
-
-            BossbarManager.setBossbarProgression(countBossbar, (float) Timer.getSeconds() / Timer.getMaxSeconds());
-            BossbarManager.setBossbarText(countBossbar, Component.text("氣到惡",ColorTypeAlt.NO_SHADOW.getColor())
-                    .append(Component.text(Timer.getFormatedTimer(), ColorTypeAlt.BOSSBAR.getColor())));
+            if (countBossbar != null){
+                BossbarManager.setBossbarProgression(countBossbar, (float) Timer.getSeconds() / Timer.getMaxSeconds());
+                BossbarManager.setBossbarText(countBossbar, Component.text("氣到惡",ColorTypeAlt.NO_SHADOW.getColor())
+                        .append(Component.text(Timer.getFormatedTimer(), ColorTypeAlt.BOSSBAR.getColor())));
+            }
         }
     }
 }

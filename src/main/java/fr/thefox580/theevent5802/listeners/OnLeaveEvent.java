@@ -10,8 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 public class OnLeaveEvent implements Listener {
 
     public OnLeaveEvent(TheEvent580_2 plugin){
@@ -27,7 +25,7 @@ public class OnLeaveEvent implements Listener {
         PlayerManager playerManager = Online.getPlayerManager(player);
 
         if (Players.isPlayer(player)){
-            if (Timer.getSeconds() <= 30 && Objects.equals(Variables.getVariable("jeu_condi"), 0)){
+            if (Timer.getSeconds() <= 30 && Variables.equals("jeu_condi", 0)){
                 Timer.setPaused(true);
             }
         }

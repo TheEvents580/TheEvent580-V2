@@ -45,7 +45,7 @@ public class OnWorldInteract implements Listener {
                         event.setCancelled(true);
                     }
                 }
-            } else if (Objects.equals(Variables.getVariable("jeu_condi"), 9)){
+            } else if (Variables.equals("jeu_condi", 9)){
                 if (!player.getAllowFlight()){
                     List<Material> unbreakableBlocks = BuildMasters.getUnbreakableBlocks();
                     if (unbreakableBlocks.contains(event.getBlock().getType())){
@@ -64,7 +64,7 @@ public class OnWorldInteract implements Listener {
         if (Players.isPlayer(event.getPlayer())){
             if (Timer.isPaused()){
                 event.setCancelled(true);
-            } else if (!Objects.equals(Variables.getVariable("jeu_condi"), 9)){
+            } else if (!Variables.equals("jeu_condi", 9)){
                 event.setCancelled(true);
             }
         }
