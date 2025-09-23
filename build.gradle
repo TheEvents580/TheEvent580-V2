@@ -20,7 +20,9 @@ repositories {
         name = "neonRepositoryReleases"
         url = "https://repo.superneon4ik.me/releases"
     }
-    maven { url 'https://jitpack.io' }
+    maven {
+        url = 'https://jitpack.io'
+    }
     maven {
         name = 'citizens-repo'
         url = 'https://maven.citizensnpcs.co/repo'
@@ -34,16 +36,19 @@ repositories {
     maven {
         url = 'https://repo.extendedclip.com/releases/'
     }
+    maven {
+        url = 'https://nexus.frengor.com/repository/public/'
+    }
 }
 
 dependencies {
     compileOnly 'io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT'
-    //compileOnly "com.github.ZockerAxel:CrazyAdvancementsAPI:v2.1.21"
     compileOnly 'net.luckperms:api:5.4'
     compileOnly 'org.mvplugins.multiverse.core:multiverse-core:5.0.0'
     compileOnly 'me.clip:placeholderapi:2.11.6'
     compileOnly 'net.citizensnpcs:citizens-main:2.0.37-SNAPSHOT'
     compileOnly 'me.clip:placeholderapi:2.11.6'
+    compileOnly 'com.frengor:ultimateadvancementapi:2.6.0'
 
 
     //implementation "me.superneon4ik:NoxesiumUtils:2.0.0"
