@@ -39,6 +39,7 @@ public record PluginStart(TheEvent580_2 plugin) {
         new Mute(plugin);
         new Leaderboard(plugin);
         new SpecMenu(plugin);
+        new Fly(plugin);
     }
 
     public void createListeners() {

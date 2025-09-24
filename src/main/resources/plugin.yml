@@ -115,3 +115,6 @@ commands:
 
   specmenu:
     description: opens the spectator menu to teleport to a player
+
+  fly:
+    description: toggles fly mode if you have access to it

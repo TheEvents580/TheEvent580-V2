@@ -41,7 +41,7 @@ public class SpawnTask implements Runnable{
                 }
 
                 if (player.getLocation().getBlock().getType() == Material.WATER){
-                    if (player.getGameMode() ==  GameMode.ADVENTURE){
+                    if (player.getGameMode() == GameMode.ADVENTURE){
                         Spawn.tp(player);
                     }
                 }
