@@ -1,6 +1,7 @@
 package fr.thefox580.theevent5802.listeners;
 
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
+import com.fren_gor.ultimateAdvancementAPI.advancement.BaseAdvancement;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
 import fr.thefox580.theevent5802.games.trials.Trials;
@@ -25,7 +26,10 @@ import java.util.Objects;
 
 public class OnPlayerMove implements Listener {
 
+    private final TheEvent580_2 plugin;
+
     public OnPlayerMove(TheEvent580_2 plugin){
+        this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -90,12 +94,20 @@ public class OnPlayerMove implements Listener {
     public void onPlayerJumpEvent(PlayerJumpEvent event){
         Player player = event.getPlayer();
         if (player.getWorld().getName().equals("world")){
-            if (Objects.equals(Variables.getVariable("jeu_condi"), 0)
-                    && player.getLocation().add(0, -1, 0).getBlock().getType() == Material.DEEPSLATE_COAL_ORE
-                    && player.getY() <= 0){
-                player.teleport(new Location(player.getWorld(), 328.5, 69.5, 316.5, 150, 0));
-                player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+            if (Variables.equals("jeu_condi", 0)){
+                if (player.getLocation().add(0, -1, 0).getBlock().getType() == Material.DEEPSLATE_COAL_ORE
+                        && player.getY() <= 0){
+                    player.teleport(new Location(player.getWorld(), 328.5, 69.5, 316.5, 150, 0));
+                    player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+                } else if (player.getLocation().add(0, -2, 0).getBlock().getType() == Material.POWDER_SNOW){
+                    BaseAdvancement parkourAdv = plugin.getInstances().getAdvancementAPI().getCustomAdvancement(AdvancementsEnum.SECRETBASE);
+                    if (!parkourAdv.isGranted(player)){
+                        parkourAdv.grant(player);
+                        plugin.getInstances().getAdvancementAPI().getCounterAdvancement().incrementProgression(player);
+                    }
+                }
             }
+
         } else if (Variables.equals("jeu_condi", Game.TRIALS.getGameCondition())){
 
             Map<Player, Integer> jumps = TrialsTasks.getStats();

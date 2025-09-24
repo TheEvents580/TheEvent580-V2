@@ -1,5 +1,6 @@
 package fr.thefox580.theevent5802.tasks.timer;
 
+import com.fren_gor.ultimateAdvancementAPI.advancement.BaseAdvancement;
 import com.fren_gor.ultimateAdvancementAPI.advancement.display.AdvancementFrameType;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.games.trials.Trials;
@@ -11,6 +12,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
@@ -106,14 +108,18 @@ public class Mode4 implements Runnable{
 
     private void createGameAdvancement(String description){
 
-        plugin.getInstances().getAdvancementAPI().createAdvancement(
+        BaseAdvancement adv = plugin.getInstances().getAdvancementAPI().createAdvancement(
                 "game1",
                 game.getMaterialBlock(),
                 "Game 1 : " + game.getIcon() + " " + game.getName(),
                 AdvancementFrameType.CHALLENGE,
                 false,
-                "The 1st game is " + game.getName(),
+                "The 1st game is " + game.getName() + " ",
                 description);
+
+        for (Player player : Bukkit.getOnlinePlayers()){
+            adv.grant(player);
+        }
     }
 
 }

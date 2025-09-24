@@ -1,5 +1,6 @@
 package fr.thefox580.theevent5802.listeners;
 
+import com.fren_gor.ultimateAdvancementAPI.advancement.BaseAdvancement;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
 import fr.thefox580.theevent5802.utils.*;
@@ -28,7 +29,10 @@ import java.util.Objects;
 
 public class OnWorldInteract implements Listener {
 
+    private final TheEvent580_2 plugin;
+
     public OnWorldInteract(TheEvent580_2 plugin){
+        this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -279,6 +283,13 @@ public class OnWorldInteract implements Listener {
                         .append(Component.text("] You now have the ", ColorType.TEXT.getColor()))
                         .append(Objects.requireNonNull(player.getInventory().getHelmet()).displayName())
                         .append(Component.text(" on your head!", ColorType.TEXT.getColor())));
+            }
+            else if (event.getClickedBlock().getType() == Material.LEVER){
+                BaseAdvancement parkourAdv = plugin.getInstances().getAdvancementAPI().getCustomAdvancement(AdvancementsEnum.HEROBRINE);
+                if (!parkourAdv.isGranted(player)){
+                    parkourAdv.grant(player);
+                    plugin.getInstances().getAdvancementAPI().getCounterAdvancement().incrementProgression(player);
+                }
             }
         }
     }

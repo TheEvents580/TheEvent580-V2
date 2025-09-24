@@ -33,7 +33,8 @@ public class OnLeaveEvent implements Listener {
             }
         }
 
-        plugin.getInstances().getAdvancementAPI().getProgressionTabTab().hideTab(player);
+        plugin.getInstances().getAdvancementAPI().getProgressionTab().hideTab(player);
+        plugin.getInstances().getAdvancementAPI().getCustomTab().hideTab(player);
 
         TextColor color = playerManager.getColorType().getColor();
 
