@@ -1,5 +1,6 @@
 package fr.thefox580.theevent5802.tasks.timer;
 
+import com.fren_gor.ultimateAdvancementAPI.advancement.display.AdvancementFrameType;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.games.trials.Trials;
 import fr.thefox580.theevent5802.utils.Game;
@@ -51,32 +52,68 @@ public class Mode4 implements Runnable{
                     Title.Times.times(Duration.ofMillis(500), Duration.ofSeconds(4), Duration.ofMillis(500)))));
         }
 
-        else if (Timer.getSeconds() == 0){
+        else if (Timer.getSeconds() == 0) {
 
             Bukkit.getOnlinePlayers().forEach(player -> {
                 player.removePotionEffect(PotionEffectType.LEVITATION);
                 PersistentDataContainer playerContainer = player.getPersistentDataContainer();
 
-                if (Players.isPlayer(player)){
+                if (Players.isPlayer(player)) {
                     playerContainer.set(new NamespacedKey(plugin, "alive"), PersistentDataType.BOOLEAN, true);
                 } else {
                     playerContainer.set(new NamespacedKey(plugin, "alive"), PersistentDataType.BOOLEAN, false);
                 }
             });
 
-            switch (game){
-                case TRIALS -> Trials.startPreGame(plugin);
-                /*case PARKOUR ->
-                case FINDER ->
-                case TAG ->
-                case MULTILAP ->
-                case BUILD_MASTERS ->
-                case ARMS_RACE ->
-                case BOW_PVP ->*/
+            switch (game) {
+                case TRIALS -> {
+                    Trials.startPreGame(plugin);
+                    createGameAdvancement("You better complete those tasks!");
+                }
+                case PARKOUR -> {
+                    //Parkour.startPreGame(plugin);
+                    createGameAdvancement("Don't fail your jumps!");
+                }
+                case FINDER -> {
+                    //Finder.startPreGame(plugin);
+                    createGameAdvancement("Did you get those blocks?");
+                }
+                case TAG -> {
+                    //Tag.startPreGame(plugin);
+                    createGameAdvancement("QUICK RUN!!!!!!!!!!!!!1!!!!!!!!!!");
+                }
+                case MULTILAP -> {
+                    //Multilap.startPreGame(plugin);
+                    createGameAdvancement("Tip : If you fall off the map, you'll get tped back to your last checkpoint.");
+                }
+                case BUILD_MASTERS -> {
+                    //BuildMasters.startPreGame(plugin);
+                    createGameAdvancement("Nobody finished that game since the mall arrived, have you?");
+                }
+                case ARMS_RACE -> {
+                    //ArmsRace.startPreGame(plugin);
+                    createGameAdvancement("Kill people but don't get killed.");
+                }
+                case BOW_PVP -> {
+                    //BowPVP.startPreGame(plugin);
+                    createGameAdvancement("SHOOT EVERYONE.");
+                }
             }
 
             task.cancel();
         }
-
     }
+
+    private void createGameAdvancement(String description){
+
+        plugin.getInstances().getAdvancementAPI().createAdvancement(
+                "game1",
+                game.getMaterialBlock(),
+                "Game 1 : " + game.getIcon() + " " + game.getName(),
+                AdvancementFrameType.CHALLENGE,
+                false,
+                "The 1st game is " + game.getName(),
+                description);
+    }
+
 }

@@ -21,6 +21,9 @@ repositories {
         url = "https://repo.superneon4ik.me/releases"
     }
     maven {
+        url = 'https://nexus.frengor.com/repository/public/'
+    }
+    maven {
         url = 'https://jitpack.io'
     }
     maven {
@@ -35,9 +38,6 @@ repositories {
     }
     maven {
         url = 'https://repo.extendedclip.com/releases/'
-    }
-    maven {
-        url = 'https://nexus.frengor.com/repository/public/'
     }
 }
 

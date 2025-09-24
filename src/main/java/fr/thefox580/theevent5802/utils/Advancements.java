@@ -1,45 +1,58 @@
 package fr.thefox580.theevent5802.utils;
 
-import javax.annotation.Nullable;
+import com.fren_gor.ultimateAdvancementAPI.AdvancementTab;
+import com.fren_gor.ultimateAdvancementAPI.UltimateAdvancementAPI;
+import com.fren_gor.ultimateAdvancementAPI.advancement.BaseAdvancement;
+import com.fren_gor.ultimateAdvancementAPI.advancement.RootAdvancement;
+import com.fren_gor.ultimateAdvancementAPI.advancement.display.AdvancementDisplay;
+import com.fren_gor.ultimateAdvancementAPI.advancement.display.AdvancementFrameType;
+import fr.thefox580.theevent5802.TheEvent580_2;
+import org.bukkit.Material;
 
-public enum Advancements {
-    LASTSECONDSBM(0, "Last seconds in Build Masters", "You managed to finish the game with less than 30 seconds on your timer!"),
-    @Deprecated
-    FINALBATTLESG(1, "Final Battle : Survival Games", "You survived until the final battle in Survival Games!"),
-    SECRETBASE(2, "Hub Secret Base", "You found the secret base in the hub!"),
-    HEROBRINE(3, "Herobrine", "You discovered Herobrine!"),
-    HUBPARKOUR(4, "Hub Parkour Completed", "You sucessfully completed the Hub parkour!");
+import java.util.ArrayList;
+import java.util.List;
 
-    private final Integer id;
-    private final String name;
-    private final String description;
+public class Advancements {
 
-    Advancements(Integer id, String name, String description){
-        this.id = id;
-        this.name = name;
-        this.description = description;
+    private final AdvancementTab advancementProgressionTab;
+    private final AdvancementTab advancementCustomTab;
+    private final RootAdvancement rootProgression;
+    private final RootAdvancement rootCustom;
+    private final List<BaseAdvancement> advancements = new ArrayList<>();
+
+    public Advancements(TheEvent580_2 plugin){
+        UltimateAdvancementAPI api = UltimateAdvancementAPI.getInstance(plugin);
+        advancementProgressionTab = api.createAdvancementTab("theevent580_progression");
+        AdvancementDisplay rootProgressionDisplay = new AdvancementDisplay(Material.EMERALD_BLOCK, "Welcome to TheEvent580", AdvancementFrameType.TASK, false, false, 0, 0, "Get ready, the event", "is starting soon.");
+        rootProgression = new RootAdvancement(advancementProgressionTab, "rootProgression", rootProgressionDisplay, "textures/block/stone.png");
+        advancementProgressionTab.registerAdvancements(rootProgression);
+
+        advancementCustomTab = api.createAdvancementTab("theevent580_custom");
+        AdvancementDisplay rootCustomDisplay = new AdvancementDisplay(Material.EMERALD_BLOCK, "Want more fun?", AdvancementFrameType.TASK, false, false, 0, 0, "Try to complete as many", "advancements as you can!");
+        rootCustom = new RootAdvancement(advancementCustomTab, "rootProgression", rootCustomDisplay, "textures/block/stone.png");
+        advancementCustomTab.registerAdvancements(rootCustom);
+
+        createCustomAdvancementsTab(rootCustom);
     }
 
-    public Integer getId() {
-        return id;
+    private void createCustomAdvancementsTab(RootAdvancement root){
+        //TODO : Add the counter advancement
+        //TODO : Add all advancements in AdvancementEnum
     }
 
-    public String getName() {
-        return name;
+    public void createAdvancement(String key, Material display, String title, AdvancementFrameType frameType, boolean showToast, String ...description){
+        AdvancementDisplay newAdvancementDisplay = new AdvancementDisplay(display, title, frameType, showToast, false, 0, 0, description);
+        BaseAdvancement newAdvancement;
+        if (advancements.isEmpty()){
+            newAdvancement = new BaseAdvancement(key, newAdvancementDisplay, rootProgression);
+        } else {
+            newAdvancement = new BaseAdvancement(key, newAdvancementDisplay, advancements.getLast());
+        }
+        advancements.add(newAdvancement);
     }
 
-    public String getDescription() {
-        return description;
+    public AdvancementTab getProgressionTabTab(){
+        return advancementProgressionTab;
     }
 
-    public static @Nullable Advancements getAdvancementById(Integer id){
-        return switch (id) {
-            case 0 -> LASTSECONDSBM;
-            case 1 -> FINALBATTLESG;
-            case 2 -> SECRETBASE;
-            case 3 -> HEROBRINE;
-            case 4 -> HUBPARKOUR;
-            case null, default -> null;
-        };
-    }
 }
