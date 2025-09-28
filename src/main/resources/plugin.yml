@@ -13,11 +13,6 @@ commands:
   spawn:
     description: Teleports the player to spawn
 
-  gametp:
-    description: Tp after games
-    permission: op
-    permission-message: "&cYou do not have the required permissions to teleport the players in the decision crystal after a game"
-
   pronouns:
     description: Changes player's pronouns
 

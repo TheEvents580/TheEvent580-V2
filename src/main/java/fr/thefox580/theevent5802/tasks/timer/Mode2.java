@@ -180,12 +180,12 @@ public class Mode2 implements Runnable {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fill -3 251 -8 -3 251 8 air");
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fill 3 251 -8 3 251 8 air");
 
+                    new Mode3(plugin);
+
+                    task.cancel();
+
                 }
             }.runTaskLater(plugin, 5L);
-
-            new Mode3(plugin);
-
-            task.cancel();
         }
     }
 }

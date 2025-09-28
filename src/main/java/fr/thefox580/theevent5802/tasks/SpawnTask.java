@@ -56,12 +56,13 @@ public class SpawnTask implements Runnable{
                     player.removePotionEffect(PotionEffectType.SPEED);
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 15, 1, false, false, false));
                 } else if (location_under.getBlock().getType() == Material.JIGSAW){
-                    if (player.getInventory().getHelmet() != null && player.getInventory().getHelmet().getType() == Material.CARROT_ON_A_STICK){
+                    PlayerManager pManager = Online.getPlayerManager(player);
+                    if (pManager.getFlag().getType() == Material.CARROT_ON_A_STICK){
                         player.sendActionBar(Component.text("Your ", ColorType.TEXT.getColor())
-                                .append(player.getInventory().getHelmet().displayName())
+                                .append(pManager.getFlag().displayName())
                                 .append(Component.text(" has been removed!", ColorType.TEXT.getColor())));
-                        player.getInventory().setHelmet(new ItemStack(Material.AIR));
-                        PlayerManager pManager = Online.getPlayerManager(player);
+                        pManager.setFlag(new ItemStack(Material.AIR));
+                        player.getInventory().setHelmet(pManager.getFlag());
                         if (pManager.isAdmin()){
                             pManager.setColorType(Team.ADMIN.getColorType());
                         } else if (pManager.isStaff()){

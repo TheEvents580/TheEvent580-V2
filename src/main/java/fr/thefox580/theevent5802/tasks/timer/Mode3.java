@@ -190,17 +190,17 @@ public class Mode3 implements Runnable {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fill -3 251 -8 -3 251 8 air");
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fill 3 251 -8 3 251 8 air");
 
+                    new Mode4(plugin, chosenGame);
+                    task.cancel();
+
                 }
             }.runTaskLater(plugin, 5L);
-
-            new Mode4(plugin, chosenGame);
-            task.cancel();
         }
     }
 
     private void getBlockUnderEntity(Material chestplate, Entity entity) {
         switch (entity.getLocation().clone().add(0, -2, 0).getBlock().getType()){
-            case LIGHT_GRAY_CONCRETE -> Voting.castGameVote(Game.NONE, chestplate);
+            case LIGHT_GRAY_CONCRETE -> Voting.castGameVote(Game.HUB, chestplate);
             case RED_CONCRETE -> Voting.castGameVote(Game.TRIALS, chestplate);
             case ORANGE_CONCRETE -> Voting.castGameVote(Game.PARKOUR, chestplate);
             case YELLOW_CONCRETE -> Voting.castGameVote(Game.FINDER, chestplate);

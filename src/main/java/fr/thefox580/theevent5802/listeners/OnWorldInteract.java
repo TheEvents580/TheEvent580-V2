@@ -233,51 +233,53 @@ public class OnWorldInteract implements Listener {
                 assert playerManager != null;
 
                 if (loc.getX() == 218 && loc.getZ() == -355){
-                    player.getInventory().setHelmet(FlagHead.getPrideFlag());
+                    playerManager.setFlag(FlagHead.getPrideFlag());
                     playerManager.setColorType(ColorType.PRIDE);
 
                 } else if (loc.getX() == 218 && loc.getZ() == -360){
-                    player.getInventory().setHelmet(FlagHead.getAsexualFlag());
+                    playerManager.setFlag(FlagHead.getAsexualFlag());
                     playerManager.setColorType(ColorType.ASEXUAL);
 
                 } else if (loc.getX() == 216 && loc.getZ() == -362){
-                    player.getInventory().setHelmet(FlagHead.getPansexualFlag());
+                    playerManager.setFlag(FlagHead.getPansexualFlag());
                     playerManager.setColorType(ColorType.PANSEXUAL);
 
                 } else if (loc.getX() == 213 && loc.getZ() == -358){
-                    player.getInventory().setHelmet(FlagHead.getTransgenderFlag());
+                    playerManager.setFlag(FlagHead.getTransgenderFlag());
                     playerManager.setColorType(ColorType.TRANSGENDER);
 
                 } else if (loc.getX() == 212 && loc.getZ() == -364){
-                    player.getInventory().setHelmet(FlagHead.getLesbianFlag());
+                    playerManager.setFlag(FlagHead.getLesbianFlag());
                     playerManager.setColorType(ColorType.LESBIAN);
 
                 } else if (loc.getX() == 209 && loc.getZ() == -360){
-                    player.getInventory().setHelmet(FlagHead.getNonBinaryFlag());
+                    playerManager.setFlag(FlagHead.getNonBinaryFlag());
                     playerManager.setColorType(ColorType.NON_BINARY);
 
                 } else if (loc.getX() == 208 && loc.getZ() == -366){
-                    player.getInventory().setHelmet(FlagHead.getGayFlag());
+                    playerManager.setFlag(FlagHead.getGayFlag());
                     playerManager.setColorType(ColorType.GAY);
 
                 } else if (loc.getX() == 205 && loc.getZ() == -362) {
-                    player.getInventory().setHelmet(FlagHead.getBisexualFlag());
+                    playerManager.setFlag(FlagHead.getBisexualFlag());
                     playerManager.setColorType(ColorType.BISEXUAL);
 
                 } else if (loc.getX() == 204 && loc.getZ() == -370) {
-                    player.getInventory().setHelmet(FlagHead.getUnlabledFlag());
+                    playerManager.setFlag(FlagHead.getUnlabledFlag());
                     playerManager.setColorType(ColorType.RAINBOW);
 
                 } else if (loc.getX() == 200 && loc.getZ() == -365) {
-                    player.getInventory().setHelmet(FlagHead.getAromanticFlag());
+                    playerManager.setFlag(FlagHead.getAromanticFlag());
                     playerManager.setColorType(ColorType.AROMANTIC);
 
                 }
 
+                player.getInventory().setHelmet(playerManager.getFlag());
+
                 player.sendActionBar(Component.text("[", ColorType.TEXT.getColor())
                         .append(Component.text("TheEvent580", ColorType.TITLE.getColor(), TextDecoration.BOLD))
                         .append(Component.text("] You now have the ", ColorType.TEXT.getColor()))
-                        .append(Objects.requireNonNull(player.getInventory().getHelmet()).displayName())
+                        .append(playerManager.getFlag().displayName())
                         .append(Component.text(" on your head!", ColorType.TEXT.getColor())));
             }
         }

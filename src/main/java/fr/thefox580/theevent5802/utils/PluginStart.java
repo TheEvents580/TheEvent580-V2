@@ -19,7 +19,6 @@ public record PluginStart(TheEvent580_2 plugin) {
 
     public void createCommands() {
         new Start(plugin);
-        new GameTp(plugin);
         new Damage(plugin);
         new Pronouns(plugin);
         new ShowPronouns(plugin);

@@ -13,7 +13,7 @@ public enum Game {
     BUILD_MASTERS("Build Masters", ColorType.MC_BLUE, "\uE006", true, 9, 10*60),
     ARMS_RACE("Arms Race", ColorType.MC_PURPLE, "\uE007", true, 12, 15*60),
     BOW_PVP("Bow PVP", ColorType.MC_PINK, "\uE008", true, 8, 10*60),
-    NONE("None", ColorType.MC_GRAY, "", false, 0, -1),
+    HUB("Hub", ColorType.TEXT, "", false, 0, -1),
     @Deprecated
     DROPPER("Dropper", ColorType.MC_RED, "?", false, 1, 10*60),
     @Deprecated
@@ -77,5 +77,15 @@ public enum Game {
         }
 
         return playedGames;
+    }
+
+    public static Game getGameByGameCondition(int gameCondition){
+        for (Game game : Game.values()){
+            if (game.getGameCondition() == gameCondition){
+                return game;
+            }
+        }
+
+        return Game.HUB;
     }
 }

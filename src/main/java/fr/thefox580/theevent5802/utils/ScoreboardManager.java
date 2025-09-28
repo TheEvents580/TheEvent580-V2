@@ -49,7 +49,7 @@ public class ScoreboardManager {
         board.updateLine(1, Component.text("Minigame :", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
 
         String jeuNom = Objects.requireNonNull(Variables.getVariable("jeu_nom")).toString();
-        Component jeuNomComponent = getJeuNomComponent(jeuNom);
+        Component jeuNomComponent = getComponent(jeuNom);
 
         board.updateLine(2, Component.text(Variables.getVariable("jeu") + "/6", ColorType.SUBTEXT.getColor())
                 .append(Component.text(" - ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD))
@@ -235,10 +235,6 @@ public class ScoreboardManager {
         }
         board.updateLine(14, Component.text(""));
 
-    }
-
-    private static @NotNull Component getJeuNomComponent(String jeuNom) {
-        return getComponent(jeuNom);
     }
 
     static @NotNull Component getComponent(String jeuNom) {

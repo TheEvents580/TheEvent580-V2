@@ -7,7 +7,6 @@ import net.citizensnpcs.trait.SkinTrait;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,7 +21,7 @@ public class Leaderboard implements CommandExecutor {
         Objects.requireNonNull(plugin.getCommand("lb")).setExecutor(this);
     }
 
-    private List<Map.Entry<Player, Integer>> getAllPlayers(){
+    public static List<Map.Entry<Player, Integer>> getAllPlayers(){
 
         Map<Player, Integer> unsortedPlayers = new HashMap<>();
 
@@ -30,7 +29,7 @@ public class Leaderboard implements CommandExecutor {
             unsortedPlayers.put(playerManager.getOnlinePlayer(), Points.getPoints(Objects.requireNonNull(playerManager.getOnlinePlayer())));
         }
 
-        return getEntries(unsortedPlayers, 0);
+        return Points.getTop(unsortedPlayers, Players.getOnlinePlayerList().size());
     }
 
     private static List<Map.Entry<Player, Integer>> getTop10(){
@@ -40,28 +39,7 @@ public class Leaderboard implements CommandExecutor {
         for (PlayerManager playerManager : Players.getOnlinePlayerList()){
             unsortedPlayers.put(playerManager.getOnlinePlayer(), Points.getPoints(Objects.requireNonNull(playerManager.getOnlinePlayer())));
         }
-
-        return getEntries(unsortedPlayers, 10);
-    }
-
-    @NotNull
-    private static List<Map.Entry<Player, Integer>> getEntries(Map<Player, Integer> unsortedPlayers, int limit) {
-
-        if (limit > 0) {
-
-            List<Map.Entry<Player, Integer>> sorted = new ArrayList<>(unsortedPlayers.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).limit(limit).toList());
-
-            while (sorted.size() < limit) {
-                Map<Player, Integer> nonePlayer = new HashMap<>();
-                nonePlayer.put(Bukkit.getPlayer("TheFox580"), -1);
-                sorted.add(nonePlayer.entrySet().stream().toList().getFirst());
-            }
-
-            return sorted;
-        }
-
-        return new ArrayList<>(unsortedPlayers.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).toList());
-
+        return Points.getTop(unsortedPlayers, 10);
     }
 
     private void showLeaderboard(Player commandSender){

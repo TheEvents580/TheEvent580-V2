@@ -153,11 +153,6 @@ public class TrialsTasks {
                         if (List.of(5, 25).contains(currentTrial)){
                             //command("trialsglass %{trials.platform}%")
                         } else if (List.of(10, 11, 12, 13, 19, 29, 30, 31, 32, 38).contains(currentTrial)){
-                            /*
-                            command("execute in minecraft:trials run fill 14 133 17 -18 127 -15 air replace light")
-                            wait 10 seconds
-                            command("execute in minecraft:trials run fill 14 133 17 -18 127 -15 light replace air")
-                            */
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "execute in minecraft:trials run fill 14 133 17 -18 127 -15 air replace light");
 
                             new BukkitRunnable() {
@@ -202,7 +197,12 @@ public class TrialsTasks {
 
                 } else if (Timer.getSeconds() == 0){
 
-                    new Mode7(plugin);
+                    if (Variables.equals("jeu", 6)){
+                        //new Mode10(plugin);
+                    } else {
+                        new Mode7(plugin);
+                    }
+
                     this.cancel();
                 }
 
