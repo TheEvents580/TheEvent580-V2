@@ -69,8 +69,8 @@ public class ScoreboardManager {
                 if (player.getAllowFlight()) { // Can fly = is done
                     board.updateLine(5, Component.text("Waiting for other players", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
                 } else {
-                    Component mainLevel = Parkour.getMainLevel(player);
-                    Component subLevel = Parkour.getSubLevel(player);
+                    Component mainLevel = Parkour.getMainLevelComp(player);
+                    Component subLevel = Parkour.getSubLevelComp(player);
                     board.updateLine(5, Component.text("Level ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
                             .append(mainLevel)
                             .append(Component.text(" | ", ColorType.SUBTEXT.getColor()).decoration(TextDecoration.BOLD, false))

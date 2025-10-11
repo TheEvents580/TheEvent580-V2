@@ -242,7 +242,12 @@ public class Spectators implements CommandExecutor, TabCompleter {
 
         spec.setFoodLevel(20);
 
-        Bukkit.getOnlinePlayers().forEach(loopPlayer -> loopPlayer.hidePlayer(plugin, spec));
+        Bukkit.getOnlinePlayers().forEach(loopPlayer -> {
+            loopPlayer.hidePlayer(plugin, spec);
+            if (!Spectators.isSpectator(loopPlayer)){
+                spec.showPlayer(plugin, loopPlayer);
+            }
+        });
 
         spec.setGameMode(GameMode.ADVENTURE);
         spec.setAllowFlight(true);

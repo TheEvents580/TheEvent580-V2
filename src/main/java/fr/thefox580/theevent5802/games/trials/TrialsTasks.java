@@ -83,24 +83,32 @@ public class TrialsTasks {
                             .append(Component.text("] ", ColorType.TEXT.getColor()))
                             .append(Component.text(Game.TRIALS.getName(), Game.TRIALS.getColorType().getColor(), TextDecoration.BOLD))
                             .append(Component.text(" is starting in 3.", ColorType.TEXT.getColor()).decoration(TextDecoration.BOLD, false)));
+
+                    Bukkit.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.VOICE, 2, 1));
                 } else if (Timer.getSeconds() == 2){
                     Bukkit.broadcast(Component.text("[")
                             .append(Component.text(Game.TRIALS.getName(), Game.TRIALS.getColorType().getColor()))
                             .append(Component.text("] ", ColorType.TEXT.getColor()))
                             .append(Component.text(Game.TRIALS.getName(), Game.TRIALS.getColorType().getColor(), TextDecoration.BOLD))
                             .append(Component.text(" is starting in 2.", ColorType.TEXT.getColor()).decoration(TextDecoration.BOLD, false)));
+
+                    Bukkit.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.VOICE, 2, 1));
                 } else if (Timer.getSeconds() == 1){
                     Bukkit.broadcast(Component.text("[")
                             .append(Component.text(Game.TRIALS.getName(), Game.TRIALS.getColorType().getColor()))
                             .append(Component.text("] ", ColorType.TEXT.getColor()))
                             .append(Component.text(Game.TRIALS.getName(), Game.TRIALS.getColorType().getColor(), TextDecoration.BOLD))
                             .append(Component.text(" is starting in 1.", ColorType.TEXT.getColor()).decoration(TextDecoration.BOLD, false)));
+
+                    Bukkit.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.VOICE, 2, 1));
                 } else if (Timer.getSeconds() == 0){
                     Bukkit.broadcast(Component.text("[")
                             .append(Component.text(Game.TRIALS.getName(), Game.TRIALS.getColorType().getColor()))
                             .append(Component.text("] ", ColorType.TEXT.getColor()))
                             .append(Component.text(Game.TRIALS.getName(), Game.TRIALS.getColorType().getColor(), TextDecoration.BOLD))
                             .append(Component.text(" is starting now.", ColorType.TEXT.getColor()).decoration(TextDecoration.BOLD, false)));
+
+                    Bukkit.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.VOICE, 0.25f, 1));
 
                     mainGameTask(plugin);
                     checkTrialsTask(plugin);
@@ -151,7 +159,7 @@ public class TrialsTasks {
                         )));
 
                         if (List.of(5, 25).contains(currentTrial)){
-                            //command("trialsglass %{trials.platform}%")
+                            Trials.triggerGlass(plugin);
                         } else if (List.of(10, 11, 12, 13, 19, 29, 30, 31, 32, 38).contains(currentTrial)){
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "execute in minecraft:trials run fill 14 133 17 -18 127 -15 air replace light");
 
