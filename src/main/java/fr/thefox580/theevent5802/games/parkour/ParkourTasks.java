@@ -102,6 +102,7 @@ public class ParkourTasks {
                             skip.setItemMeta(skipMeta);
 
                             player.getInventory().setItem(7, skip);
+                            player.setCooldown(skip, 10*20);
                         }
                     });
 
@@ -180,7 +181,7 @@ public class ParkourTasks {
                                     }
                                 } else {
                                     if (Parkour.getPlayerCheckpoint(player).x()+16 <= player.getX() && withinBounds(player.getLocation())){
-                                        if (!Parkour.getPlayerSkipped(player)){
+                                        if (Parkour.hasPlayerSkipped(player)){
                                             switch (Parkour.getMainLevel(player)){
                                                 case 1 -> Parkour.addPlayerMult(player, 0.1f);
                                                 case 2 -> Parkour.addPlayerMult(player, 0.2f);

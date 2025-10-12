@@ -2,6 +2,7 @@ package fr.thefox580.theevent5802.listeners;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
+import fr.thefox580.theevent5802.games.parkour.Parkour;
 import fr.thefox580.theevent5802.utils.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -28,7 +29,10 @@ import java.util.Objects;
 
 public class OnWorldInteract implements Listener {
 
+    private final TheEvent580_2 plugin;
+
     public OnWorldInteract(TheEvent580_2 plugin){
+        this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -210,6 +214,22 @@ public class OnWorldInteract implements Listener {
                         Location blockLoc = player.getLocation().clone();
                         blockLoc.setY(249);
                         BlockGame.block(blockLoc.getBlock().getType(), playerManager);
+                    }
+                }
+            } else if (Timer.getEnum() == Timer.TimerEnum.IN_GAME){
+                if (Variables.equals("jeu_condi", Game.PARKOUR.getGameCondition())){
+                    if (Parkour.hasPlayerSkipped(player)){
+                        player.sendMessage(Component.text("[")
+                                .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
+                                .append(Component.text("] You already skipped a level in the last 10 seconds...", ColorType.TEXT.getColor())));
+                    } else {
+                        if (Parkour.getMainLevel(player) == Parkour.getSubLevel(player) && Parkour.getSubLevel(player) == 1){
+                            player.sendMessage(Component.text("[")
+                                    .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
+                                    .append(Component.text("] You cannot skip the first level...", ColorType.TEXT.getColor())));
+                            return;
+                        }
+                        Parkour.setPlayerSkipped(player, plugin);
                     }
                 }
             }

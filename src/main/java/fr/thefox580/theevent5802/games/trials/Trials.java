@@ -18,6 +18,10 @@ public class Trials {
     private static int trialLevel = 1;
     private static int trialPlatform = 1;
 
+    /**
+     * Method to call to start the pre-game setup
+     * @param plugin The main class of the plugin.
+     */
     public static void startPreGame(TheEvent580_2 plugin){
         Timer.setSeconds(90);
         Timer.setMaxSeconds(90);
@@ -63,10 +67,18 @@ public class Trials {
         }
     }
 
+    /**
+     * @param player The player who may have completed the current trial.
+     * @return true if player has completed the trial, false otherise.
+     */
     public static boolean hasPlayerCompleted(Player player){
         return roundCompleted.get(player);
     }
 
+
+    /**
+     * @return The number of players who completed the current trial.
+     */
     public static int getPlayersCompletedCount(){
         int playersCompleted = 0;
         for (Player player : roundCompleted.keySet()){
@@ -78,16 +90,17 @@ public class Trials {
 
     /**
      * Gets the points obtained by a player.
-     * @param player The player who we want to get the points
+     * @param player The player who we want to get the points.
+     * @return The amount of points the player gained this trial.
      */
     public static int getRoundPoints(Player player){
         return roundPoints.get(player);
     }
 
     /**
-     * Sets the points obtained by a player to `roundPoints` and if points are 0, then sets their completed round to false.
-     * @param player The player who got those points
-     * @param points The amount of points this player got
+     * Sets the points obtained by a player to `roundPoints` and if points are 0, then sets their completed round to false..
+     * @param player The player who got those points.
+     * @param points The amount of points this player got.
      */
     public static void setRoundPoints(Player player, int points){
         roundPoints.put(player, points);
@@ -98,14 +111,23 @@ public class Trials {
         roundCompleted.put(player, true);
     }
 
+    /**
+     * @return The speed of a trial based on the level.
+     */
     public static int getTrialsSpeed(){
         return 11-trialLevel;
     }
 
+    /**
+     * @return The level of a trial.
+     */
     public static int getTrialLevel(){
         return trialLevel;
     }
 
+    /**
+     * Automatically sets the platform and announces the next level in chat.
+     */
     public static void nextTrialLevel(){
         trialLevel++;
 
@@ -120,6 +142,11 @@ public class Trials {
                 .append(Component.text("] " + getTrialsSpeed()+1 + "s --> " + getTrialsSpeed() + "s", ColorType.TEXT.getColor())));
     }
 
+    /**
+     * Automatically sets the platform and announces the next level in chat.
+     * @param platform The level you want the platform to be.
+     * @param plugin The main class of the plugin.
+     */
     public static void setPlatform(int platform, TheEvent580_2 plugin){
         if (trialPlatform < platform){
 
@@ -263,6 +290,11 @@ public class Trials {
 
         trialPlatform = platform;
     }
+
+    /**
+     * Automatically removes and replaces the glass for any trials who need it to be removed.
+     * @param plugin The main class of the plugin.
+     */
 
     public static void triggerGlass(TheEvent580_2 plugin){
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "execute in minecraft:trials run fill -19 133 -16 15 126 18 air replace tinted_glass");

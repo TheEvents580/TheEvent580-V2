@@ -9,6 +9,10 @@ public class TrialsDecision {
     private static final List<String> trialsList = new ArrayList<>();
     private static final List<Integer> last10Trials = new ArrayList<>();
 
+
+    /**
+     * Resets all trials
+     */
     public static void resetAllTrials() {
         trialsList.clear();
         last10Trials.clear();
@@ -66,23 +70,41 @@ public class TrialsDecision {
 
     }
 
+    /**
+     * Returns the String name for the current trial
+     * @return The name of the current trial as a String
+     */
     public static String getLastTrialString() {
         return trialsList.get(last10Trials.getLast());
     }
 
+    /**
+     * Returns the index for the current trial
+     * @return The index of the current trial
+     */
     public static int getLastTrial() {
         return last10Trials.getLast();
     }
 
+    /**
+     * Returns the String name for the trial entered as a parameter
+     * @param trialNumber The trial for which you want its name
+     * @return The name of the trial entered as a parameter as a String
+     */
     public static String getTrial(int trialNumber) {
         return trialsList.get(trialNumber);
     }
 
+    /**
+     * Automatically chooses and returns the next trial. If it was played in the last 10 trials, it will reroll
+     * until it has one which wasn't played recently.
+     * @return The index of the next trial
+     */
     public static int chooseNewTrial() {
         int randomNumber = new Random().nextInt(trialsList.size());
 
         if (last10Trials.contains(randomNumber)) {
-            chooseNewTrial();
+            randomNumber = chooseNewTrial();
         } else {
             if (last10Trials.size() >= 10) {
                 last10Trials.removeFirst();

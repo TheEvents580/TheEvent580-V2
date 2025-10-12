@@ -26,18 +26,31 @@ public class TrialsTasks {
     private static final Map<Player, Location> playerLocation = new HashMap<>();
     private static final Map<Player, Integer> playerStats = new HashMap<>();
 
+    /**
+     * @return The index of the current trial.
+     */
     public static int getCurrentTrial(){
         return currentTrial;
     }
 
+    /**
+     * @return The amount of points a player will be awarded when this method is called.
+     */
     public static float getCurrentTrialPoints(){
         return currentTrialPoints;
     }
 
+    /**
+     * @return A map containing a stats needed for a trial (i.e. : sneaking, jumping, ...).
+     */
     public static Map<Player, Integer> getStats(){
         return playerStats;
     }
 
+    /**
+     * Method to call to start the pre-game sequence
+     * @param plugin The main class of the plugin.
+     */
     public static void preGameTask(TheEvent580_2 plugin){
 
         new BukkitRunnable() {
@@ -120,7 +133,11 @@ public class TrialsTasks {
 
     }
 
-    private static void mainGameTask(TheEvent580_2 plugin){
+    /**
+     * Method to call to start the game mechanics (runs every second)
+     * @param plugin The main class of the plugin.
+     */
+    private static void mainGameTask(TheEvent580_2 plugin) {
 
         Timer.setSeconds(Game.TRIALS.getGameTime());
         Timer.setMaxSeconds(Game.TRIALS.getGameTime());
@@ -130,14 +147,14 @@ public class TrialsTasks {
             @Override
             public void run() {
 
-                if (List.of(7*60+4, 4*60+56, 2*60+59, 57).contains(Timer.getSeconds())){
+                if (List.of(7 * 60 + 4, 4 * 60 + 56, 2 * 60 + 59, 57).contains(Timer.getSeconds())) {
                     Trials.nextTrialLevel();
-                } else if (Timer.getSeconds()%(Trials.getTrialsSpeed()+5) == 0){
+                } else if (Timer.getSeconds() % (Trials.getTrialsSpeed() + 5) == 0) {
 
                     currentTrial = TrialsDecision.chooseNewTrial();
                     currentTrialPoints = 100f;
 
-                    if (42 <= currentTrial && currentTrial <= 48){
+                    if (42 <= currentTrial && currentTrial <= 48) {
                         Bukkit.getOnlinePlayers().forEach(player -> player.showTitle(Title.title(
                                 Component.text(TrialsDecision.getTrial(currentTrial)),
                                 Component.text("Type the answer in chat"),
@@ -158,9 +175,9 @@ public class TrialsTasks {
                                 )
                         )));
 
-                        if (List.of(5, 25).contains(currentTrial)){
+                        if (List.of(5, 25).contains(currentTrial)) {
                             Trials.triggerGlass(plugin);
-                        } else if (List.of(10, 11, 12, 13, 19, 29, 30, 31, 32, 38).contains(currentTrial)){
+                        } else if (List.of(10, 11, 12, 13, 19, 29, 30, 31, 32, 38).contains(currentTrial)) {
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "execute in minecraft:trials run fill 14 133 17 -18 127 -15 air replace light");
 
                             new BukkitRunnable() {
@@ -168,21 +185,21 @@ public class TrialsTasks {
                                 public void run() {
                                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "execute in minecraft:trials run fill 14 133 17 -18 127 -15 air replace light");
                                 }
-                            }.runTaskLater(plugin, Trials.getTrialsSpeed()*20L);
+                            }.runTaskLater(plugin, Trials.getTrialsSpeed() * 20L);
                         }
 
                         if (List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-                                                12, 13, 14, 15, 16, 17, 18, 19, 20,
-                                                21, 41, 42, 43, 44, 45, 46, 47, 48, 49).contains(currentTrial)){
+                                12, 13, 14, 15, 16, 17, 18, 19, 20,
+                                21, 41, 42, 43, 44, 45, 46, 47, 48, 49).contains(currentTrial)) {
 
                             playerLocation.clear();
                             playerStats.clear();
 
-                            for (PlayerManager player : Players.getOnlinePlayerList()){
+                            for (PlayerManager player : Players.getOnlinePlayerList()) {
                                 Trials.setRoundPoints(Objects.requireNonNull(player.getOnlinePlayer()), 0);
-                                if (currentTrial == 49){
+                                if (currentTrial == 49) {
                                     playerLocation.put(player.getOnlinePlayer(), player.getOnlinePlayer().getLocation());
-                                } else if (List.of(1, 2, 3, 4, 6, 22, 23, 24).contains(currentTrial)){
+                                } else if (List.of(1, 2, 3, 4, 6, 22, 23, 24).contains(currentTrial)) {
                                     playerStats.put(player.getOnlinePlayer(), 0);
                                 }
 
@@ -191,9 +208,9 @@ public class TrialsTasks {
 
                         } else {
 
-                            for (PlayerManager player : Players.getOnlinePlayerList()){
+                            for (PlayerManager player : Players.getOnlinePlayerList()) {
                                 Trials.setRoundPoints(Objects.requireNonNull(player.getOnlinePlayer()), 50);
-                                if (currentTrial == 50){
+                                if (currentTrial == 50) {
                                     playerLocation.put(player.getOnlinePlayer(), player.getOnlinePlayer().getLocation());
                                 } else {
                                     playerLocation.clear();
@@ -203,9 +220,9 @@ public class TrialsTasks {
                         }
                     }
 
-                } else if (Timer.getSeconds() == 0){
+                } else if (Timer.getSeconds() == 0) {
 
-                    if (Variables.equals("jeu", 6)){
+                    if (Variables.equals("jeu", 6)) {
                         //new Mode10(plugin);
                     } else {
                         new Mode7(plugin);
@@ -219,6 +236,10 @@ public class TrialsTasks {
 
     }
 
+    /**
+     * Method to call to start the trials mechanics (runs every tick)
+     * @param plugin The main class of the plugin.
+     */
     private static void checkTrialsTask(TheEvent580_2 plugin){
 
         new BukkitRunnable() {
