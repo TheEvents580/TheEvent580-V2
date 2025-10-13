@@ -12,10 +12,10 @@ public class PlayerAdvancement {
 
     public PlayerAdvancement(UUID player_uuid){
         this.player_uuid = player_uuid;
-        this.advancements.put(Advancements.LASTSECONDSBM, false);
-        this.advancements.put(Advancements.SECRETBASE, false);
-        this.advancements.put(Advancements.HEROBRINE, false);
-        this.advancements.put(Advancements.HUBPARKOUR, false);
+        advancements.put(Advancements.LASTSECONDSBM, false);
+        advancements.put(Advancements.SECRETBASE, false);
+        advancements.put(Advancements.HEROBRINE, false);
+        advancements.put(Advancements.HUBPARKOUR, false);
     }
 
     public UUID getPlayerUUID() {
@@ -27,13 +27,13 @@ public class PlayerAdvancement {
     }
 
     public void setAdvancementCompletion(Advancements advancement, boolean completion){
-        this.advancements.replace(advancement, completion);
+        advancements.replace(advancement, completion);
     }
 
     private Document formatAdvancementsDoc(){
         Document doc = new Document();
 
-        this.advancements.forEach((Advancements adv, Boolean completion) -> doc.append(adv.getId().toString(), completion));
+        advancements.forEach((Advancements adv, Boolean completion) -> doc.append(adv.getId().toString(), completion));
 
         return doc;
     }
@@ -41,8 +41,8 @@ public class PlayerAdvancement {
 
     public Document getPlayerAdvancement(){
         return new Document()
-                .append("_id", this.player_uuid.toString())
-                .append("username", Bukkit.getOfflinePlayer(this.player_uuid).getName())
-                .append("advancements", this.formatAdvancementsDoc());
+                .append("_id", player_uuid.toString())
+                .append("username", Bukkit.getOfflinePlayer(player_uuid).getName())
+                .append("advancements", formatAdvancementsDoc());
     }
 }

@@ -109,8 +109,9 @@ public class Mode7 implements Runnable{
 
                     Score gameScore = new Score(game);
                     gameScore.setPoints(player.getValue());
-                    playerManager.getStats().getScores().add(gameScore);
-                    playerManager.getStats().setScores(playerManager.getStats().getScores());
+                    List<Score> playerScores = playerManager.getStats().getScores();
+                    playerScores.add(gameScore);
+                    playerManager.getStats().setScores(playerScores);
 
                 }
 

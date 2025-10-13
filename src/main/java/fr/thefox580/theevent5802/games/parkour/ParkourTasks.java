@@ -127,92 +127,95 @@ public class ParkourTasks {
         new BukkitRunnable() {
             @Override
             public void run() {
-                 if (Timer.getSeconds() == 0){
-                    if (Variables.equals("jeu", 6)){
-                        //new Mode10(plugin);
+
+                if (!Timer.isPaused()){
+                    if (Timer.getSeconds() == 0){
+                        if (Variables.equals("jeu", 6)){
+                            //new Mode10(plugin);
+                        } else {
+                            new Mode7(plugin);
+                        }
+
+                        this.cancel();
                     } else {
-                        new Mode7(plugin);
-                    }
 
-                    this.cancel();
-                } else {
+                        Players.getOnlinePlayerList().forEach(playerManager -> {
+                            Player player = playerManager.getOnlinePlayer();
 
-                    Players.getOnlinePlayerList().forEach(playerManager -> {
-                        Player player = playerManager.getOnlinePlayer();
+                            if (player != null){
+                                if (player.getLocation().y() < 100){
+                                    player.teleport(Parkour.getPlayerCheckpoint(player));
+                                } else if (!player.getAllowFlight()){
+                                    if (Parkour.getMainLevel(player) == 4 && Parkour.getSubLevel(player) == 8){
+                                        if (player.getInventory().contains(Material.CARROT_ON_A_STICK)){
+                                            player.getInventory().clear();
+                                        }
+                                        if (Parkour.getPlayerCheckpoint(player).x()+32 <= player.getX() && withinBounds(player.getLocation())){
+                                            Parkour.addPlayerMult(player, 1.3f);
+                                            Spectators.readySpectatorGame(playerManager);
+                                            Players.getOnlinePlayerList().forEach(otherPlayerManager -> {
+                                                Player otherPlayer = otherPlayerManager.getOnlinePlayer();
 
-                        if (player != null){
-                            if (player.getLocation().y() < 100){
-                                player.teleport(Parkour.getPlayerCheckpoint(player));
-                            } else if (!player.getAllowFlight()){
-                                if (Parkour.getMainLevel(player) == 4 && Parkour.getSubLevel(player) == 8){
-                                    if (player.getInventory().contains(Material.CARROT_ON_A_STICK)){
-                                        player.getInventory().clear();
-                                    }
-                                    if (Parkour.getPlayerCheckpoint(player).x()+32 <= player.getX() && withinBounds(player.getLocation())){
-                                        Parkour.addPlayerMult(player, 1.3f);
-                                        Spectators.readySpectatorGame(playerManager);
-                                        Players.getOnlinePlayerList().forEach(otherPlayerManager -> {
-                                            Player otherPlayer = otherPlayerManager.getOnlinePlayer();
-
-                                            if (otherPlayer != null){
-                                                if (player.getUniqueId() == otherPlayer.getUniqueId()){
-                                                    player.sendMessage(Component.text("[")
-                                                            .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
-                                                            .append(Component.text("] You fully completed ", ColorType.TEXT.getColor()))
-                                                            .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
-                                                            .append(Component.text("! You get rewarded with " + (Parkour.getPlayerPoints(player)*Parkour.getPlayerMult(player)) + "工!", ColorType.TEXT.getColor())));
-                                                } else if (otherPlayer.getAllowFlight()){
-                                                    if (Spectators.isSpectator(player)){
+                                                if (otherPlayer != null){
+                                                    if (player.getUniqueId() == otherPlayer.getUniqueId()){
                                                         player.sendMessage(Component.text("[")
                                                                 .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
-                                                                .append(Component.text("] " + player.getName() + "  finished all 25 levels of ", ColorType.TEXT.getColor()))
-                                                                .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor())));
-                                                    } else {
-                                                        Parkour.addPlayerPoints(player, 10);
-                                                        player.sendMessage(Component.text("[")
+                                                                .append(Component.text("] You fully completed ", ColorType.TEXT.getColor()))
                                                                 .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
-                                                                .append(Component.text("] " + player.getName() + "  finished ", ColorType.TEXT.getColor()))
-                                                                .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
-                                                                .append(Component.text(" after you! You get rewarded with " + (10*Points.getMultiplier()) + "工 (unmultiplied)!", ColorType.TEXT.getColor())));
+                                                                .append(Component.text("! You get rewarded with " + (Parkour.getPlayerPoints(player)*Parkour.getPlayerMult(player)) + "工!", ColorType.TEXT.getColor())));
+                                                    } else if (otherPlayer.getAllowFlight()){
+                                                        if (Spectators.isSpectator(player)){
+                                                            player.sendMessage(Component.text("[")
+                                                                    .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
+                                                                    .append(Component.text("] " + player.getName() + "  finished all 25 levels of ", ColorType.TEXT.getColor()))
+                                                                    .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor())));
+                                                        } else {
+                                                            Parkour.addPlayerPoints(player, 10);
+                                                            player.sendMessage(Component.text("[")
+                                                                    .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
+                                                                    .append(Component.text("] " + player.getName() + "  finished ", ColorType.TEXT.getColor()))
+                                                                    .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
+                                                                    .append(Component.text(" after you! You get rewarded with " + (10*Points.getMultiplier()) + "工 (unmultiplied)!", ColorType.TEXT.getColor())));
+                                                        }
                                                     }
                                                 }
-                                            }
-                                        });
-                                    }
-                                } else {
-                                    if (Parkour.getPlayerCheckpoint(player).x()+16 <= player.getX() && withinBounds(player.getLocation())){
-                                        if (Parkour.hasPlayerSkipped(player)){
-                                            switch (Parkour.getMainLevel(player)){
-                                                case 1 -> Parkour.addPlayerMult(player, 0.1f);
-                                                case 2 -> Parkour.addPlayerMult(player, 0.2f);
-                                                case 3 -> Parkour.addPlayerMult(player, 0.4f);
-                                                case 4 -> Parkour.addPlayerMult(player, 0.75f);
-                                            }
+                                            });
                                         }
+                                    } else {
+                                        if (Parkour.getPlayerCheckpoint(player).x()+16 <= player.getX() && withinBounds(player.getLocation())){
+                                            if (Parkour.hasPlayerSkipped(player)){
+                                                switch (Parkour.getMainLevel(player)){
+                                                    case 1 -> Parkour.addPlayerMult(player, 0.1f);
+                                                    case 2 -> Parkour.addPlayerMult(player, 0.2f);
+                                                    case 3 -> Parkour.addPlayerMult(player, 0.4f);
+                                                    case 4 -> Parkour.addPlayerMult(player, 0.75f);
+                                                }
+                                            }
 
-                                        Parkour.setPlayerCheckpoint(player);
+                                            Parkour.setPlayerCheckpoint(player);
 
-                                        player.sendMessage(Component.text("[")
-                                                .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
-                                                .append(Component.text("] ", ColorType.TEXT.getColor()))
-                                                .append(Parkour.getMainLevelComp(player))
-                                                .append(Component.text(" sub-level completed! New multiplier : 必"+ Parkour.getPlayerMult(player) +"!", ColorType.TEXT.getColor())));
-
-                                        if (Parkour.getSubLevel(player) == 7){
-                                            Parkour.setMainLevel(player,Parkour.getMainLevel(player) + 1);
-                                            Parkour.setSubLevel(player,0);
-                                            Bukkit.broadcast(Component.text("[")
+                                            player.sendMessage(Component.text("[")
                                                     .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
-                                                    .append(Component.text("] " + player.getName() + " finished all ", ColorType.TEXT.getColor()))
+                                                    .append(Component.text("] ", ColorType.TEXT.getColor()))
                                                     .append(Parkour.getMainLevelComp(player))
-                                                    .append(Component.text(" levels!", ColorType.TEXT.getColor())));
+                                                    .append(Component.text(" sub-level completed! New multiplier : 必"+ Parkour.getPlayerMult(player) +"!", ColorType.TEXT.getColor())));
+
+                                            if (Parkour.getSubLevel(player) == 7){
+                                                Parkour.setMainLevel(player,Parkour.getMainLevel(player) + 1);
+                                                Parkour.setSubLevel(player,0);
+                                                Bukkit.broadcast(Component.text("[")
+                                                        .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
+                                                        .append(Component.text("] " + player.getName() + " finished all ", ColorType.TEXT.getColor()))
+                                                        .append(Parkour.getMainLevelComp(player))
+                                                        .append(Component.text(" levels!", ColorType.TEXT.getColor())));
+                                            }
+                                            Parkour.setSubLevel(player,Parkour.getSubLevel(player) + 1);
                                         }
-                                        Parkour.setSubLevel(player,Parkour.getSubLevel(player) + 1);
                                     }
                                 }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
         }.runTaskTimer(plugin, 0L, 1L);

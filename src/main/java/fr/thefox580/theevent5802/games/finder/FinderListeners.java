@@ -1,10 +1,12 @@
 package fr.thefox580.theevent5802.games.finder;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
+import fr.thefox580.theevent5802.utils.Game;
 import fr.thefox580.theevent5802.utils.Variables;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -23,41 +25,42 @@ public class FinderListeners implements Listener {
 
     @EventHandler
     public void onBlockBreakEvent(BlockBreakEvent event){
-        if (Objects.equals(Variables.getVariable("jeu_condi"), 13)){
-            Location blockLocation = event.getBlock().getLocation();
-            blockLocation.setY(-64);
+        if (cannotInteract(event.getBlock().getLocation(), event.getPlayer())){
+            event.setCancelled(true);
+        }
+    }
 
-            if (blockLocation.getBlock().getType() == Material.BARRIER){
-                if (event.getPlayer().getGameMode() != GameMode.CREATIVE && event.getPlayer().isOp()){
-                    event.setCancelled(true);
+    @EventHandler
+    public void onRighClickEvent(PlayerInteractEvent event){
+        if (Objects.equals(Variables.getVariable("jeu_condi"), Game.FINDER.getGameCondition())){
+            if (event.getAction() == Action.RIGHT_CLICK_AIR){
+                if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.FIREWORK_ROCKET){
+                    ItemStack rocket = event.getPlayer().getInventory().getItemInMainHand();
+                    rocket.setAmount(1);
+                    event.getPlayer().give(rocket);
                 }
             }
         }
     }
 
     @EventHandler
-    public void onRighClickEvent(PlayerInteractEvent event){
-        if (event.getAction() == Action.RIGHT_CLICK_AIR){
-            if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.FIREWORK_ROCKET){
-                ItemStack rocket = event.getPlayer().getInventory().getItemInMainHand();
-                rocket.setAmount(1);
-                event.getPlayer().give(rocket);
-            }
-        }
-    }
-
-    @EventHandler
     public void onBlockPlaceEvent(BlockPlaceEvent event){
-        if (Objects.equals(Variables.getVariable("jeu_condi"), 13)){
-        Location blockLocation = event.getBlock().getLocation();
-        blockLocation.setY(-64);
-
-        if (blockLocation.getBlock().getType() == Material.BARRIER){
-            if (event.getPlayer().getGameMode() != GameMode.CREATIVE && event.getPlayer().isOp()){
-                event.setCancelled(true);
-            }
+        if (cannotInteract(event.getBlock().getLocation(), event.getPlayer())){
+            event.setCancelled(true);
         }
     }
+
+    private boolean cannotInteract(Location blockLocation, Player player){
+        if (Objects.equals(Variables.getVariable("jeu_condi"), Game.FINDER.getGameCondition())){
+            blockLocation.setY(-64);
+
+            if (blockLocation.getBlock().getType() == Material.BARRIER){
+                if (player.getGameMode() != GameMode.CREATIVE && player.isOp()){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }
