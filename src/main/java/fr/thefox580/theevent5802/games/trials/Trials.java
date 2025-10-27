@@ -38,6 +38,9 @@ public class Trials {
         });
 
         Variables.setVariable("jeu_condi", Game.TRIALS.getGameCondition());
+        Variables.setVariable("jeu", (int) Variables.getVariable("jeu") +1);
+        Variables.setVariable("jeu_nom", Game.TRIALS.getName());
+        Variables.setVariable("jeu_logo", Game.TRIALS.getIcon());
 
         Spectators.readySpectatorsGame();
 

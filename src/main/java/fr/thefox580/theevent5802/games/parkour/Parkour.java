@@ -47,7 +47,11 @@ public class Parkour {
             }.runTaskLater(plugin, 20L);
         });
 
+
         Variables.setVariable("jeu_condi", Game.PARKOUR.getGameCondition());
+        Variables.setVariable("jeu", (int) Variables.getVariable("jeu") +1);
+        Variables.setVariable("jeu_nom", Game.PARKOUR.getName());
+        Variables.setVariable("jeu_logo", Game.PARKOUR.getIcon());
 
         playerPoints.clear();
         playerMults.clear();
