@@ -54,15 +54,11 @@ public class FinderTasks {
                 } else if (Timer.getSeconds() == 20){
                     Bukkit.broadcast(Component.text("[")
                             .append(Component.text(Game.FINDER.getName(), Game.FINDER.getColorType().getColor()))
-                            .append(Component.text("] In the last 5 minutes, a Golden set (worth 3x more) will appear!", ColorType.TEXT.getColor())));
+                            .append(Component.text("] In the last minute of each set, a Golden Item (worth 3x more) will appear!", ColorType.TEXT.getColor())));
                 } else if (Timer.getSeconds() == 15){
                     Bukkit.broadcast(Component.text("[")
                             .append(Component.text(Game.FINDER.getName(), Game.FINDER.getColorType().getColor()))
-                            .append(Component.text("] But be fast! Because only 10 of each items will be accepted...", ColorType.TEXT.getColor())));
-                } else if (Timer.getSeconds() == 10){
-                    Bukkit.broadcast(Component.text("[")
-                            .append(Component.text(Game.FINDER.getName(), Game.FINDER.getColorType().getColor()))
-                            .append(Component.text("] You'll get points based on how many times you've given an item compared to everyone else.", ColorType.TEXT.getColor())));
+                            .append(Component.text("] You'll get points based on how many times you've given an item compared to everyone else..", ColorType.TEXT.getColor())));
                 } else if (Timer.getSeconds() == 3){
                     Bukkit.broadcast(Component.text("[")
                             .append(Component.text(Game.FINDER.getName(), Game.FINDER.getColorType().getColor()))
