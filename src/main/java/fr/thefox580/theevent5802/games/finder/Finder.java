@@ -152,12 +152,14 @@ public class Finder {
                     .append(Component.text(Game.FINDER.getName(), Game.FINDER.getColorType().getColor()))
                     .append(Component.text("] Banked " + amount + "x "))
                     .append(ItemStack.of(material).displayName().color(ColorType.GOLD.getColor())));
+            Points.addGamePoints(player, 3*Math.round(2*amount*Points.getMultiplier()));
             return;
         }
         player.sendMessage(Component.text("[")
                 .append(Component.text(Game.FINDER.getName(), Game.FINDER.getColorType().getColor()))
                 .append(Component.text("] Banked " + amount + "x "))
                 .append(ItemStack.of(material).displayName().color(ColorType.SILVER.getColor())));
+        Points.addGamePoints(player, Math.round(2*amount*Points.getMultiplier()));
     }
 
     /**
