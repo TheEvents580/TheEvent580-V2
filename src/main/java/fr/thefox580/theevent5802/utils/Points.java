@@ -3,9 +3,8 @@ package fr.thefox580.theevent5802.utils;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.Bukkit;
-import org.bukkit.NamespacedKey;
-import org.bukkit.OfflinePlayer;
+import net.kyori.adventure.title.Title;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,14 +12,17 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.time.Duration;
 import java.util.*;
 
 public class Points implements CommandExecutor, TabCompleter {
 
     private static TheEvent580_2 plugin;
+    private static float multiplier = 1f;
 
     public Points(TheEvent580_2 plugin){
         Points.plugin = plugin;
@@ -56,13 +58,11 @@ public class Points implements CommandExecutor, TabCompleter {
 
         Map<Player, Integer> unsortedPlayers = new HashMap<>();
 
-        for (Player player : Bukkit.getOnlinePlayers()){
-            if (Players.isPlayer(player)){
-                unsortedPlayers.put(player, getPoints(player));
-            }
+        for (PlayerManager playerManager : Players.getOnlinePlayerList()){
+            unsortedPlayers.put(playerManager.getOnlinePlayer(), getPoints(Objects.requireNonNull(playerManager.getOnlinePlayer())));
         }
 
-        return getEntries(unsortedPlayers);
+        return getTop(unsortedPlayers, 3);
 
     }
 
@@ -70,27 +70,32 @@ public class Points implements CommandExecutor, TabCompleter {
 
         Map<Player, Integer> unsortedPlayers = new HashMap<>();
 
-        for (Player player : Bukkit.getOnlinePlayers()){
-            if (Players.isPlayer(player)){
-                unsortedPlayers.put(player, getGamePoints(player));
-            }
+        for (PlayerManager playerManager : Players.getOnlinePlayerList()){
+            unsortedPlayers.put(playerManager.getOnlinePlayer(), getGamePoints(Objects.requireNonNull(playerManager.getOnlinePlayer())));
         }
 
-        return getEntries(unsortedPlayers);
+        return getTop(unsortedPlayers, 3);
 
     }
 
     @NotNull
-    private static List<Map.Entry<Player, Integer>> getEntries(Map<Player, Integer> unsortedPlayers) {
-        List<Map.Entry<Player, Integer>> sorted = new ArrayList<>(unsortedPlayers.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).limit(3).toList());
+    public static List<Map.Entry<Player, Integer>> getTop(Map<Player, Integer> unsortedPlayers, int limit) {
 
-        while (sorted.size() < 3){
-            Map<Player, Integer> nonePlayer = new HashMap<>();
-            nonePlayer.put(Bukkit.getPlayer("TheFox580"), -1);
-            sorted.add(nonePlayer.entrySet().stream().toList().getFirst());
+        if (limit > 0) {
+
+            List<Map.Entry<Player, Integer>> sorted = new ArrayList<>(unsortedPlayers.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).limit(limit).toList());
+
+            while (sorted.size() < limit) {
+                Map<Player, Integer> nonePlayer = new HashMap<>();
+                nonePlayer.put(Bukkit.getPlayer("TheFox580"), -1);
+                sorted.add(nonePlayer.entrySet().stream().toList().getFirst());
+            }
+
+            return sorted;
         }
 
-        return sorted;
+        return new ArrayList<>(unsortedPlayers.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).toList());
+
     }
 
     public static int getPoints(Player player){
@@ -177,7 +182,7 @@ public class Points implements CommandExecutor, TabCompleter {
         if (current_total_points_event == null){
             current_total_points_event = 0;
         }
-        playerContainer.set(new NamespacedKey(plugin, "total_points"), PersistentDataType.INTEGER, current_total_points_event-points);
+        playerContainer.set(new NamespacedKey(plugin, "total_points_event"), PersistentDataType.INTEGER, current_total_points_event-points);
 
 
         Integer current_total_points = playerContainer.get(new NamespacedKey(plugin, "total_points"), PersistentDataType.INTEGER);
@@ -221,6 +226,7 @@ public class Points implements CommandExecutor, TabCompleter {
         }
 
         playerContainer.set(new NamespacedKey(plugin, "points"), PersistentDataType.INTEGER, current_points+game_points);
+        playerContainer.set(new NamespacedKey(plugin, "game_points"), PersistentDataType.INTEGER, 0);
 
 
     }
@@ -237,6 +243,53 @@ public class Points implements CommandExecutor, TabCompleter {
         playerContainer.set(new NamespacedKey(plugin, "total_points"), PersistentDataType.INTEGER, points);
 
         return points;
+    }
+
+    public static void setMultiplier(float newMultiplier){
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            player.showTitle(Title.title(
+                    Component.text("New Multiplier !", ColorType.MC_RED.getColor(), TextDecoration.BOLD),
+                    Component.text("Multiplier went from " + multiplier + "必 to " + newMultiplier + "必", ColorType.TEXT.getColor()),
+                    Title.Times.times(
+                            Duration.ofMillis(500),
+                            Duration.ofSeconds(3),
+                            Duration.ofMillis(500)
+                    )));
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, SoundCategory.VOICE, 2, 0.5f);
+
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, SoundCategory.VOICE, 2, 1f);
+
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, SoundCategory.VOICE, 2, 1.5f);
+
+                                    new BukkitRunnable() {
+                                        @Override
+                                        public void run() {
+                                            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, SoundCategory.VOICE, 2, 2f);
+                                        }
+                                    }.runTaskLater(plugin, 1L);
+                                }
+                            }.runTaskLater(plugin, 1L);
+                        }
+                    }.runTaskLater(plugin, 1L);
+
+                }
+            }.runTaskLater(plugin, 1L);
+        });
+        multiplier = newMultiplier;
+    }
+
+    public static float getMultiplier(){
+        return multiplier;
     }
 
     @Override

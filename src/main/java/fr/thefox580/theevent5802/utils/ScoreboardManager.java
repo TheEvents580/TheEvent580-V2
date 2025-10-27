@@ -4,7 +4,7 @@ import fr.mrmicky.fastboard.adventure.FastBoard;
 import fr.thefox580.theevent5802.games.arms_race.ArmsRace;
 import fr.thefox580.theevent5802.games.bow_pvp.BowPVP;
 import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
-import fr.thefox580.theevent5802.games.finder.Finder;
+import fr.thefox580.theevent5802.games.finder.FinderSets;
 import fr.thefox580.theevent5802.games.multilap.Multilap;
 import fr.thefox580.theevent5802.games.parkour.Parkour;
 import fr.thefox580.theevent5802.games.tag.Tag;
@@ -49,7 +49,7 @@ public class ScoreboardManager {
         board.updateLine(1, Component.text("Minigame :", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
 
         String jeuNom = Objects.requireNonNull(Variables.getVariable("jeu_nom")).toString();
-        Component jeuNomComponent = getJeuNomComponent(jeuNom);
+        Component jeuNomComponent = getComponent(jeuNom);
 
         board.updateLine(2, Component.text(Variables.getVariable("jeu") + "/6", ColorType.SUBTEXT.getColor())
                 .append(Component.text(" - ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD))
@@ -69,8 +69,8 @@ public class ScoreboardManager {
                 if (player.getAllowFlight()) { // Can fly = is done
                     board.updateLine(5, Component.text("Waiting for other players", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
                 } else {
-                    Component mainLevel = Parkour.getMainLevel(player);
-                    Component subLevel = Parkour.getSubLevel(player);
+                    Component mainLevel = Parkour.getMainLevelComp(player);
+                    Component subLevel = Parkour.getSubLevelComp(player);
                     board.updateLine(5, Component.text("Level ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
                             .append(mainLevel)
                             .append(Component.text(" | ", ColorType.SUBTEXT.getColor()).decoration(TextDecoration.BOLD, false))
@@ -128,7 +128,7 @@ public class ScoreboardManager {
                                 .append(Component.text(ArmsRace.getPlayerKills(topPlayers.getFirst()), ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD))
                                 .append(Component.text(" kills", ColorType.SUBTEXT.getColor())));
                     } else {
-                        board.updateLine(5, Component.text("Player in lead : ", ColorType.SUBTEXT.getColor(), TextDecoration.BOLD)
+                        board.updateLine(5, Component.text("Players in lead : ", ColorType.SUBTEXT.getColor(), TextDecoration.BOLD)
                                 .append(Component.text(topPlayers.size() + " players", ColorType.SPECIAL_2.getColor()))
                                 .append(Component.text(" with ", ColorType.SUBTEXT.getColor()))
                                 .append(Component.text(ArmsRace.getPlayerKills(topPlayers.getFirst()), ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD))
@@ -140,12 +140,12 @@ public class ScoreboardManager {
                 }
             }
             case 13 -> {
-                if (player.hasPermission("group.spectators")) {
+                if (FinderSets.isGoldenLocked()){
                     board.updateLine(5, Component.text("Current Item Set : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
-                            .append(Component.text(Finder.getCurrentItemSetName(), ColorType.SUBTEXT.getColor())));
+                            .append(Component.text(FinderSets.getCurrentItemSetName(), ColorType.SUBTEXT.getColor())));
                 } else {
-                    board.updateLine(5, Component.text("Items found : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
-                            .append(Component.text(Finder.getPlayerItemsFound(player) + "/" + Finder.getTotalItemsFound())));
+                    board.updateLine(5, Component.text("Current Item Set : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
+                            .append(Component.text(FinderSets.getCurrentItemSetName(), ColorType.RAINBOW.getColor())));
                 }
             }
             default -> {
@@ -235,10 +235,6 @@ public class ScoreboardManager {
         }
         board.updateLine(14, Component.text(""));
 
-    }
-
-    private static @NotNull Component getJeuNomComponent(String jeuNom) {
-        return getComponent(jeuNom);
     }
 
     static @NotNull Component getComponent(String jeuNom) {

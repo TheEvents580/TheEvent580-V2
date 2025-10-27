@@ -13,11 +13,6 @@ commands:
   spawn:
     description: Teleports the player to spawn
 
-  gametp:
-    description: Tp after games
-    permission: op
-    permission-message: "&cYou do not have the required permissions to teleport the players in the decision crystal after a game"
-
   pronouns:
     description: Changes player's pronouns
 
@@ -68,10 +63,8 @@ commands:
     permission: op
     permission-message: "&cYou do not have the required permissions to test stuff, what did you think?"
 
-  finder:
-    description: Starts Finder
-    permission: op
-    permission-message: "&cYou do not have the required permissions to start this game"
+  sets:
+    description: Shows a menu will items in the shop
 
   variables:
     description: Perform operations on variables
@@ -115,3 +108,6 @@ commands:
 
   specmenu:
     description: opens the spectator menu to teleport to a player
+
+  fly:
+    description: toggles fly mode if you have access to it

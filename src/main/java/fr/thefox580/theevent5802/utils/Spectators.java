@@ -223,7 +223,8 @@ public class Spectators implements CommandExecutor, TabCompleter {
 
         ItemStack compass = new ItemStack(Material.COMPASS);
         ItemMeta compassMeta = compass.getItemMeta();
-        compassMeta.displayName(Component.text("Teleport to player", ColorType.TEXT.getColor()));
+        compassMeta.displayName(Component.text("Teleport to player", ColorType.TEXT.getColor())
+                .decoration(TextDecoration.ITALIC, false));
         compass.setItemMeta(compassMeta);
 
         ItemStack feather = new ItemStack(Material.FEATHER);
@@ -242,7 +243,12 @@ public class Spectators implements CommandExecutor, TabCompleter {
 
         spec.setFoodLevel(20);
 
-        Bukkit.getOnlinePlayers().forEach(loopPlayer -> loopPlayer.hidePlayer(plugin, spec));
+        Bukkit.getOnlinePlayers().forEach(loopPlayer -> {
+            loopPlayer.hidePlayer(plugin, spec);
+            if (!Spectators.isSpectator(loopPlayer)){
+                spec.showPlayer(plugin, loopPlayer);
+            }
+        });
 
         spec.setGameMode(GameMode.ADVENTURE);
         spec.setAllowFlight(true);

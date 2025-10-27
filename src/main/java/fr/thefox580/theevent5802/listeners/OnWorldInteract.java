@@ -1,8 +1,10 @@
 package fr.thefox580.theevent5802.listeners;
 
-import com.fren_gor.ultimateAdvancementAPI.advancement.BaseAdvancement;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
+import fr.thefox580.theevent5802.games.finder.Finder;
+import fr.thefox580.theevent5802.games.finder.FinderSets;
+import fr.thefox580.theevent5802.games.parkour.Parkour;
 import fr.thefox580.theevent5802.utils.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -11,6 +13,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fox;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,6 +22,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -216,6 +220,29 @@ public class OnWorldInteract implements Listener {
                         BlockGame.block(blockLoc.getBlock().getType(), playerManager);
                     }
                 }
+            } else if (Timer.getEnum() == Timer.TimerEnum.IN_GAME){
+                if (Variables.equals("jeu_condi", Game.PARKOUR.getGameCondition())){
+                    if (Parkour.hasPlayerSkipped(player)){
+                        player.sendMessage(Component.text("[")
+                                .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
+                                .append(Component.text("] You already skipped a level in the last 10 seconds...", ColorType.TEXT.getColor())));
+                    } else {
+                        if (Parkour.getMainLevel(player) == Parkour.getSubLevel(player) && Parkour.getSubLevel(player) == 1){
+                            player.sendMessage(Component.text("[")
+                                    .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
+                                    .append(Component.text("] You cannot skip the first level...", ColorType.TEXT.getColor())));
+                            return;
+                        }
+                        Parkour.setPlayerSkipped(player, plugin);
+                    }
+                } else if (Variables.equals("jeu_condi", Game.FINDER.getGameCondition())){
+                    if (event.getItem().getItemMeta().getCustomModelDataComponent().getStrings().contains("bingo_house")){
+                        player.teleport(new Location(Bukkit.getWorld("Finder"), -67, 64, -53));
+                        player.sendMessage(Component.text("[")
+                                .append(Component.text(Game.FINDER.getName(), Game.FINDER.getColorType().getColor()))
+                                .append(Component.text("] You've been teleported to the spawn!", ColorType.TEXT.getColor())));
+                    }
+                }
             }
         } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK){
             if (event.getClickedBlock() == null){
@@ -237,59 +264,96 @@ public class OnWorldInteract implements Listener {
                 assert playerManager != null;
 
                 if (loc.getX() == 218 && loc.getZ() == -355){
-                    player.getInventory().setHelmet(FlagHead.getPrideFlag());
+                    playerManager.setFlag(FlagHead.getPrideFlag());
                     playerManager.setColorType(ColorType.PRIDE);
 
                 } else if (loc.getX() == 218 && loc.getZ() == -360){
-                    player.getInventory().setHelmet(FlagHead.getAsexualFlag());
+                    playerManager.setFlag(FlagHead.getAsexualFlag());
                     playerManager.setColorType(ColorType.ASEXUAL);
 
                 } else if (loc.getX() == 216 && loc.getZ() == -362){
-                    player.getInventory().setHelmet(FlagHead.getPansexualFlag());
+                    playerManager.setFlag(FlagHead.getPansexualFlag());
                     playerManager.setColorType(ColorType.PANSEXUAL);
 
                 } else if (loc.getX() == 213 && loc.getZ() == -358){
-                    player.getInventory().setHelmet(FlagHead.getTransgenderFlag());
+                    playerManager.setFlag(FlagHead.getTransgenderFlag());
                     playerManager.setColorType(ColorType.TRANSGENDER);
 
                 } else if (loc.getX() == 212 && loc.getZ() == -364){
-                    player.getInventory().setHelmet(FlagHead.getLesbianFlag());
+                    playerManager.setFlag(FlagHead.getLesbianFlag());
                     playerManager.setColorType(ColorType.LESBIAN);
 
                 } else if (loc.getX() == 209 && loc.getZ() == -360){
-                    player.getInventory().setHelmet(FlagHead.getNonBinaryFlag());
+                    playerManager.setFlag(FlagHead.getNonBinaryFlag());
                     playerManager.setColorType(ColorType.NON_BINARY);
 
                 } else if (loc.getX() == 208 && loc.getZ() == -366){
-                    player.getInventory().setHelmet(FlagHead.getGayFlag());
+                    playerManager.setFlag(FlagHead.getGayFlag());
                     playerManager.setColorType(ColorType.GAY);
 
                 } else if (loc.getX() == 205 && loc.getZ() == -362) {
-                    player.getInventory().setHelmet(FlagHead.getBisexualFlag());
+                    playerManager.setFlag(FlagHead.getBisexualFlag());
                     playerManager.setColorType(ColorType.BISEXUAL);
 
                 } else if (loc.getX() == 204 && loc.getZ() == -370) {
-                    player.getInventory().setHelmet(FlagHead.getUnlabledFlag());
+                    playerManager.setFlag(FlagHead.getUnlabledFlag());
                     playerManager.setColorType(ColorType.RAINBOW);
 
                 } else if (loc.getX() == 200 && loc.getZ() == -365) {
-                    player.getInventory().setHelmet(FlagHead.getAromanticFlag());
+                    playerManager.setFlag(FlagHead.getAromanticFlag());
                     playerManager.setColorType(ColorType.AROMANTIC);
 
                 }
 
+                player.getInventory().setHelmet(playerManager.getFlag());
+
                 player.sendActionBar(Component.text("[", ColorType.TEXT.getColor())
                         .append(Component.text("TheEvent580", ColorType.TITLE.getColor(), TextDecoration.BOLD))
                         .append(Component.text("] You now have the ", ColorType.TEXT.getColor()))
-                        .append(Objects.requireNonNull(player.getInventory().getHelmet()).displayName())
+                        .append(playerManager.getFlag().displayName())
                         .append(Component.text(" on your head!", ColorType.TEXT.getColor())));
             }
-            else if (event.getClickedBlock().getType() == Material.LEVER){
-                BaseAdvancement parkourAdv = plugin.getInstances().getAdvancementAPI().getCustomAdvancement(AdvancementsEnum.HEROBRINE);
-                if (!parkourAdv.isGranted(player)){
-                    parkourAdv.grant(player);
-                    plugin.getInstances().getAdvancementAPI().getCounterAdvancement().incrementProgression(player);
+        } if (event.getAction().isRightClick()) {
+            if (player.isGliding()) {
+                if (player.getInventory().getItemInMainHand().getType() == Material.FIREWORK_ROCKET) {
+                    ItemStack rocket = player.getInventory().getItemInMainHand();
+                    rocket.setAmount(1);
+                    player.give(rocket);
                 }
+
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerInteractWithEntity(PlayerInteractEntityEvent event){
+        Player player = event.getPlayer();
+        Entity entity = event.getRightClicked();
+        if (entity.getType() == EntityType.VILLAGER){
+            if (Variables.equals("jeu_condi", Game.FINDER.getGameCondition())){
+                event.setCancelled(true);
+                ItemStack itemInHand = player.getInventory().getItemInMainHand();
+                boolean isInSet = FinderSets.getCurrentItemSet().contains(player.getInventory().getItemInMainHand().getType());
+                if (isInSet){
+                    boolean isGoldenItem = FinderSets.getCurrentItemSet().getFirst().equals(player.getInventory().getItemInMainHand().getType());
+                    if (isGoldenItem){
+                        if (FinderSets.isGoldenLocked()){
+                            player.sendMessage(Component.text("Sorry, but you cannot bank the ", ColorType.MC_RED.getColor())
+                                    .append(Component.text("Golden Item", ColorType.RAINBOW.getColor()))
+                                    .append(Component.text(" yet!", ColorType.MC_RED.getColor())));
+                            return;
+                        }
+                        int count = itemInHand.getAmount();
+                        Finder.playerCollectedMaterialAmount(player, itemInHand.getType(), count);
+                        player.getInventory().setItem(player.getInventory().getHeldItemSlot(), ItemStack.of(Material.AIR));
+                        return;
+                    }
+                    int count = itemInHand.getAmount();
+                    Finder.playerCollectedMaterialAmount(player, itemInHand.getType(), count);
+                    player.getInventory().remove(itemInHand);
+                    return;
+                }
+                player.sendMessage(Component.text("Sorry, but the villagers are not requesting for this item currently... ", ColorType.MC_RED.getColor()));
             }
         }
     }

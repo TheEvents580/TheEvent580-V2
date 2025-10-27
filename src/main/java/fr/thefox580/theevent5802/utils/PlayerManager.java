@@ -1,7 +1,9 @@
 package fr.thefox580.theevent5802.utils;
 
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -20,6 +22,7 @@ public class PlayerManager{
     private ColorType color;
     private final boolean staff;
     private final boolean admin;
+    private ItemStack flag;
 
     public PlayerManager(OfflinePlayer player, Team team, boolean staff, boolean admin){
         this.player = player;
@@ -34,6 +37,7 @@ public class PlayerManager{
         this.color = team.getColorType();
         this.staff = staff;
         this.admin = admin;
+        this.flag = new ItemStack(Material.AIR);
     }
 
     public OfflinePlayer getOfflinePlayer() {
@@ -101,5 +105,13 @@ public class PlayerManager{
 
     public boolean isAdmin() {
         return admin;
+    }
+
+    public void setFlag(ItemStack flag){
+        this.flag = flag;
+    }
+
+    public ItemStack getFlag(){
+        return flag;
     }
 }

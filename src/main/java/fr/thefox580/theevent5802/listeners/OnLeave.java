@@ -10,12 +10,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class OnLeaveEvent implements Listener {
+public class OnLeave implements Listener {
 
-    private final TheEvent580_2 plugin;
-
-    public OnLeaveEvent(TheEvent580_2 plugin){
-        this.plugin = plugin;
+    public OnLeave(TheEvent580_2 plugin){
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -32,9 +29,6 @@ public class OnLeaveEvent implements Listener {
                 Timer.setPaused(true);
             }
         }
-
-        plugin.getInstances().getAdvancementAPI().getProgressionTab().hideTab(player);
-        plugin.getInstances().getAdvancementAPI().getCustomTab().hideTab(player);
 
         TextColor color = playerManager.getColorType().getColor();
 
