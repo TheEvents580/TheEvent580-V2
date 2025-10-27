@@ -33,7 +33,7 @@ public class PlayerAdvancement {
     private Document formatAdvancementsDoc(){
         Document doc = new Document();
 
-        this.advancements.forEach((AdvancementsEnum adv, Boolean completion) -> doc.append(adv.getId().toString(), completion));
+        this.advancements.forEach((AdvancementsEnum adv, Boolean completion) -> doc.append(String.valueOf(adv.getId()), completion));
 
         return doc;
     }
@@ -41,8 +41,8 @@ public class PlayerAdvancement {
 
     public Document getPlayerAdvancement(){
         return new Document()
-                .append("_id", this.player_uuid.toString())
-                .append("username", Bukkit.getOfflinePlayer(this.player_uuid).getName())
-                .append("advancements", this.formatAdvancementsDoc());
+                .append("_id", player_uuid.toString())
+                .append("username", Bukkit.getOfflinePlayer(player_uuid).getName())
+                .append("advancements", formatAdvancementsDoc());
     }
 }

@@ -9,13 +9,13 @@ public enum Game {
 
     TRIALS("Trials", ColorType.MC_RED, "\uE001", true, 10, 10*60, Material.RED_CONCRETE),
     PARKOUR("Parkour", ColorType.MC_ORANGE, "\uE002", true, 2, 10*60, Material.ORANGE_CONCRETE),
-    FINDER("Finder", ColorType.MC_YELLOW, "\uE003", true, 13, 20*60, Material.YELLOW_CONCRETE),
+    FINDER("Finder", ColorType.MC_YELLOW, "\uE003", true, 13, 15*60, Material.YELLOW_CONCRETE),
     TAG("Tag", ColorType.MC_LIME, "\uE004", true, 11, -1, Material.LIME_CONCRETE),
     MULTILAP("Multilap", ColorType.MC_AQUA, "\uE005", true, 5, 10*60, Material.LIGHT_BLUE_CONCRETE),
     BUILD_MASTERS("Build Masters", ColorType.MC_BLUE, "\uE006", true, 9, 10*60, Material.BLUE_CONCRETE),
     ARMS_RACE("Arms Race", ColorType.MC_PURPLE, "\uE007", true, 12, 15*60, Material.PURPLE_CONCRETE),
     BOW_PVP("Bow PVP", ColorType.MC_PINK, "\uE008", true, 8, 10*60, Material.PINK_CONCRETE),
-    NONE("None", ColorType.MC_GRAY, "", false, 0, -1, Material.WHITE_CONCRETE),
+    HUB("Hub", ColorType.TEXT, "", false, 0, -1, Material.WHITE_CONCRETE),
     @Deprecated
     DROPPER("Dropper", ColorType.MC_RED, "?", false, 1, 10*60, Material.RED_CONCRETE),
     @Deprecated
@@ -71,7 +71,7 @@ public enum Game {
         return gameTime;
     }
 
-    public  Material getMaterialBlock() {return materialBlock;}
+    public Material getMaterialBlock() {return materialBlock;}
 
     public static List<Game> playedGames(){
         List<Game> playedGames = new ArrayList<>();
@@ -83,5 +83,14 @@ public enum Game {
         }
 
         return playedGames;
+    }
+
+    public static Game getGameByGameCondition(int gameCondition){
+        for (Game game : Game.values()){
+            if (game.getGameCondition() == gameCondition){
+                return game;
+            }
+        }
+        return Game.HUB;
     }
 }
