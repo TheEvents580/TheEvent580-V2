@@ -1,6 +1,7 @@
 package fr.thefox580.theevent5802.tasks.timer;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
+import fr.thefox580.theevent5802.games.finder.Finder;
 import fr.thefox580.theevent5802.games.parkour.Parkour;
 import fr.thefox580.theevent5802.games.trials.Trials;
 import fr.thefox580.theevent5802.utils.Game;
@@ -68,8 +69,8 @@ public class Mode4 implements Runnable{
             switch (game){
                 case TRIALS -> Trials.startPreGame(plugin);
                 case PARKOUR -> Parkour.startPreGame(plugin);
-                /*case FINDER ->
-                case TAG ->
+                case FINDER -> Finder.startPreGame(plugin);
+                /*case TAG ->
                 case MULTILAP ->
                 case BUILD_MASTERS ->
                 case ARMS_RACE ->

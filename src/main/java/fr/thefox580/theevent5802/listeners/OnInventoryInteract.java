@@ -2,9 +2,11 @@ package fr.thefox580.theevent5802.listeners;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.commands.Minecraftle;
-import fr.thefox580.theevent5802.games.finder.Finder;
+import fr.thefox580.theevent5802.games.finder.FinderSets;
 import fr.thefox580.theevent5802.tasks.timer.Mode1;
-import fr.thefox580.theevent5802.utils.*;
+import fr.thefox580.theevent5802.utils.BossbarManager;
+import fr.thefox580.theevent5802.utils.ColorType;
+import fr.thefox580.theevent5802.utils.Variables;
 import me.clip.placeholderapi.libs.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -14,22 +16,28 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
-public class OnGUIClick implements Listener {
+public class OnInventoryInteract implements Listener {
 
     private final TheEvent580_2 plugin;
 
-    public OnGUIClick(TheEvent580_2 plugin) {
+    public OnInventoryInteract(TheEvent580_2 plugin){
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
@@ -213,7 +221,7 @@ public class OnGUIClick implements Listener {
                     player.closeInventory();
                 }
             }
-            else if (event.getView().title().equals(Component.text(Finder.getCurrentItemSetName() + "'s Items"))){
+            else if (event.getView().title().equals(Component.text(FinderSets.getCurrentItemSetName() + "'s Items"))){
                 event.setCancelled(true);
             }
             else if (event.getView().title().equals(Component.text("Spectator TP Menu"))){
@@ -244,5 +252,18 @@ public class OnGUIClick implements Listener {
             }
         }
     }
-}
 
+    @EventHandler
+    public void onInventoryCloseEvent(InventoryCloseEvent event){
+        HumanEntity player = event.getPlayer();
+        if (event.getInventory().getType() == InventoryType.WORKBENCH){
+            if (player.getWorld().getName().equals("world")){
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    ItemStack helmet = player.getInventory().getHelmet();
+                    player.getInventory().clear();
+                    player.getInventory().setHelmet(helmet);
+                }, 3L);
+            }
+        }
+    }
+}

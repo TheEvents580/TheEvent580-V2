@@ -21,11 +21,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 
-public class OnJoinEvent implements Listener {
+public class OnJoin implements Listener {
 
     private final TheEvent580_2 plugin;
 
-    public OnJoinEvent(TheEvent580_2 plugin) {
+    public OnJoin(TheEvent580_2 plugin) {
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }

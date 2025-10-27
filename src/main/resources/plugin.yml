@@ -63,10 +63,8 @@ commands:
     permission: op
     permission-message: "&cYou do not have the required permissions to test stuff, what did you think?"
 
-  finder:
-    description: Starts Finder
-    permission: op
-    permission-message: "&cYou do not have the required permissions to start this game"
+  sets:
+    description: Shows a menu will items in the shop
 
   variables:
     description: Perform operations on variables

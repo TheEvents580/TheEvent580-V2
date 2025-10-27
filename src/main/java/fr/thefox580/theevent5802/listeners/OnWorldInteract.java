@@ -2,6 +2,8 @@ package fr.thefox580.theevent5802.listeners;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
+import fr.thefox580.theevent5802.games.finder.Finder;
+import fr.thefox580.theevent5802.games.finder.FinderSets;
 import fr.thefox580.theevent5802.games.parkour.Parkour;
 import fr.thefox580.theevent5802.utils.*;
 import net.kyori.adventure.text.Component;
@@ -11,6 +13,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fox;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,6 +22,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -231,6 +235,13 @@ public class OnWorldInteract implements Listener {
                         }
                         Parkour.setPlayerSkipped(player, plugin);
                     }
+                } else if (Variables.equals("jeu_condi", Game.FINDER.getGameCondition())){
+                    if (event.getItem().getItemMeta().getCustomModelDataComponent().getStrings().contains("bingo_house")){
+                        player.teleport(new Location(Bukkit.getWorld("Finder"), -67, 64, -53));
+                        player.sendMessage(Component.text("[")
+                                .append(Component.text(Game.FINDER.getName(), Game.FINDER.getColorType().getColor()))
+                                .append(Component.text("] You've been teleported to the spawn!", ColorType.TEXT.getColor())));
+                    }
                 }
             }
         } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK){
@@ -301,6 +312,48 @@ public class OnWorldInteract implements Listener {
                         .append(Component.text("] You now have the ", ColorType.TEXT.getColor()))
                         .append(playerManager.getFlag().displayName())
                         .append(Component.text(" on your head!", ColorType.TEXT.getColor())));
+            }
+        } if (event.getAction().isRightClick()) {
+            if (player.isGliding()) {
+                if (player.getInventory().getItemInMainHand().getType() == Material.FIREWORK_ROCKET) {
+                    ItemStack rocket = player.getInventory().getItemInMainHand();
+                    rocket.setAmount(1);
+                    player.give(rocket);
+                }
+
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerInteractWithEntity(PlayerInteractEntityEvent event){
+        Player player = event.getPlayer();
+        Entity entity = event.getRightClicked();
+        if (entity.getType() == EntityType.VILLAGER){
+            if (Variables.equals("jeu_condi", Game.FINDER.getGameCondition())){
+                event.setCancelled(true);
+                ItemStack itemInHand = player.getInventory().getItemInMainHand();
+                boolean isInSet = FinderSets.getCurrentItemSet().contains(player.getInventory().getItemInMainHand().getType());
+                if (isInSet){
+                    boolean isGoldenItem = FinderSets.getCurrentItemSet().getFirst().equals(player.getInventory().getItemInMainHand().getType());
+                    if (isGoldenItem){
+                        if (FinderSets.isGoldenLocked()){
+                            player.sendMessage(Component.text("Sorry, but you cannot bank the ", ColorType.MC_RED.getColor())
+                                    .append(Component.text("Golden Item", ColorType.RAINBOW.getColor()))
+                                    .append(Component.text(" yet!", ColorType.MC_RED.getColor())));
+                            return;
+                        }
+                        int count = itemInHand.getAmount();
+                        Finder.playerCollectedMaterialAmount(player, itemInHand.getType(), count);
+                        player.getInventory().setItem(player.getInventory().getHeldItemSlot(), ItemStack.of(Material.AIR));
+                        return;
+                    }
+                    int count = itemInHand.getAmount();
+                    Finder.playerCollectedMaterialAmount(player, itemInHand.getType(), count);
+                    player.getInventory().remove(itemInHand);
+                    return;
+                }
+                player.sendMessage(Component.text("Sorry, but the villagers are not requesting for this item currently... ", ColorType.MC_RED.getColor()));
             }
         }
     }

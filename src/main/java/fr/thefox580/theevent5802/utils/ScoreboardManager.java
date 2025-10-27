@@ -4,7 +4,7 @@ import fr.mrmicky.fastboard.adventure.FastBoard;
 import fr.thefox580.theevent5802.games.arms_race.ArmsRace;
 import fr.thefox580.theevent5802.games.bow_pvp.BowPVP;
 import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
-import fr.thefox580.theevent5802.games.finder.Finder;
+import fr.thefox580.theevent5802.games.finder.FinderSets;
 import fr.thefox580.theevent5802.games.multilap.Multilap;
 import fr.thefox580.theevent5802.games.parkour.Parkour;
 import fr.thefox580.theevent5802.games.tag.Tag;
@@ -128,7 +128,7 @@ public class ScoreboardManager {
                                 .append(Component.text(ArmsRace.getPlayerKills(topPlayers.getFirst()), ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD))
                                 .append(Component.text(" kills", ColorType.SUBTEXT.getColor())));
                     } else {
-                        board.updateLine(5, Component.text("Player in lead : ", ColorType.SUBTEXT.getColor(), TextDecoration.BOLD)
+                        board.updateLine(5, Component.text("Players in lead : ", ColorType.SUBTEXT.getColor(), TextDecoration.BOLD)
                                 .append(Component.text(topPlayers.size() + " players", ColorType.SPECIAL_2.getColor()))
                                 .append(Component.text(" with ", ColorType.SUBTEXT.getColor()))
                                 .append(Component.text(ArmsRace.getPlayerKills(topPlayers.getFirst()), ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD))
@@ -140,12 +140,12 @@ public class ScoreboardManager {
                 }
             }
             case 13 -> {
-                if (player.hasPermission("group.spectators")) {
+                if (FinderSets.isGoldenLocked()){
                     board.updateLine(5, Component.text("Current Item Set : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
-                            .append(Component.text(Finder.getCurrentItemSetName(), ColorType.SUBTEXT.getColor())));
+                            .append(Component.text(FinderSets.getCurrentItemSetName(), ColorType.SUBTEXT.getColor())));
                 } else {
-                    board.updateLine(5, Component.text("Items found : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
-                            .append(Component.text(Finder.getPlayerItemsFound(player) + "/" + Finder.getTotalItemsFound())));
+                    board.updateLine(5, Component.text("Current Item Set : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
+                            .append(Component.text(FinderSets.getCurrentItemSetName(), ColorType.RAINBOW.getColor())));
                 }
             }
             default -> {

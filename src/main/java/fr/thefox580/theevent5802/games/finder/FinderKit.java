@@ -2,11 +2,15 @@ package fr.thefox580.theevent5802.games.finder;
 
 import fr.thefox580.theevent5802.utils.ColorType;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
+
+import java.util.List;
 
 public class FinderKit {
 
@@ -62,6 +66,14 @@ public class FinderKit {
         rocket.setAmount(99);
         player.setCooldown(rocket, 20);
 
+        ItemStack spawn = ItemStack.of(Material.CARROT_ON_A_STICK);
+        ItemMeta spawnMeta = spawn.getItemMeta();
+        spawnMeta.customName(Component.text("Return to spawn", ColorType.MC_ORANGE.getColor()).decoration(TextDecoration.ITALIC, false));
+        CustomModelDataComponent cmdComp = spawnMeta.getCustomModelDataComponent();
+        cmdComp.setStrings(List.of("bingo_house"));
+        spawnMeta.setCustomModelDataComponent(cmdComp);
+        spawn.setItemMeta(spawnMeta);
+
         ItemStack steak = new ItemStack(Material.COOKED_BEEF);
         ItemMeta steakMeta = steak.getItemMeta();
         steakMeta.displayName(Component.text("Steak", ColorType.MC_YELLOW.getColor()));
@@ -81,6 +93,7 @@ public class FinderKit {
         chestplateMeta.setUnbreakable(true);
         chestplateMeta.addEnchant(Enchantment.PROTECTION, 4, false);
         chestplateMeta.displayName(Component.text("Diamond Chestplate", ColorType.MC_YELLOW.getColor()));
+        chestplate.setItemMeta(chestplateMeta);
 
 
         ItemStack leggings = new ItemStack(Material.DIAMOND_LEGGINGS);
@@ -103,7 +116,9 @@ public class FinderKit {
         player.getInventory().setItem(2, pickaxeFortune);
         player.getInventory().setItem(3, pickaxeSilk);
         player.getInventory().setItem(4, rocket);
-        player.getInventory().setItem(8, steak);
+        player.getInventory().setItem(6, spawn);
+        player.getInventory().setItem(7, steak);
+        player.getInventory().setItem(8, elytra);
 
         player.getInventory().setHelmet(helmet);
         player.getInventory().setChestplate(chestplate);

@@ -4,7 +4,6 @@ import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.commands.*;
 import fr.thefox580.theevent5802.commands.TimerCommand;
 import fr.thefox580.theevent5802.games.finder.FinderCommand;
-import fr.thefox580.theevent5802.games.finder.FinderListeners;
 import fr.thefox580.theevent5802.listeners.*;
 import fr.thefox580.theevent5802.tasks.*;
 import fr.thefox580.theevent5802.tasks.timer.RemoveTime;
@@ -42,17 +41,18 @@ public record PluginStart(TheEvent580_2 plugin) {
     }
 
     public void createListeners() {
-        new OnJoinEvent(plugin);
-        new OnLeaveEvent(plugin);
+        new OnJoin(plugin);
+        new OnLeave(plugin);
         new OnMessage(plugin);
-        new OnGUIClick(plugin);
         new OnDamage(plugin);
-        new OnInventoryClose(plugin);
+        new OnInventoryInteract(plugin);
         new OnItemInteract(plugin);
         new OnWorldInteract(plugin);
         new OnServerListPing(plugin);
         new OnPlayerMove(plugin);
-        new FinderListeners(plugin);
+        new OnPlace(plugin);
+        new OnShoot(plugin);
+        new OnBreak(plugin);
     }
 
     public void createTasks() {

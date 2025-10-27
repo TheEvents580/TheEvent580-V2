@@ -36,7 +36,7 @@ public class Mode7 implements Runnable{
     @Override
     public void run() {
 
-        if (Timer.getSeconds() == 29){
+        if (Timer.getSeconds() == 30){
             for (Player loopPlayer : Bukkit.getOnlinePlayers()){
                 loopPlayer.getAttribute(Attribute.MAX_HEALTH).setBaseValue(loopPlayer.getAttribute(Attribute.MAX_HEALTH).getDefaultValue());
                 loopPlayer.getInventory().clear();

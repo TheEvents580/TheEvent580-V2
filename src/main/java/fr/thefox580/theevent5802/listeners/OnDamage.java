@@ -34,11 +34,11 @@ public class OnDamage implements Listener {
         if (event.getEntity() instanceof Player player){
             if (Spectators.isSpectator(player)) {
                 event.setCancelled(true);
+            } else if (List.of(Timer.TimerEnum.SHOW_GAMES, Timer.TimerEnum.TP_TO_GAME, Timer.TimerEnum.PRE_GAME, Timer.TimerEnum.STARTING_SOON).contains(Timer.getEnum())){
+                event.setCancelled(true);
+            } else if (Timer.isPaused()){
+                event.setCancelled(true);
             }
-        } else if (List.of(Timer.TimerEnum.SHOW_GAMES, Timer.TimerEnum.TP_TO_GAME, Timer.TimerEnum.PRE_GAME).contains(Timer.getEnum())){
-            event.setCancelled(true);
-        } else if (Timer.isPaused()){
-            event.setCancelled(true);
         }
     }
 

@@ -10,9 +10,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class OnLeaveEvent implements Listener {
+public class OnLeave implements Listener {
 
-    public OnLeaveEvent(TheEvent580_2 plugin){
+    public OnLeave(TheEvent580_2 plugin){
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
