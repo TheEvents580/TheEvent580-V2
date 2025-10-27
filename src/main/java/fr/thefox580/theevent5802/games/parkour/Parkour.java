@@ -47,6 +47,8 @@ public class Parkour {
             }.runTaskLater(plugin, 20L);
         });
 
+        Variables.setVariable("jeu_condi", Game.PARKOUR.getGameCondition());
+
         playerPoints.clear();
         playerMults.clear();
         playerMainLevel.clear();

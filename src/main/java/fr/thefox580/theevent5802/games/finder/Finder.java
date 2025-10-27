@@ -47,6 +47,8 @@ public class Finder {
             }.runTaskLater(plugin, 20L);
         });
 
+        Variables.setVariable("jeu_condi", Game.FINDER.getGameCondition());
+
         for (PlayerManager player : Online.getOnlinePlayers()){
             Map<Material, Integer> mapList = new HashMap<>();
             for (String set : FinderSets.getAllItemSets()){
