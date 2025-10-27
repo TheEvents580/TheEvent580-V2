@@ -246,29 +246,52 @@ public class TrialsTasks {
             @Override
             public void run() {
 
-                if (Timer.getSeconds()%(Trials.getTrialsSpeed()+5) > 5){
-                    for (PlayerManager player : Online.getOnlinePlayers()){
-                        if (Players.isPlayer(Objects.requireNonNull(player.getOnlinePlayer()))){
-                            player.getOnlinePlayer().sendActionBar(
-                                    Component.text("Trial points : +", ColorType.SUBTEXT.getColor())
-                                            .append(Component.text('工', ColorType.NO_SHADOW.getColor()))
-                            );
-                        } else {
-                            int playersCompleted = Trials.getPlayersCompletedCount();
-                            player.getOnlinePlayer().sendActionBar(
-                                    Component.text(playersCompleted + " players completed this trial!", ColorType.SUBTEXT.getColor())
-                            );
+                if (!Timer.isPaused()){
+
+                    if (Timer.getSeconds()%(Trials.getTrialsSpeed()+5) > 5){
+                        for (PlayerManager player : Online.getOnlinePlayers()){
+                            if (Players.isPlayer(Objects.requireNonNull(player.getOnlinePlayer()))){
+                                player.getOnlinePlayer().sendActionBar(
+                                        Component.text("Trial points : +", ColorType.SUBTEXT.getColor())
+                                                .append(Component.text('工', ColorType.NO_SHADOW.getColor()))
+                                );
+                            } else {
+                                int playersCompleted = Trials.getPlayersCompletedCount();
+                                player.getOnlinePlayer().sendActionBar(
+                                        Component.text(playersCompleted + " players completed this trial!", ColorType.SUBTEXT.getColor())
+                                );
+                            }
                         }
-                    }
 
-                    if (currentTrialPoints > 0){
+                        if (currentTrialPoints > 0){
 
-                        switch (currentTrial){
-                            case 5: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (Objects.requireNonNull(player.getOnlinePlayer()).getY() < 0){
-                                        player.getOnlinePlayer().teleport(new Location(Bukkit.getWorld("trials"), 0.5, 130, 0.5, 0, 0));
-                                        if (!Trials.hasPlayerCompleted(player.getOnlinePlayer())){
+                            switch (currentTrial){
+                                case 5: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (Objects.requireNonNull(player.getOnlinePlayer()).getY() < 0){
+                                            player.getOnlinePlayer().teleport(new Location(Bukkit.getWorld("trials"), 0.5, 130, 0.5, 0, 0));
+                                            if (!Trials.hasPlayerCompleted(player.getOnlinePlayer())){
+                                                Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
+                                                player.getOnlinePlayer().showTitle(
+                                                        Title.title(
+                                                                Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
+                                                                Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
+                                                                        .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
+                                                                Title.Times.times(
+                                                                        Duration.ofMillis(100),
+                                                                        Duration.ofMillis(1500),
+                                                                        Duration.ofMillis(100))
+                                                        )
+                                                );
+                                            }
+                                        }
+                                    }
+                                    break;
+                                }
+
+                                case 10: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().clone().add(0, -1, 0).getBlock().getType() == Material.RED_CONCRETE){
                                             Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
                                             player.getOnlinePlayer().showTitle(
                                                     Title.title(
@@ -283,255 +306,254 @@ public class TrialsTasks {
                                             );
                                         }
                                     }
+                                    break;
                                 }
-                                break;
-                            }
 
-                            case 10: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().clone().add(0, -1, 0).getBlock().getType() == Material.RED_CONCRETE){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
-                                                        Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
-                                                                .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
+                                case 11: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().clone().add(0, -1, 0).getBlock().getType() == Material.LIME_CONCRETE){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
+                                                            Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
+                                                                    .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
                                     }
+                                    break;
                                 }
-                                break;
-                            }
 
-                            case 11: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().clone().add(0, -1, 0).getBlock().getType() == Material.LIME_CONCRETE){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
-                                                        Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
-                                                                .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
+                                case 12: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().clone().add(0, -1, 0).getBlock().getType() == Material.BLUE_CONCRETE){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
+                                                            Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
+                                                                    .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
                                     }
+                                    break;
                                 }
-                                break;
-                            }
 
-                            case 12: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().clone().add(0, -1, 0).getBlock().getType() == Material.BLUE_CONCRETE){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
-                                                        Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
-                                                                .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
+                                case 13: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().clone().add(0, -1, 0).getBlock().getType() == Material.GRAY_CONCRETE){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
+                                                            Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
+                                                                    .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
                                     }
+                                    break;
                                 }
-                                break;
-                            }
 
-                            case 13: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().clone().add(0, -1, 0).getBlock().getType() == Material.GRAY_CONCRETE){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
-                                                        Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
-                                                                .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
+                                case 14: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getX() >= 0){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
+                                                            Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
+                                                                    .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
                                     }
+                                    break;
                                 }
-                                break;
-                            }
 
-                            case 14: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getX() >= 0){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
-                                                        Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
-                                                                .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
+                                case 15: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getZ() >= 0){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
+                                                            Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
+                                                                    .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
                                     }
+                                    break;
                                 }
-                                break;
-                            }
 
-                            case 15: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getZ() >= 0){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
-                                                        Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
-                                                                .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
+                                case 16: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getX() < 0){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
+                                                            Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
+                                                                    .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
                                     }
+                                    break;
                                 }
-                                break;
-                            }
 
-                            case 16: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getX() < 0){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
-                                                        Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
-                                                                .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
+                                case 17: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getZ() < 0){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
+                                                            Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
+                                                                    .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
                                     }
+                                    break;
                                 }
-                                break;
-                            }
 
-                            case 17: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getZ() < 0){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
-                                                        Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
-                                                                .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
+                                case 18: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getTargetEntity(10) instanceof Player){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
+                                                            Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
+                                                                    .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
                                     }
+                                    break;
                                 }
-                                break;
-                            }
 
-                            case 18: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getTargetEntity(10) instanceof Player){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
-                                                        Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
-                                                                .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
+                                case 19: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && Objects.requireNonNull(player.getOnlinePlayer().getTargetBlockExact(5)).getType() == Material.TINTED_GLASS){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
+                                                            Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
+                                                                    .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
                                     }
+                                    break;
                                 }
-                                break;
-                            }
 
-                            case 19: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && Objects.requireNonNull(player.getOnlinePlayer().getTargetBlockExact(5)).getType() == Material.TINTED_GLASS){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
-                                                        Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
-                                                                .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
+                                case 20: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getPitch() <= -65){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
+                                                            Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
+                                                                    .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
                                     }
+                                    break;
                                 }
-                                break;
-                            }
 
-                            case 20: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getPitch() <= -65){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
-                                                        Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
-                                                                .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
+                                case 21: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getPitch() >= 65){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
+                                                            Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
+                                                                    .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
                                     }
+                                    break;
                                 }
-                                break;
-                            }
 
-                            case 21: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getPitch() >= 65){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
-                                                        Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
-                                                                .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
+                                case 25: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (Objects.requireNonNull(player.getOnlinePlayer()).getY() < 0){
+                                            player.getOnlinePlayer().teleport(new Location(Bukkit.getWorld("trials"), 0.5, 130, 0.5, 0, 0));
+                                            if (Trials.hasPlayerCompleted(player.getOnlinePlayer())){
+                                                Trials.setRoundPoints(player.getOnlinePlayer(), 0);
+                                                player.getOnlinePlayer().showTitle(
+                                                        Title.title(
+                                                                Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
+                                                                Component.text("", ColorType.SUBTEXT.getColor()),
+                                                                Title.Times.times(
+                                                                        Duration.ofMillis(100),
+                                                                        Duration.ofMillis(1500),
+                                                                        Duration.ofMillis(100))
+                                                        )
+                                                );
+                                            }
+                                        }
                                     }
+                                    break;
                                 }
-                                break;
-                            }
 
-                            case 25: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (Objects.requireNonNull(player.getOnlinePlayer()).getY() < 0){
-                                        player.getOnlinePlayer().teleport(new Location(Bukkit.getWorld("trials"), 0.5, 130, 0.5, 0, 0));
-                                        if (Trials.hasPlayerCompleted(player.getOnlinePlayer())){
+                                case 29: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().clone().add(0, -1, 0).getBlock().getType() == Material.RED_CONCRETE){
                                             Trials.setRoundPoints(player.getOnlinePlayer(), 0);
                                             player.getOnlinePlayer().showTitle(
                                                     Title.title(
@@ -545,314 +567,295 @@ public class TrialsTasks {
                                             );
                                         }
                                     }
+                                    break;
                                 }
-                                break;
-                            }
 
-                            case 29: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().clone().add(0, -1, 0).getBlock().getType() == Material.RED_CONCRETE){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), 0);
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
-                                                        Component.text("", ColorType.SUBTEXT.getColor()),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
+                                case 30: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().clone().add(0, -1, 0).getBlock().getType() == Material.LIME_CONCRETE){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), 0);
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
+                                                            Component.text("", ColorType.SUBTEXT.getColor()),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
+                                    }
+                                    break;
+                                }
+
+                                case 31: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().clone().add(0, -1, 0).getBlock().getType() == Material.BLUE_CONCRETE){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), 0);
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
+                                                            Component.text("", ColorType.SUBTEXT.getColor()),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
+                                    }
+                                    break;
+                                }
+
+                                case 32: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().clone().add(0, -1, 0).getBlock().getType() == Material.GRAY_CONCRETE){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), 0);
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
+                                                            Component.text("", ColorType.SUBTEXT.getColor()),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
+                                    }
+                                    break;
+                                }
+
+                                case 33: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getX() >= 0){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), 0);
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
+                                                            Component.text("", ColorType.SUBTEXT.getColor()),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
+                                    }
+                                    break;
+                                }
+
+                                case 34: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getZ() >= 0){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), 0);
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
+                                                            Component.text("", ColorType.SUBTEXT.getColor()),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
+                                    }
+                                    break;
+                                }
+
+                                case 35: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getX() < 0){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), 0);
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
+                                                            Component.text("", ColorType.SUBTEXT.getColor()),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
+                                    }
+                                    break;
+                                }
+
+                                case 36: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getZ() < 0){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), 0);
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
+                                                            Component.text("", ColorType.SUBTEXT.getColor()),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
+                                    }
+                                    break;
+                                }
+
+                                case 37: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getTargetEntity(10) instanceof Player){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), 0);
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
+                                                            Component.text("", ColorType.SUBTEXT.getColor()),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
+                                    }
+                                    break;
+                                }
+
+                                case 38: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && Objects.requireNonNull(player.getOnlinePlayer().getTargetBlockExact(5)).getType() == Material.TINTED_GLASS){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), 0);
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
+                                                            Component.text("", ColorType.SUBTEXT.getColor()),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
+                                    }
+                                    break;
+                                }
+
+                                case 39: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getPitch() <= -65){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), 0);
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
+                                                            Component.text("", ColorType.SUBTEXT.getColor()),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
+                                    }
+                                    break;
+                                }
+
+                                case 40: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getPitch() >= 65){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), 0);
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
+                                                            Component.text("", ColorType.SUBTEXT.getColor()),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        }
+                                    }
+                                    break;
+                                }
+
+                                case 49: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation() == playerLocation.get(player.getOnlinePlayer())){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
+                                            playerLocation.remove(player.getOnlinePlayer());
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
+                                                            Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
+                                                                    .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        } else if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer()))) {
+                                            playerLocation.put(player.getOnlinePlayer(), player.getOnlinePlayer().getLocation());
+                                        }
+                                    }
+                                    break;
+                                }
+
+                                case 50: {
+                                    for (PlayerManager player : Players.getOnlinePlayerList()){
+                                        if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation() == playerLocation.get(player.getOnlinePlayer())){
+                                            Trials.setRoundPoints(player.getOnlinePlayer(), 0);
+                                            playerLocation.remove(player.getOnlinePlayer());
+                                            player.getOnlinePlayer().showTitle(
+                                                    Title.title(
+                                                            Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
+                                                            Component.text("", ColorType.SUBTEXT.getColor()),
+                                                            Title.Times.times(
+                                                                    Duration.ofMillis(100),
+                                                                    Duration.ofMillis(1500),
+                                                                    Duration.ofMillis(100))
+                                                    )
+                                            );
+                                        } else if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer()))) {
+                                            playerLocation.put(player.getOnlinePlayer(), player.getOnlinePlayer().getLocation());
+                                        }
                                     }
                                 }
                                 break;
                             }
-
-                            case 30: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().clone().add(0, -1, 0).getBlock().getType() == Material.LIME_CONCRETE){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), 0);
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
-                                                        Component.text("", ColorType.SUBTEXT.getColor()),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
-                                    }
-                                }
-                                break;
-                            }
-
-                            case 31: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().clone().add(0, -1, 0).getBlock().getType() == Material.BLUE_CONCRETE){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), 0);
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
-                                                        Component.text("", ColorType.SUBTEXT.getColor()),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
-                                    }
-                                }
-                                break;
-                            }
-
-                            case 32: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().clone().add(0, -1, 0).getBlock().getType() == Material.GRAY_CONCRETE){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), 0);
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
-                                                        Component.text("", ColorType.SUBTEXT.getColor()),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
-                                    }
-                                }
-                                break;
-                            }
-
-                            case 33: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getX() >= 0){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), 0);
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
-                                                        Component.text("", ColorType.SUBTEXT.getColor()),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
-                                    }
-                                }
-                                break;
-                            }
-
-                            case 34: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getZ() >= 0){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), 0);
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
-                                                        Component.text("", ColorType.SUBTEXT.getColor()),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
-                                    }
-                                }
-                                break;
-                            }
-
-                            case 35: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getX() < 0){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), 0);
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
-                                                        Component.text("", ColorType.SUBTEXT.getColor()),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
-                                    }
-                                }
-                                break;
-                            }
-
-                            case 36: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getZ() < 0){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), 0);
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
-                                                        Component.text("", ColorType.SUBTEXT.getColor()),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
-                                    }
-                                }
-                                break;
-                            }
-
-                            case 37: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getTargetEntity(10) instanceof Player){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), 0);
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
-                                                        Component.text("", ColorType.SUBTEXT.getColor()),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
-                                    }
-                                }
-                                break;
-                            }
-
-                            case 38: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && Objects.requireNonNull(player.getOnlinePlayer().getTargetBlockExact(5)).getType() == Material.TINTED_GLASS){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), 0);
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
-                                                        Component.text("", ColorType.SUBTEXT.getColor()),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
-                                    }
-                                }
-                                break;
-                            }
-
-                            case 39: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getPitch() <= -65){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), 0);
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
-                                                        Component.text("", ColorType.SUBTEXT.getColor()),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
-                                    }
-                                }
-                                break;
-                            }
-
-                            case 40: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation().getPitch() >= 65){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), 0);
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
-                                                        Component.text("", ColorType.SUBTEXT.getColor()),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
-                                    }
-                                }
-                                break;
-                            }
-
-                            case 49: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation() == playerLocation.get(player.getOnlinePlayer())){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), Math.round(currentTrialPoints));
-                                        playerLocation.remove(player.getOnlinePlayer());
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You completed this trial!", ColorType.MC_LIME.getColor()),
-                                                        Component.text("+" + Math.round(currentTrialPoints), ColorType.SUBTEXT.getColor())
-                                                                .append(Component.text('工', ColorType.NO_SHADOW.getColor())),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
-                                    } else if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer()))) {
-                                        playerLocation.put(player.getOnlinePlayer(), player.getOnlinePlayer().getLocation());
-                                    }
-                                }
-                                break;
-                            }
-
-                            case 50: {
-                                for (PlayerManager player : Players.getOnlinePlayerList()){
-                                    if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer())) && player.getOnlinePlayer().getLocation() == playerLocation.get(player.getOnlinePlayer())){
-                                        Trials.setRoundPoints(player.getOnlinePlayer(), 0);
-                                        playerLocation.remove(player.getOnlinePlayer());
-                                        player.getOnlinePlayer().showTitle(
-                                                Title.title(
-                                                        Component.text("You failed this trial!", ColorType.MC_RED.getColor()),
-                                                        Component.text("", ColorType.SUBTEXT.getColor()),
-                                                        Title.Times.times(
-                                                                Duration.ofMillis(100),
-                                                                Duration.ofMillis(1500),
-                                                                Duration.ofMillis(100))
-                                                )
-                                        );
-                                    } else if (!Trials.hasPlayerCompleted(Objects.requireNonNull(player.getOnlinePlayer()))) {
-                                        playerLocation.put(player.getOnlinePlayer(), player.getOnlinePlayer().getLocation());
-                                    }
-                                }
-                            }
-                            break;
                         }
-                    }
 
-                    currentTrialPoints -= 100f/Trials.getTrialsSpeed()/2/10;
+                        currentTrialPoints -= 100f/Trials.getTrialsSpeed()/2/10;
 
-                } else if (Timer.getSeconds()%Trials.getTrialsSpeed()+5 == 5){
+                    } else if (Timer.getSeconds()%Trials.getTrialsSpeed()+5 == 5){
 
-                    currentTrial = 0;
-                    for (PlayerManager player : Players.getOnlinePlayerList()){
-                        World world = Objects.requireNonNull(player.getOnlinePlayer()).getWorld();
-                        Firework firework = (Firework) world.spawnEntity(player.getOnlinePlayer().getLocation(), EntityType.FIREWORK_ROCKET);
-                        FireworkMeta fireworkMeta = firework.getFireworkMeta();
-                        FireworkEffect.Builder builder = FireworkEffect.builder();
-                        if (Trials.hasPlayerCompleted(player.getOnlinePlayer())){
-                            builder.withColor(Color.LIME);
-                        } else {
-                            builder.withColor(Color.RED);
+                        currentTrial = 0;
+                        for (PlayerManager player : Players.getOnlinePlayerList()){
+                            World world = Objects.requireNonNull(player.getOnlinePlayer()).getWorld();
+                            Firework firework = (Firework) world.spawnEntity(player.getOnlinePlayer().getLocation(), EntityType.FIREWORK_ROCKET);
+                            FireworkMeta fireworkMeta = firework.getFireworkMeta();
+                            FireworkEffect.Builder builder = FireworkEffect.builder();
+                            if (Trials.hasPlayerCompleted(player.getOnlinePlayer())){
+                                builder.withColor(Color.LIME);
+                            } else {
+                                builder.withColor(Color.RED);
+                            }
+                            fireworkMeta.addEffect(builder.with(FireworkEffect.Type.BURST).build());
+                            fireworkMeta.setPower(1);
+                            firework.setFireworkMeta(fireworkMeta);
+                            firework.setTicksToDetonate(0);
+                            firework.detonate();
+
+                            Points.addGamePoints(player.getOnlinePlayer(), Trials.getRoundPoints(player.getOnlinePlayer()));
                         }
-                        fireworkMeta.addEffect(builder.with(FireworkEffect.Type.BURST).build());
-                        fireworkMeta.setPower(1);
-                        firework.setFireworkMeta(fireworkMeta);
-                        firework.setTicksToDetonate(0);
-                        firework.detonate();
 
-                        Points.addGamePoints(player.getOnlinePlayer(), Trials.getRoundPoints(player.getOnlinePlayer()));
+                        currentTrialPoints = 100f;
+                        Trials.resetRoundPoints();
+
+                    } else if (Timer.getSeconds() == 0){
+                        this.cancel();
                     }
-
-                    currentTrialPoints = 100f;
-                    Trials.resetRoundPoints();
-
-                } else if (Timer.getSeconds() == 0){
-                    this.cancel();
                 }
 
             }
