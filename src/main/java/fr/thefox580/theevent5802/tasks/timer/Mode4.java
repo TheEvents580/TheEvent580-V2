@@ -5,6 +5,7 @@ import com.fren_gor.ultimateAdvancementAPI.advancement.display.AdvancementFrameT
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.games.finder.Finder;
 import fr.thefox580.theevent5802.games.parkour.Parkour;
+import fr.thefox580.theevent5802.games.tag.Tag;
 import fr.thefox580.theevent5802.games.trials.Trials;
 import fr.thefox580.theevent5802.utils.Game;
 import fr.thefox580.theevent5802.utils.Players;
@@ -83,6 +84,7 @@ public class Mode4 implements Runnable{
                     createGameAdvancement("Did you get those blocks?");
                 }
                 case TAG -> {
+                    Tag.startPreGame(plugin);
                     createGameAdvancement("QUICK RUN!!!!!!!!!!!!!1!!!!!!!!!!");
                 }
                 case MULTILAP -> {
