@@ -1,6 +1,7 @@
 package fr.thefox580.theevent5802.listeners;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
+import fr.thefox580.theevent5802.games.tag.Tag;
 import fr.thefox580.theevent5802.games.trials.Trials;
 import fr.thefox580.theevent5802.games.trials.TrialsTasks;
 import fr.thefox580.theevent5802.utils.*;
@@ -37,6 +38,12 @@ public class OnDamage implements Listener {
             } else if (List.of(Timer.TimerEnum.SHOW_GAMES, Timer.TimerEnum.TP_TO_GAME, Timer.TimerEnum.PRE_GAME, Timer.TimerEnum.STARTING_SOON).contains(Timer.getEnum())){
                 event.setCancelled(true);
             } else if (Timer.isPaused()){
+                event.setCancelled(true);
+            } else if (event.getCause() == EntityDamageEvent.DamageCause.WORLD_BORDER){
+                event.setCancelled(true);
+            } else if (Variables.equals("jeu_condi", Game.PARKOUR.getGameCondition())){
+                event.setCancelled(true);
+            } else if (Variables.equals("jeu_condi", Game.TAG.getGameCondition()) && event.getCause() == EntityDamageEvent.DamageCause.FALL){
                 event.setCancelled(true);
             }
         }
@@ -82,6 +89,13 @@ public class OnDamage implements Listener {
                                 Trials.setRoundPoints(damager, 0);
                             }
                         }
+                    }
+                }
+            } else if (Variables.equals("jeu_condi", Game.TAG.getGameCondition())){
+                if (event.getDamager() instanceof Player damager){
+                    event.setCancelled(true);
+                    if (Tag.getTagger().getUniqueId() == damager.getUniqueId()){
+                        Tag.setTagger(player);
                     }
                 }
             }

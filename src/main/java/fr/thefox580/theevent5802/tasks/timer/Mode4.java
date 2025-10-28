@@ -3,11 +3,9 @@ package fr.thefox580.theevent5802.tasks.timer;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.games.finder.Finder;
 import fr.thefox580.theevent5802.games.parkour.Parkour;
+import fr.thefox580.theevent5802.games.tag.Tag;
 import fr.thefox580.theevent5802.games.trials.Trials;
-import fr.thefox580.theevent5802.utils.Game;
-import fr.thefox580.theevent5802.utils.Players;
-import fr.thefox580.theevent5802.utils.Timer;
-import fr.thefox580.theevent5802.utils.Voting;
+import fr.thefox580.theevent5802.utils.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
@@ -70,8 +68,8 @@ public class Mode4 implements Runnable{
                 case TRIALS -> Trials.startPreGame(plugin);
                 case PARKOUR -> Parkour.startPreGame(plugin);
                 case FINDER -> Finder.startPreGame(plugin);
-                /*case TAG ->
-                case MULTILAP ->
+                case TAG -> Tag.startPreGame(plugin);
+                /*case MULTILAP ->
                 case BUILD_MASTERS ->
                 case ARMS_RACE ->
                 case BOW_PVP ->*/

@@ -1,9 +1,12 @@
 package fr.thefox580.theevent5802.utils;
 
+import fr.thefox580.theevent5802.TheEvent580_2;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -49,6 +52,10 @@ public class PlayerManager{
             return player.getPlayer();
         }
         return null;
+    }
+
+    public boolean isOnline(){
+        return player.isOnline();
     }
 
     public String getName(){
@@ -113,5 +120,9 @@ public class PlayerManager{
 
     public ItemStack getFlag(){
         return flag;
+    }
+
+    public boolean isAlive(TheEvent580_2 plugin){
+        return Boolean.TRUE.equals(player.getPersistentDataContainer().get(new NamespacedKey(plugin, "alive"), PersistentDataType.BOOLEAN));
     }
 }

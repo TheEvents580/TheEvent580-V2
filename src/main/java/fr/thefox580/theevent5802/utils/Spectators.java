@@ -245,7 +245,7 @@ public class Spectators implements CommandExecutor, TabCompleter {
 
         Bukkit.getOnlinePlayers().forEach(loopPlayer -> {
             loopPlayer.hidePlayer(plugin, spec);
-            if (!Spectators.isSpectator(loopPlayer)){
+            if (Online.getPlayerManager(loopPlayer).isAlive(plugin)){
                 spec.showPlayer(plugin, loopPlayer);
             }
         });

@@ -8,7 +8,7 @@ public enum Game {
     TRIALS("Trials", ColorType.MC_RED, "\uE001", true, 10, 10*60),
     PARKOUR("Parkour", ColorType.MC_ORANGE, "\uE002", true, 2, 10*60),
     FINDER("Finder", ColorType.MC_YELLOW, "\uE003", true, 13, 15*60),
-    TAG("Tag", ColorType.MC_LIME, "\uE004", true, 11, -1),
+    TAG("Tag", ColorType.MC_LIME, "\uE004", true, 11, 12*60),
     MULTILAP("Multilap", ColorType.MC_AQUA, "\uE005", true, 5, 10*60),
     BUILD_MASTERS("Build Masters", ColorType.MC_BLUE, "\uE006", true, 9, 10*60),
     ARMS_RACE("Arms Race", ColorType.MC_PURPLE, "\uE007", true, 12, 15*60),
