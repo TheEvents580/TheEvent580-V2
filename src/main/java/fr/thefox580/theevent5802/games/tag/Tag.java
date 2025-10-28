@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class Tag {
 
-    private static final World world = Bukkit.getWorld("Tag");
+    private static final World world = Bukkit.getWorld("tag");
     private static Player tagger;
     private static int switchUntilExplosion = 50;
     private static int timeUntilExplosion = 40;
@@ -40,7 +40,7 @@ public class Tag {
         }
 
         Bukkit.getOnlinePlayers().forEach(player -> {
-            player.teleport(new Location(Bukkit.getWorld("Tag"), 7.5, 142, -6.5, 180, 0));
+            player.teleport(new Location(Bukkit.getWorld("tag"), 7.5, 142, -6.5, 180, 0));
             new BukkitRunnable() {
                 @Override
                 public void run() {

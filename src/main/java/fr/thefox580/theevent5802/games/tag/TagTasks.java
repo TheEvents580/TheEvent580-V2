@@ -170,7 +170,7 @@ public class TagTasks {
                     for (PlayerManager playerManager : Players.getOnlinePlayerList()){
                         if (playerManager.isAlive(plugin)){
                             if (outsideBorder.get(playerManager.getOnlinePlayer()) >= 30L){
-                                Objects.requireNonNull(playerManager.getOnlinePlayer()).teleport(new Location(Bukkit.getWorld("Tag"), 7.5, 142, -6.5, 180, 0));
+                                Objects.requireNonNull(playerManager.getOnlinePlayer()).teleport(new Location(Bukkit.getWorld("tag"), 7.5, 142, -6.5, 180, 0));
                                 playerManager.getOnlinePlayer().sendMessage(Component.text("[")
                                         .append(Component.text(Game.TAG.getName(), Game.TAG.getColorType().getColor()))
                                         .append(Component.text("] ", ColorType.TEXT.getColor()))
