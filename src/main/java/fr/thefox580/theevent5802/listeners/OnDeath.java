@@ -2,12 +2,11 @@ package fr.thefox580.theevent5802.listeners;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.games.bow_pvp.BowPVP;
-import fr.thefox580.theevent5802.utils.ColorType;
-import fr.thefox580.theevent5802.utils.PlayerManager;
-import fr.thefox580.theevent5802.utils.Players;
-import fr.thefox580.theevent5802.utils.Variables;
+import fr.thefox580.theevent5802.utils.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -81,8 +80,10 @@ public class OnDeath implements Listener {
     public void onRespawnEvent(PlayerRespawnEvent event){
         Player player = event.getPlayer();
 
-        if (Variables.equals("jeu_condi", 8)){
+        if (Variables.equals("jeu_condi", Game.BOW_PVP.getGameCondition())){
             BowPVP.respawnPlayer(player);
+        } else if (Variables.equals("jeu_condi", Game.FINDER.getGameCondition())){
+            player.teleport(new Location(Bukkit.getWorld("Finder"), -67, 64, -53));
         }
     }
 
