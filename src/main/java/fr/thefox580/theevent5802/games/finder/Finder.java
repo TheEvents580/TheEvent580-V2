@@ -13,6 +13,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import java.util.Map;
 
 public class Finder {
 
+    private static final FinderKit kit = new FinderKit();
     private static final Map<Player, Map<Material, Integer>> playersItemFound = new HashMap<>();
 
     /**
@@ -34,18 +36,29 @@ public class Finder {
 
         Bukkit.getOnlinePlayers().forEach(player -> {
             player.teleport(new Location(Bukkit.getWorld("Finder"), -67, 64, -53));
+
+            if (Players.isPlayer(player)) { // If player isn't a spectator
+                kit.giveKitToPlayer(player);
+
+                org.bukkit.scoreboard.Team loopPlayerTeam = player.getScoreboard().getPlayerTeam(player);
+                assert loopPlayerTeam != null;
+                loopPlayerTeam.setOption(org.bukkit.scoreboard.Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
+            }
+
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     player.setGameMode(GameMode.ADVENTURE);
-                    Bukkit.getOnlinePlayers().forEach(otherPlayer -> {
-                        if (otherPlayer.getUniqueId() != player.getUniqueId()){
-                            player.hidePlayer(plugin, otherPlayer);
-                        }
-                    });
                 }
             }.runTaskLater(plugin, 20L);
         });
+
+        Variables.setVariable("jeu_condi", Game.FINDER.getGameCondition());
+        Variables.setVariable("jeu", (int) Variables.getVariable("jeu") +1);
+        Variables.setVariable("jeu_nom", Game.FINDER.getName());
+        Variables.setVariable("jeu_logo", Game.FINDER.getIcon());
+
+        Spectators.readySpectatorsGame();
 
         for (PlayerManager player : Online.getOnlinePlayers()){
             Map<Material, Integer> mapList = new HashMap<>();
@@ -152,12 +165,14 @@ public class Finder {
                     .append(Component.text(Game.FINDER.getName(), Game.FINDER.getColorType().getColor()))
                     .append(Component.text("] Banked " + amount + "x "))
                     .append(ItemStack.of(material).displayName().color(ColorType.GOLD.getColor())));
+            Points.addGamePoints(player, 3*Math.round(2*amount*Points.getMultiplier()));
             return;
         }
         player.sendMessage(Component.text("[")
                 .append(Component.text(Game.FINDER.getName(), Game.FINDER.getColorType().getColor()))
                 .append(Component.text("] Banked " + amount + "x "))
                 .append(ItemStack.of(material).displayName().color(ColorType.SILVER.getColor())));
+        Points.addGamePoints(player, Math.round(2*amount*Points.getMultiplier()));
     }
 
     /**

@@ -2,14 +2,12 @@ package fr.thefox580.theevent5802.utils;
 
 import com.fren_gor.ultimateAdvancementAPI.UltimateAdvancementAPI;
 import fr.thefox580.theevent5802.TheEvent580_2;
-import fr.thefox580.theevent5802.games.finder.FinderInstance;
 
 public class Instances {
     private final TheEvent580_2 plugin;
 
     private VariablesDatabase variablesDatabase;
     private StatsDatabase statsDatabase;
-    private FinderInstance economicsInstance;
     private Spectators spectators;
     private Variables variables;
     private BossbarManager bossbars;
@@ -30,7 +28,6 @@ public class Instances {
     }
 
     public void initialize(){
-        this.economicsInstance = new FinderInstance();
         this.spectators = new Spectators(plugin);
         this.variables = new Variables();
         this.bossbars = new BossbarManager(plugin);
@@ -49,10 +46,6 @@ public class Instances {
 
     public StatsDatabase getStatsDatabase(){
         return statsDatabase;
-    }
-
-    public FinderInstance getEconomicsInstance(){
-        return economicsInstance;
     }
 
     public Spectators getSpectators(){
