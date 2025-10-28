@@ -12,8 +12,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class OnLeave implements Listener {
 
+    private final TheEvent580_2 plugin;
+
     public OnLeave(TheEvent580_2 plugin){
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        this.plugin = plugin;
     }
 
     @EventHandler
@@ -29,6 +32,9 @@ public class OnLeave implements Listener {
                 Timer.setPaused(true);
             }
         }
+
+        plugin.getInstances().getAdvancementAPI().getProgressionTab().hideTab(player);
+        plugin.getInstances().getAdvancementAPI().getCustomTab().hideTab(player);
 
         TextColor color = playerManager.getColorType().getColor();
 

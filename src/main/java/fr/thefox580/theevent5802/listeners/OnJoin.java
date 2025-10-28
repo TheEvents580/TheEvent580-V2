@@ -1,5 +1,7 @@
 package fr.thefox580.theevent5802.listeners;
 
+import com.fren_gor.ultimateAdvancementAPI.advancement.BaseAdvancement;
+import com.fren_gor.ultimateAdvancementAPI.events.PlayerLoadingCompletedEvent;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.utils.*;
 import net.kyori.adventure.text.Component;
@@ -43,26 +45,6 @@ public class OnJoin implements Listener {
                 }
             }
         }
-
-        SpawnParkour.updateText();
-
-        player.setFlySpeed(0.1f);
-
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, PotionEffect.INFINITE_DURATION, 255, false, false, false));
-
-        PersistentDataContainer playerContainer = player.getPersistentDataContainer();
-
-        if (!playerContainer.has(new NamespacedKey(plugin, "points"))){
-            Points.initialisePoints(player);
-        }
-
-        playerContainer.set(new NamespacedKey(plugin, "alive"), PersistentDataType.BOOLEAN, true);
-
-        if (Objects.equals(Variables.getVariable("jeu"), 0)){
-            Points.resetPoints(player);
-        }
-
-        ScoreboardManager.createBoard(player);
 
         PlayerManager playerManager;
 
@@ -182,6 +164,49 @@ public class OnJoin implements Listener {
 
         Component message = getPlayerJoinComponent(component, player, color);
         event.joinMessage(message); //Setup join message
+    }
+
+    @EventHandler
+    public void playerCompleteLoadingEvent(PlayerLoadingCompletedEvent event){
+        Player player = event.getPlayer();
+
+        SpawnParkour.updateText();
+
+        player.setFlySpeed(0.1f);
+
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, PotionEffect.INFINITE_DURATION, 255, false, false, false));
+
+        PersistentDataContainer playerContainer = player.getPersistentDataContainer();
+
+        if (!playerContainer.has(new NamespacedKey(plugin, "points"))){
+            Points.initialisePoints(player);
+        }
+
+        playerContainer.set(new NamespacedKey(plugin, "alive"), PersistentDataType.BOOLEAN, true);
+
+        if (Objects.equals(Variables.getVariable("jeu"), 0)){
+            Points.resetPoints(player);
+        }
+
+        ScoreboardManager.createBoard(player);
+
+        plugin.getInstances().getAdvancementAPI().getProgressionTab().showTab(player);
+        plugin.getInstances().getAdvancementAPI().getCustomTab().showTab(player);
+
+        int game = 0;
+        if (game < (int) Variables.getVariable("jeu")){
+            int offset = 1;
+            if ((int) Variables.getVariable("jeu") > 3){
+                offset = 2;
+            }
+            while (game < (int) Variables.getVariable("jeu") + offset){
+                BaseAdvancement adv = plugin.getInstances().getAdvancementAPI().getProgressionAdvancement(game);
+                if (!adv.isGranted(player)){
+                    adv.grant(player);
+                }
+                game++;
+            }
+        }
     }
 
     @NotNull

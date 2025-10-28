@@ -8,32 +8,32 @@ import java.util.*;
 public class PlayerAdvancement {
 
     private final UUID player_uuid;
-    private final Map<Advancements, Boolean> advancements = new HashMap<>();
+    private final Map<AdvancementsEnum, Boolean> advancements = new HashMap<>();
 
     public PlayerAdvancement(UUID player_uuid){
         this.player_uuid = player_uuid;
-        advancements.put(Advancements.LASTSECONDSBM, false);
-        advancements.put(Advancements.SECRETBASE, false);
-        advancements.put(Advancements.HEROBRINE, false);
-        advancements.put(Advancements.HUBPARKOUR, false);
+        this.advancements.put(AdvancementsEnum.LASTSECONDSBM, false);
+        this.advancements.put(AdvancementsEnum.SECRETBASE, false);
+        this.advancements.put(AdvancementsEnum.HEROBRINE, false);
+        this.advancements.put(AdvancementsEnum.HUBPARKOUR, false);
     }
 
     public UUID getPlayerUUID() {
         return player_uuid;
     }
 
-    public Map<Advancements, Boolean> getAdvancements() {
+    public Map<AdvancementsEnum, Boolean> getAdvancements() {
         return advancements;
     }
 
-    public void setAdvancementCompletion(Advancements advancement, boolean completion){
-        advancements.replace(advancement, completion);
+    public void setAdvancementCompletion(AdvancementsEnum advancement, boolean completion){
+        this.advancements.replace(advancement, completion);
     }
 
     private Document formatAdvancementsDoc(){
         Document doc = new Document();
 
-        advancements.forEach((Advancements adv, Boolean completion) -> doc.append(adv.getId().toString(), completion));
+        this.advancements.forEach((AdvancementsEnum adv, Boolean completion) -> doc.append(String.valueOf(adv.getId()), completion));
 
         return doc;
     }
