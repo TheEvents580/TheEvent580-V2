@@ -1,6 +1,7 @@
 package fr.thefox580.theevent5802.utils;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
@@ -124,5 +125,10 @@ public class PlayerManager{
 
     public boolean isAlive(TheEvent580_2 plugin){
         return Boolean.TRUE.equals(player.getPersistentDataContainer().get(new NamespacedKey(plugin, "alive"), PersistentDataType.BOOLEAN));
+    }
+
+    public Component playerComponent(){
+        return Component.text(getTeam().getIcon())
+                .append(Component.text(getName(), getColorType().getColor()));
     }
 }

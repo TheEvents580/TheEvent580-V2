@@ -1,10 +1,7 @@
 package fr.thefox580.theevent5802.commands;
 
-import com.destroystokyo.paper.profile.PlayerProfile;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.utils.ColorType;
-import fr.thefox580.theevent5802.utils.Online;
-import fr.thefox580.theevent5802.utils.PlayerManager;
 import fr.thefox580.theevent5802.utils.Team;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -17,11 +14,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class SpecMenu implements CommandExecutor {
@@ -40,17 +34,17 @@ public class SpecMenu implements CommandExecutor {
                 Inventory gui = Bukkit.createInventory(player, 9*5, Component.text("Spectator TP Menu"));
 
                 if (args.length == 0){
-                    createTeam(gui, Team.RED, 1);
-                    createTeam(gui, Team.ORANGE, 2);
-                    createTeam(gui, Team.YELLOW, 3);
-                    createTeam(gui, Team.LIME, 4);
+                    Team.RED.createTeamInInv(gui, 1, true);
+                    Team.ORANGE.createTeamInInv(gui, 2, true);
+                    Team.YELLOW.createTeamInInv(gui, 3, true);
+                    Team.LIME.createTeamInInv(gui, 4, true);
                     createNextPage(gui);
 
                 } else {
-                    createTeam(gui, Team.LIGHT_BLUE, 1);
-                    createTeam(gui, Team.BLUE, 2);
-                    createTeam(gui, Team.PURPLE, 3);
-                    createTeam(gui, Team.PINK, 4);
+                    Team.LIGHT_BLUE.createTeamInInv(gui, 1, true);
+                    Team.BLUE.createTeamInInv(gui, 2, true);
+                    Team.PURPLE.createTeamInInv(gui, 3, true);
+                    Team.PINK.createTeamInInv(gui, 4, true);
                     createLastPage(gui);
                 }
 
@@ -59,49 +53,6 @@ public class SpecMenu implements CommandExecutor {
         }
 
         return true;
-    }
-
-    private void createTeam(Inventory gui, Team team, int row){
-        int slot = 9*(row-1);
-
-        ItemStack concrete = team.getItemStack();
-        ItemMeta concreteMeta = concrete.getItemMeta();
-
-        concreteMeta.displayName(Component.text(team.getIcon()).decoration(TextDecoration.ITALIC, false)
-                .append(Component.text(" "+ team.getName() + " Team", team.getColorType().getColor())));
-
-        concrete.setItemMeta(concreteMeta);
-
-        gui.setItem(slot, concrete);
-        slot++;
-
-        List<Player> teamPlayers = new ArrayList<>();
-
-        for (PlayerManager playerManager : Online.getOnlinePlayers()){
-            Player player = playerManager.getOnlinePlayer();
-            if (player != null && playerManager.getTeam() == team && player.getAllowFlight() && !teamPlayers.contains(player) && teamPlayers.size() < 8){
-                teamPlayers.add(player);
-            }
-        }
-
-        for (Player player : teamPlayers){
-
-            PlayerProfile playerProfile = player.getPlayerProfile();
-
-            ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
-            SkullMeta playerHeadMeta = (SkullMeta) playerHead.getItemMeta();
-            playerHeadMeta.displayName(Component.text(team.getIcon() + " ", ColorType.TEXT.getColor()).decoration(TextDecoration.ITALIC, false)
-                    .append(Component.text(player.getName(), team.getColorType().getColor())));
-            if (playerProfile.getTextures().isEmpty()){
-                playerProfile.update().thenAccept(playerHeadMeta::setPlayerProfile);
-            } else {
-                playerHeadMeta.setPlayerProfile(playerProfile);
-            }
-            playerHead.setItemMeta(playerHeadMeta);
-
-            gui.setItem(slot, playerHead);
-            slot++;
-        }
     }
 
     private void createNextPage(Inventory gui){

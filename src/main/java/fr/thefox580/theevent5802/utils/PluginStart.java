@@ -7,6 +7,7 @@ import fr.thefox580.theevent5802.games.finder.FinderCommand;
 import fr.thefox580.theevent5802.listeners.*;
 import fr.thefox580.theevent5802.tasks.*;
 import fr.thefox580.theevent5802.tasks.timer.RemoveTime;
+import fr.thefox580.theevent5802.tasks.timer.ShowBlocksTask;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public record PluginStart(TheEvent580_2 plugin) {
         new Leaderboard(plugin);
         new SpecMenu(plugin);
         new Fly(plugin);
+        new ShowBlocks(plugin);
     }
 
     public void createListeners() {
@@ -61,6 +63,7 @@ public record PluginStart(TheEvent580_2 plugin) {
         new UpdateBoardAndTab(plugin);
         new RemoveTime(plugin);
         new SpawnTask(plugin);
+        new ShowBlocksTask(plugin);
     }
 
     public static void stopTasks() {

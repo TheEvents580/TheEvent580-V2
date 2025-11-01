@@ -7,6 +7,7 @@ import fr.thefox580.theevent5802.utils.Variables;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -19,18 +20,32 @@ public class OnBreak implements Listener {
 
     @EventHandler
     public void onBlockBreakEvent(BlockBreakEvent event){
-        if (Variables.equals("jeu_condi", Game.FINDER.getGameCondition())){
-            Location blockLocation = event.getBlock().getLocation();
-            blockLocation.setY(-64);
 
-            if (blockLocation.getBlock().getType() == Material.BARRIER){
-                if (event.getPlayer().getGameMode() != GameMode.CREATIVE && event.getPlayer().isOp()){
-                    event.setCancelled(true);
+        Player player = event.getPlayer();
+
+        if (player.getGameMode() != GameMode.CREATIVE){
+
+            if (Variables.equals("jeu_condi", Game.FINDER.getGameCondition())){
+                Location blockLocation = event.getBlock().getLocation();
+                blockLocation.setY(-64);
+
+                if (blockLocation.getBlock().getType() == Material.BARRIER){
+                    if (!player.isOp()){
+                        event.setCancelled(true);
+                    }
                 }
-            }
-        } else if (Variables.equals("jeu_condi", Game.BUILD_MASTERS.getGameCondition())){
-            if (BuildMasters.getUnbreakableBlocks().contains(event.getBlock().getType())){
-                event.setCancelled(true);
+            } else if (Variables.equals("jeu_condi", Game.BUILD_MASTERS.getGameCondition())){
+                if (!BuildMasters.getRemainingPlayers().contains(event.getPlayer())){
+                    event.setCancelled(true);
+                } else {
+                    if (BuildMasters.getUnbreakableBlocks().contains(event.getBlock().getType())){
+                        event.setCancelled(true);
+                    } else if (event.getBlock().getZ() < 3000){
+                        if (event.getBlock().getY() != 128){
+                            event.setCancelled(true);
+                        }
+                    }
+                }
             }
         }
     }
