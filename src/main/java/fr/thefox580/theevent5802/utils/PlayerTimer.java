@@ -26,28 +26,37 @@ public class PlayerTimer {
         return seconds;
     }
 
+    public void remove1Second(){
+        seconds--;
+    }
+
+    public void add1Second(){
+        seconds++;
+    }
+
     public String getFormatedPlayerTimer(){
-        int minutes = seconds%60;
-        int newSeconds = seconds-minutes*60;
+        int minutes = seconds/60;
+        int newSeconds = seconds%60;
 
         String minutesString = ""+minutes;
         String secondsString = ""+newSeconds;
 
         if (minutes < 10){
-            minutesString = "0"+minutes;
+            minutesString = "0" + minutes;
         } if (newSeconds < 10) {
-            secondsString = "0"+newSeconds;
+            secondsString = "0" + newSeconds;
         }
 
-        return minutesString+":"+secondsString;
+        return minutesString + ":" + secondsString;
+
     }
 
     public Component timeLeft(){
-        if (seconds%60 < 1){
+        if (seconds/60 < 1){
             return Component.text(getFormatedPlayerTimer(), ColorType.MC_RED.getColor());
-        } else if (seconds%60 < 3) {
+        } else if (seconds/60 < 3) {
             return Component.text(getFormatedPlayerTimer(), ColorType.MC_ORANGE.getColor());
-        } else if (seconds%60 < 5){
+        } else if (seconds/60 < 5){
             return Component.text(getFormatedPlayerTimer(), ColorType.MC_YELLOW.getColor());
         }
         return Component.text(getFormatedPlayerTimer(), ColorType.MC_LIME.getColor());

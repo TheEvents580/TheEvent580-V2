@@ -66,7 +66,7 @@ public class Timer {
             return "--:--";
         } else {
             int minutes = Timer.seconds/60;
-            int newSeconds = Timer.seconds-minutes*60;
+            int newSeconds = Timer.seconds%60;
 
             String minutesString = ""+minutes;
             String secondsString = ""+newSeconds;

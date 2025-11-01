@@ -111,3 +111,9 @@ commands:
 
   fly:
     description: toggles fly mode if you have access to it
+
+  showblocks:
+    aliases:
+      - "blocks"
+      - "showblock"
+    description: toggles if you see the block name above your hotbar or not

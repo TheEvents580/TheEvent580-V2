@@ -10,7 +10,7 @@ public enum Game {
     FINDER("Finder", ColorType.MC_YELLOW, "\uE003", true, 13, 15*60),
     TAG("Tag", ColorType.MC_LIME, "\uE004", true, 11, 12*60),
     MULTILAP("Multilap", ColorType.MC_AQUA, "\uE005", true, 5, 10*60),
-    BUILD_MASTERS("Build Masters", ColorType.MC_BLUE, "\uE006", true, 9, 10*60),
+    BUILD_MASTERS("Build Masters", ColorType.MC_BLUE, "\uE006", true, 9, 60*60),
     ARMS_RACE("Arms Race", ColorType.MC_PURPLE, "\uE007", true, 12, 15*60),
     BOW_PVP("Bow PVP", ColorType.MC_PINK, "\uE008", true, 8, 10*60),
     HUB("Hub", ColorType.TEXT, "", false, 0, -1),

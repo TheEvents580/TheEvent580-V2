@@ -9,6 +9,7 @@ import net.kyori.adventure.title.Title;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
@@ -54,6 +55,13 @@ public class Mode7 implements Runnable{
                                 Duration.ofSeconds(1)
                         )));
                 loopPlayer.setGlowing(false);
+
+                PersistentDataContainer pdc = loopPlayer.getPersistentDataContainer();
+
+                if (Boolean.TRUE.equals(pdc.get(new NamespacedKey(plugin, "showBlocks"), PersistentDataType.BOOLEAN))){
+                    Bukkit.dispatchCommand(loopPlayer, "showBlocks");
+                }
+
                 if (Players.isPlayer(loopPlayer)){
                     if (Variables.equals("jeu_condi", Game.PARKOUR.getGameCondition())){
                         Points.addGamePoints(loopPlayer, Math.round(Parkour.getPlayerPoints(loopPlayer) * Parkour.getPlayerMult(loopPlayer)));

@@ -91,16 +91,6 @@ public class ScoreboardManager {
             }
             case 8 -> {
                 if (player.hasPermission("group.spectators")) {
-                    board.updateLine(5, Component.text("Total Completed Builds : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
-                            .append(Component.text(BuildMasters.getTotalCompletedBuild(), ColorType.SUBTEXT.getColor()).decoration(TextDecoration.BOLD, false)));
-                } else {
-                    Component timeLeft = Objects.requireNonNull(Players.getPlayerManager(player)).getTimer().timeLeft();
-                    board.updateLine(5, Component.text("Time Left : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
-                            .append(timeLeft));
-                }
-            }
-            case 9 -> {
-                if (player.hasPermission("group.spectators")) {
                     board.updateLine(5, Component.text("Waiting for other players", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
                 } else {
                     if (player.getInventory().getHelmet() != null && player.getInventory().getHelmet().getType() == Material.NETHERITE_HELMET) {
@@ -110,6 +100,16 @@ public class ScoreboardManager {
                         board.updateLine(5, Component.text("You are invincible for : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
                                 .append(invincibilityTime));
                     }
+                }
+            }
+            case 9 -> {
+                if (player.hasPermission("group.spectators")) {
+                    board.updateLine(5, Component.text("Total Completed Builds : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
+                            .append(Component.text(BuildMasters.getTotalCompletedBuild(), ColorType.SUBTEXT.getColor()).decoration(TextDecoration.BOLD, false)));
+                } else {
+                    Component timeLeft = Objects.requireNonNull(Players.getPlayerManager(player)).getTimer().timeLeft();
+                    board.updateLine(5, Component.text("Time Left : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
+                            .append(timeLeft));
                 }
             }
             case 10 ->

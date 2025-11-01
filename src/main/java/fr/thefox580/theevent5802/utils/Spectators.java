@@ -218,6 +218,8 @@ public class Spectators implements CommandExecutor, TabCompleter {
         Player spec = spectator.getOnlinePlayer();
         assert spec != null;
 
+        spec.getInventory().clear();
+
         PersistentDataContainer playerContainer = spec.getPersistentDataContainer();
         playerContainer.set(new NamespacedKey(plugin, "alive"), PersistentDataType.BOOLEAN, false);
 

@@ -6,6 +6,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -54,6 +55,10 @@ public class OnJoin implements Listener {
 
         if (!playerContainer.has(new NamespacedKey(plugin, "points"))){
             Points.initialisePoints(player);
+        }
+
+        if (!playerContainer.has(new NamespacedKey(plugin, "showBlocks"))){
+            playerContainer.set(new NamespacedKey(plugin, "showBlocks"), PersistentDataType.BOOLEAN, false);
         }
 
         playerContainer.set(new NamespacedKey(plugin, "alive"), PersistentDataType.BOOLEAN, true);
@@ -179,6 +184,8 @@ public class OnJoin implements Listener {
                 color = Team.STAFF.getColorType().getColor();
             }
         }
+
+        player.setGameMode(GameMode.ADVENTURE);
 
         Component message = getPlayerJoinComponent(component, player, color);
         event.joinMessage(message); //Setup join message
