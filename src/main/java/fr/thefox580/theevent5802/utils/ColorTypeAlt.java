@@ -38,7 +38,16 @@ public enum ColorTypeAlt {
     AROMANTIC(TextColor.color(240, 240, 92)),
     NON_BINARY(TextColor.color(240, 240, 96)),
     NO_SHADOW(TextColor.color(240, 240, 100)),
-    BOSSBAR(TextColor.color(240, 240, 104));
+    BOSSBAR(TextColor.color(240, 240, 104)),
+    GOLD(TextColor.color(255, 215, 0)),
+    SILVER(TextColor.color(192, 192, 192)),
+    BRONZE(TextColor.color(205, 127, 50)),
+    ARMS_RACE_BLANK_EVEN(TextColor.color(240, 240, 108)),
+    ARMS_RACE_BLANK_ODD(TextColor.color(240, 240, 112)),
+    ARMS_RACE_BLANK_LAST(TextColor.color(240, 240, 116)),
+    ARMS_RACE_DONE_EVEN(TextColor.color(240, 240, 120)),
+    ARMS_RACE_DONE_ODD(TextColor.color(240, 240, 124)),
+    ARMS_RACE_DONE_LAST(TextColor.color(240, 240, 128));
 
     private final TextColor color;
 
