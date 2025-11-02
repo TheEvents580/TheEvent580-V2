@@ -108,6 +108,12 @@ public class BuildMastersTasks {
                         }
                     });
 
+                    BossBar mallBossbar = BossbarManager.getBossbar("mall");
+
+                    if (mallBossbar != null){
+                        BossbarManager.setBossbarVisibility(mallBossbar, true);
+                    }
+
                     mainGameTask(plugin);
                     otherTask(plugin);
                     this.cancel();
