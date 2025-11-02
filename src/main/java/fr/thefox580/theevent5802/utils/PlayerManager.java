@@ -128,7 +128,9 @@ public class PlayerManager{
     }
 
     public Component playerComponent(){
-        return Component.text(getTeam().getIcon())
-                .append(Component.text(getName(), getColorType().getColor()));
+        Component head = Component.translatable("%nox_uuid%" + getUniqueId() + ",false,0,-1,1", "\uD83D\uDC64");
+        return Component.text(getTeam().getIcon() + " ", ColorType.NO_SHADOW.getColor())
+                .append(head)
+                .append(Component.text(" " + getName(), getColorType().getColor()));
     }
 }

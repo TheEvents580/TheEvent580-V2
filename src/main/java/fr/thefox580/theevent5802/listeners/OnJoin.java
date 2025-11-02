@@ -3,7 +3,6 @@ package fr.thefox580.theevent5802.listeners;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.utils.*;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -76,8 +75,6 @@ public class OnJoin implements Listener {
         } else {
             playerManager = Players.getPlayerManager(player);
         }
-
-        Component component = Component.translatable("%nox_uuid%"+player.getUniqueId()+",false,0,-1,1","\uD83D\uDC64").color(ColorType.TEXT.getColor()); //Setup custom player head
 
         if (playerManager == null){
 
@@ -152,6 +149,8 @@ public class OnJoin implements Listener {
             }
         }
 
+        player.getInventory().clear();
+
         if (Spectators.isSpectator(player)){
             plugin.getLogger().info("Player " + player.getName() + " is a spectator");
             if (playerManager != null){
@@ -175,29 +174,33 @@ public class OnJoin implements Listener {
             }
         }
 
-        TextColor color = Objects.requireNonNull(playerManager).getColorType().getColor();
-
-        if (color == playerManager.getTeam().getColorType().getColor()){
-            if (player.hasPermission("group.admin")){
-                color = Team.ADMIN.getColorType().getColor();
-            } else if (player.hasPermission("group.staff")){
-                color = Team.STAFF.getColorType().getColor();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (Variables.equals("jeu_condi", Game.FINDER.getGameCondition()) || Variables.equals("jeu_condi", Game.BUILD_MASTERS.getGameCondition())){
+                    player.setGameMode(GameMode.SURVIVAL);
+                } else {
+                    player.setGameMode(GameMode.ADVENTURE);
+                }
             }
+        }.runTaskLater(plugin, 2*20L);
+
+        playerManager = Online.getPlayerManager(player);
+
+        if (playerManager != null){
+            event.joinMessage(getPlayerJoinComponent(playerManager)); //Setup join message
+        } else {
+            event.joinMessage(Component.text("")); //Setup join message
         }
 
-        player.setGameMode(GameMode.ADVENTURE);
-
-        Component message = getPlayerJoinComponent(component, player, color);
-        event.joinMessage(message); //Setup join message
     }
 
     @NotNull
-    private static Component getPlayerJoinComponent(Component component, Player player, TextColor color) { //Setup join message
+    private static Component getPlayerJoinComponent(PlayerManager playerManager) { //Setup join message
 
         return Component.text('[')
                 .append(Component.text('+', ColorType.MC_LIME.getColor())) //Setup part 2
                 .append(Component.text("] ", ColorType.TEXT.getColor())) //Setup part 3
-                .append(component) //Add custom player head to the message
-                .append(Component.text(" "+ player.getName(), color)); //Add player's name to the message
+                .append(playerManager.playerComponent()); //Add custom player head to the message
     }
 }
