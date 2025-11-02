@@ -122,17 +122,19 @@ public class ScoreboardManager {
                 if (player.hasPermission("group.spectators")) {
                     ArrayList<Player> topPlayers = ArmsRace.getFurthestPlayers();
                     if (topPlayers.size() == 1) {
-                        board.updateLine(5, Component.text("Player in lead : ", ColorType.SUBTEXT.getColor(), TextDecoration.BOLD)
+                        board.updateLine(5, Component.text("Player in lead : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
                                 .append(Component.text(topPlayers.getFirst().getName(), Objects.requireNonNull(Players.getPlayerManager(topPlayers.getFirst())).getTeam().getColorType().getColor()))
-                                .append(Component.text(" with ", ColorType.SUBTEXT.getColor()))
-                                .append(Component.text(ArmsRace.getPlayerKills(topPlayers.getFirst()), ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD))
-                                .append(Component.text(" kills", ColorType.SUBTEXT.getColor())));
+                                .append(Component.text(" with ", ColorType.SPECIAL_2.getColor()))
+                                .append(Component.text(ArmsRace.getPlayerKills(topPlayers.getFirst()), ColorType.SUBTEXT.getColor(), TextDecoration.BOLD))
+                                .append(Component.text(" kills", ColorType.SPECIAL_2.getColor())));
+                    } else if (topPlayers.size() > 1){
+                        board.updateLine(5, Component.text("Players in lead : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
+                                .append(Component.text(topPlayers.size() + " players", ColorType.SUBTEXT.getColor()))
+                                .append(Component.text(" with ", ColorType.SPECIAL_2.getColor()))
+                                .append(Component.text(ArmsRace.getPlayerKills(topPlayers.getFirst()), ColorType.SUBTEXT.getColor(), TextDecoration.BOLD))
+                                .append(Component.text(" kills", ColorType.SPECIAL_2.getColor())));
                     } else {
-                        board.updateLine(5, Component.text("Players in lead : ", ColorType.SUBTEXT.getColor(), TextDecoration.BOLD)
-                                .append(Component.text(topPlayers.size() + " players", ColorType.SPECIAL_2.getColor()))
-                                .append(Component.text(" with ", ColorType.SUBTEXT.getColor()))
-                                .append(Component.text(ArmsRace.getPlayerKills(topPlayers.getFirst()), ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD))
-                                .append(Component.text(" kills", ColorType.SUBTEXT.getColor())));
+                        board.updateLine(5, Component.text("Waiting for the game to start.", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
                     }
                 } else {
                     board.updateLine(5, Component.text("Next weapon : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)

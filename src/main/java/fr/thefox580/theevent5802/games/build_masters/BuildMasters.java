@@ -43,6 +43,9 @@ public class BuildMasters {
      * @param plugin The main class of the plugin.
      */
     public static void startPreGame(TheEvent580_2 plugin){
+        Timer.setSeconds(90);
+        Timer.setMaxSeconds(90);
+        Timer.setEnum(Timer.TimerEnum.PRE_GAME);
 
         BossBar mallBossbar = BossbarManager.getBossbar("mall");
 
@@ -80,6 +83,11 @@ public class BuildMasters {
 
             }
         }
+
+        Variables.setVariable("jeu_condi", Game.BUILD_MASTERS.getGameCondition());
+        Variables.setVariable("jeu", (int) Variables.getVariable("jeu") +1);
+        Variables.setVariable("jeu_nom", Game.BUILD_MASTERS.getName());
+        Variables.setVariable("jeu_logo", Game.BUILD_MASTERS.getIcon());
 
 
         BuildMastersTasks.preGameTask(plugin);

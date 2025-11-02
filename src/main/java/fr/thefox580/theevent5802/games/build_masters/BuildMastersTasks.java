@@ -126,6 +126,10 @@ public class BuildMastersTasks {
 
     private static void mainGameTask(TheEvent580_2 plugin){
 
+        Timer.setSeconds(Game.BUILD_MASTERS.getGameTime());
+        Timer.setMaxSeconds(Game.BUILD_MASTERS.getGameTime());
+        Timer.setEnum(Timer.TimerEnum.IN_GAME);
+
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -136,11 +140,14 @@ public class BuildMastersTasks {
                     if (mallBossbar != null){
                         BossbarManager.setBossbarVisibility(mallBossbar, false);
                     }
+
                     if (Variables.equals("jeu", 6)){
                         //new Mode10(plugin);
                     } else {
                         new Mode7(plugin);
                     }
+
+                    this.cancel();
                 }
 
                 for (Player player : BuildMasters.getRemainingPlayers()){
