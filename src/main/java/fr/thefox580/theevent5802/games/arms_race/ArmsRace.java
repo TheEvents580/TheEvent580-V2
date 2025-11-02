@@ -1,5 +1,6 @@
 package fr.thefox580.theevent5802.games.arms_race;
 
+import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.utils.ColorType;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -19,6 +20,10 @@ public class ArmsRace {
 
     private static final Map<Player, Integer> playerWeapon = new HashMap<>();
     private static final Map<Integer, ItemStack> weapons = new HashMap<>();
+
+    public static void startPreGame(TheEvent580_2 plugin){
+
+    }
 
     private void initializeWeapons(){
         ItemStack nSword = new ItemStack(Material.NETHERITE_SWORD);
