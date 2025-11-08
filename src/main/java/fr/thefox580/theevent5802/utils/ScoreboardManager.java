@@ -96,7 +96,7 @@ public class ScoreboardManager {
                     if (player.getInventory().getHelmet() != null && player.getInventory().getHelmet().getType() == Material.NETHERITE_HELMET) {
                         board.updateLine(5, Component.text("You are not invincible", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
                     } else {
-                        Component invincibilityTime = BowPVP.getPlayerInvincibilityTime(player);
+                        Component invincibilityTime = BowPVP.getPlayerInvincibilityTimeComp(player);
                         board.updateLine(5, Component.text("You are invincible for : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
                                 .append(invincibilityTime));
                     }

@@ -6,6 +6,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
@@ -19,31 +20,36 @@ public class BowPVP {
 
     private static final Map<Player, Double> invincibleTime = new HashMap<>();
     private static final List<Location> respawnLocations = List.of();
+    private static final World world = Bukkit.getWorld("Bow_PVP");
 
-    public static Component getPlayerInvincibilityTime(Player player){
-        //int time = Math.toIntExact(Math.round(invincibleTime.get(player)));
-        int time = Math.toIntExact(Math.round(3.85));
+    public static Component getPlayerInvincibilityTimeComp(Player player){
+        double time = 0;
 
-        return Component.text(time + "s", ColorType.SUBTEXT.getColor()).decoration(TextDecoration.BOLD, false);
+        if (invincibleTime.get(player) != null){
+            time = invincibleTime.get(player);
+        }
+
+        return Component.text(Math.round(Math.ceil(time)) + "s", ColorType.SUBTEXT.getColor()).decoration(TextDecoration.BOLD, false);
     }
 
     public static void respawnPlayer(Player player){
         invincibleTime.put(player, 5d);
-        tpPlayerToRespawnLocation(player, Objects.requireNonNull(Bukkit.getWorld("Bow_PVP")).getWorldBorder().getSize() < 100);
+        tpPlayerToRespawnLocation(player, Objects.requireNonNull(world).getWorldBorder().getSize() < 100);
         Objects.requireNonNull(player.getAttribute(Attribute.MAX_HEALTH)).setBaseValue(Objects.requireNonNull(player.getAttribute(Attribute.MAX_HEALTH)).getValue()-2);
         player.heal(20, EntityRegainHealthEvent.RegainReason.CUSTOM);
         player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, PotionEffect.INFINITE_DURATION, 255, false, false, false));
-        player.getInventory().setHelmet(new ItemStack(Material.NETHERITE_HELMET));
-        player.getInventory().setChestplate(new ItemStack(Material.NETHERITE_CHESTPLATE));
-        player.getInventory().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
-        player.getInventory().setBoots(new ItemStack(Material.NETHERITE_BOOTS));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, PotionEffect.INFINITE_DURATION, 255, false, false, false));
+        player.getInventory().setHelmet(ItemStack.of(Material.NETHERITE_HELMET));
+        player.getInventory().setChestplate(ItemStack.of(Material.NETHERITE_CHESTPLATE));
+        player.getInventory().setLeggings(ItemStack.of(Material.NETHERITE_LEGGINGS));
+        player.getInventory().setBoots(ItemStack.of(Material.NETHERITE_BOOTS));
     }
 
     private static void tpPlayerToRespawnLocation(Player player, boolean postBorderReduction){
         if (postBorderReduction){
-            player.teleport(respawnLocations.get(new Random().nextInt(8)));
+            player.teleport(respawnLocations.get(new Random().nextInt(7)));
         } else {
-            player.teleport(respawnLocations.get(new Random().nextInt(respawnLocations.size()+1)));
+            player.teleport(respawnLocations.get(new Random().nextInt(respawnLocations.size())));
         }
     }
 
