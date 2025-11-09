@@ -1,7 +1,6 @@
 package fr.thefox580.theevent5802.games.bow_pvp;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
-import fr.thefox580.theevent5802.games.arms_race.ArmsRace;
 import fr.thefox580.theevent5802.tasks.timer.Mode7;
 import fr.thefox580.theevent5802.utils.*;
 import net.kyori.adventure.text.Component;
@@ -19,7 +18,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.Locale;
 
 public class BowPVPTasks {
 
@@ -133,7 +131,7 @@ public class BowPVPTasks {
                     });
 
                     mainGameTask(plugin);
-                    //otherTask(plugin);
+                    otherTask(plugin);
                     this.cancel();
                 }
 
@@ -161,17 +159,36 @@ public class BowPVPTasks {
                         new Mode7(plugin);
                     }
 
-                    for (PlayerManager playerManager : Players.getOnlinePlayerList()){
-                        Player player = playerManager.getOnlinePlayer();
-
-                        if (player != null){
-
-                        }
-                    }
-
                     this.cancel();
                 }
             }
         }.runTaskTimer(plugin, 0L, 20L);
+    }
+
+    private static void otherTask(TheEvent580_2 plugin){
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (Timer.getSeconds() == 0){
+                    this.cancel();
+                } else {
+                    List<Player> topPlayers = BowPVP.topPlayers();
+                    for (PlayerManager playerManager : Players.getOnlinePlayerList()){
+                        if (playerManager.isAlive(plugin)){
+                            Player player = playerManager.getOnlinePlayer();
+                            if (player != null){
+                                if (topPlayers.contains(player)){
+                                    if (!player.isGlowing()){
+                                        player.setGlowing(true);
+                                    }
+                                } else if (player.isGlowing()){
+                                    player.setGlowing(false);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }.runTaskTimer(plugin, 0L, 2L);
     }
 }

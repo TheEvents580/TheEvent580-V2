@@ -1,7 +1,6 @@
 package fr.thefox580.theevent5802.games.bow_pvp;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
-import fr.thefox580.theevent5802.games.arms_race.ArmsRaceTasks;
 import fr.thefox580.theevent5802.utils.*;
 import fr.thefox580.theevent5802.utils.Timer;
 import net.kyori.adventure.text.Component;
@@ -69,6 +68,30 @@ public class BowPVP {
         BowPVPTasks.preGameTask(plugin);
     }
 
+    public static List<Player> topPlayers(){
+        List<Player> topPlayers = new ArrayList<>();
+
+        double max = 0d;
+
+        for (PlayerManager playerManager : Players.getOnlinePlayerList()){
+            if (playerManager.isAlive(plugin)){
+                Player player = playerManager.getOnlinePlayer();
+                if (player != null){
+                    double playerMaxHealth = Objects.requireNonNull(player.getAttribute(Attribute.MAX_HEALTH)).getValue();
+                    if (playerMaxHealth >= max){
+                        if (playerMaxHealth > max){
+                            max = playerMaxHealth;
+                            topPlayers.clear();
+                        }
+                        topPlayers.add(player);
+                    }
+                }
+            }
+        }
+
+        return topPlayers;
+    }
+
     public static Component getPlayerInvincibilityTimeComp(Player player){
         double time = getPlayerInvincibilityTime(player);
 
@@ -116,17 +139,20 @@ public class BowPVP {
 
     public static void respawnPlayer(Player player){
         invincibleTime.put(player, 5d);
+        player.setGlowing(false);
 
         player.spigot().respawn();
         tpPlayerToRespawnLocation(player, Objects.requireNonNull(world).getWorldBorder().getSize() < 68);
+        boolean dead = Objects.requireNonNull(player.getAttribute(Attribute.MAX_HEALTH)).getValue() <= 2d;
 
-        Objects.requireNonNull(player.getAttribute(Attribute.MAX_HEALTH)).setBaseValue(Objects.requireNonNull(player.getAttribute(Attribute.MAX_HEALTH)).getValue()-2);
+        if (!dead){
+            Objects.requireNonNull(player.getAttribute(Attribute.MAX_HEALTH)).setBaseValue(Objects.requireNonNull(player.getAttribute(Attribute.MAX_HEALTH)).getValue()-2);
+        }
         player.heal(20, EntityRegainHealthEvent.RegainReason.CUSTOM);
 
         player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, PotionEffect.INFINITE_DURATION, 255, false, false, false));
         player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, PotionEffect.INFINITE_DURATION, 255, false, false, false));
 
-        boolean dead = Objects.requireNonNull(player.getAttribute(Attribute.MAX_HEALTH)).getValue() <= 2d;
         if (dead){
             Spectators.readySpectatorGame(Online.getPlayerManager(player));
 
