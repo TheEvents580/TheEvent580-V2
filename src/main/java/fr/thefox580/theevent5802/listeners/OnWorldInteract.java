@@ -93,9 +93,9 @@ public class OnWorldInteract implements Listener {
                     float before = player.getFlySpeed();
                     int percentageBefore = Math.round(player.getFlySpeed()*1000)-Math.round((player.getFlySpeed()-0.1f)*500);
 
-                    if (event.getAction() == Action.LEFT_CLICK_AIR && player.getFlySpeed() < 0.5f){
+                    if (event.getAction().isRightClick() && player.getFlySpeed() < 0.5f){
                         player.setFlySpeed(player.getFlySpeed()+0.1f);
-                    } else if (event.getAction() == Action.RIGHT_CLICK_AIR && player.getFlySpeed() >= 0.2f){
+                    } else if (event.getAction().isLeftClick() && player.getFlySpeed() >= 0.2f){
                         player.setFlySpeed(player.getFlySpeed()-0.1f);
                     }
                     int percentageAfter = Math.round(player.getFlySpeed()*1000)-Math.round((player.getFlySpeed()-0.1f)*500);
