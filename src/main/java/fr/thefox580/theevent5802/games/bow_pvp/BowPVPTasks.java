@@ -160,7 +160,13 @@ public class BowPVPTasks {
                     }
 
                     this.cancel();
+                } else {
+                    if (Timer.getSeconds() == 5*60){
+                        BowPVP.reduceWorldBorder();
+                    }
                 }
+
+
             }
         }.runTaskTimer(plugin, 0L, 20L);
     }
@@ -172,6 +178,10 @@ public class BowPVPTasks {
                 if (Timer.getSeconds() == 0){
                     this.cancel();
                 } else {
+                    if (BowPVP.nbPlayersAlive() <= 1){
+                        Timer.setSeconds(0);
+                    }
+
                     List<Player> topPlayers = BowPVP.topPlayers();
                     for (PlayerManager playerManager : Players.getOnlinePlayerList()){
                         if (playerManager.isAlive(plugin)){

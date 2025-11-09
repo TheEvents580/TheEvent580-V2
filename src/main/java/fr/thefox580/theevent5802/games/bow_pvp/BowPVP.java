@@ -39,6 +39,7 @@ public class BowPVP {
 
         if (world != null){
             world.setGameRule(GameRule.KEEP_INVENTORY, true);
+            world.getWorldBorder().setSize(83);
         }
 
         for (PlayerManager playerManager : Online.getOnlinePlayers()){
@@ -66,6 +67,18 @@ public class BowPVP {
         Spectators.readySpectatorsGame();
 
         BowPVPTasks.preGameTask(plugin);
+    }
+
+    public static int nbPlayersAlive(){
+        int count = 0;
+
+        for (PlayerManager playerManager : Players.getOnlinePlayerList()){
+            if (playerManager.isAlive(plugin)){
+                count++;
+            }
+        }
+
+        return count;
     }
 
     public static List<Player> topPlayers(){
@@ -202,6 +215,12 @@ public class BowPVP {
             player.teleport(respawnLocations.get(new Random().nextInt(8)));
         } else {
             player.teleport(respawnLocations.get(new Random().nextInt(respawnLocations.size())));
+        }
+    }
+
+    public static void reduceWorldBorder(){
+        if (world != null){
+            world.getWorldBorder().setSize(68, 60);
         }
     }
 
