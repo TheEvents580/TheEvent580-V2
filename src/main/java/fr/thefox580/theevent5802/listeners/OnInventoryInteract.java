@@ -25,10 +25,7 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class OnInventoryInteract implements Listener {
 
@@ -69,7 +66,7 @@ public class OnInventoryInteract implements Listener {
                             }
                             assert item != null;
                             if (item.getType() != Material.AIR) {
-                                config.set("minecraftle_game_tries." + player.getUniqueId(), config.getInt("minecraftle_game_tries." + player.getUniqueId()) + 1);
+                                config.set("minecraftle_game_tries." + player.getUniqueId(), Optional.of(config.getInt("minecraftle_game_tries." + player.getUniqueId()) + 1));
                                 if (Objects.equals(event.getCurrentItem().getType().getItemTranslationKey(), config.getString("minecraftle_game." + player.getUniqueId()))) {
                                     player.closeInventory();
                                     if (player.getWorld().getName().equals("world")) {
