@@ -151,29 +151,36 @@ public class Spectators implements CommandExecutor, TabCompleter {
         return spectatorList.size();
     }
 
+    private static void giveSpectatorTool(Player spectator){
+
+        ItemStack compass = new ItemStack(Material.COMPASS);
+        ItemMeta compassMeta = compass.getItemMeta();
+        compassMeta.displayName(Component.text("Teleport to player", ColorType.SUBTEXT.getColor()));
+        compass.setItemMeta(compassMeta);
+
+        ItemStack feather = new ItemStack(Material.FEATHER);
+        ItemMeta featherMeta = feather.getItemMeta();
+        featherMeta.customName(Component.text("Change your fly speed", ColorType.SUBTEXT.getColor())
+                .decoration(TextDecoration.BOLD, false)
+                .decoration(TextDecoration.ITALIC, false));
+        featherMeta.lore(List.of(Component.text("Right-click to reduce fly speed by 50%", ColorType.SPECIAL_2.getColor()).decoration(TextDecoration.ITALIC, false), Component.text("Left-click to increase fly speed by 50%", ColorType.SPECIAL_2.getColor()).decoration(TextDecoration.ITALIC, false)));
+        feather.setItemMeta(featherMeta);
+
+        spectator.getInventory().setItem(0, compass);
+        spectator.getInventory().setItem(1, feather);
+
+        Objects.requireNonNull(spectator.getAttribute(Attribute.MAX_HEALTH)).setBaseValue(20);
+        spectator.heal(20);
+
+        spectator.setFoodLevel(20);
+    }
+
     private static void giveSpectatorTools(){
         for (PlayerManager spectator : spectatorList){
-
-            ItemStack compass = new ItemStack(Material.COMPASS);
-            ItemMeta compassMeta = compass.getItemMeta();
-            compassMeta.displayName(Component.text("Teleport to player", ColorType.TEXT.getColor()));
-            compass.setItemMeta(compassMeta);
-
-            ItemStack feather = new ItemStack(Material.FEATHER);
-            ItemMeta featherMeta = feather.getItemMeta();
-            featherMeta.customName(Component.text("Change your fly speed", ColorType.SUBTEXT.getColor())
-                    .decoration(TextDecoration.BOLD, false)
-                    .decoration(TextDecoration.ITALIC, false));
-            featherMeta.lore(List.of(Component.text("Right-click to reduce fly speed by 50%", ColorType.SPECIAL_2.getColor()).decoration(TextDecoration.ITALIC, false), Component.text("Left-click to increase fly speed by 50%", ColorType.SPECIAL_2.getColor()).decoration(TextDecoration.ITALIC, false)));
-            feather.setItemMeta(featherMeta);
-
-            Objects.requireNonNull(spectator.getOnlinePlayer()).getInventory().setItem(0, compass);
-            spectator.getOnlinePlayer().getInventory().setItem(1, feather);
-
-            Objects.requireNonNull(spectator.getOnlinePlayer().getAttribute(Attribute.MAX_HEALTH)).setBaseValue(20);
-            spectator.getOnlinePlayer().heal(20);
-
-            spectator.getOnlinePlayer().setFoodLevel(20);
+            Player player = spectator.getOnlinePlayer();
+            if (player != null){
+                giveSpectatorTool(player);
+            }
         }
     }
 
@@ -223,27 +230,7 @@ public class Spectators implements CommandExecutor, TabCompleter {
         PersistentDataContainer playerContainer = spec.getPersistentDataContainer();
         playerContainer.set(new NamespacedKey(plugin, "alive"), PersistentDataType.BOOLEAN, false);
 
-        ItemStack compass = new ItemStack(Material.COMPASS);
-        ItemMeta compassMeta = compass.getItemMeta();
-        compassMeta.displayName(Component.text("Teleport to player", ColorType.TEXT.getColor())
-                .decoration(TextDecoration.ITALIC, false));
-        compass.setItemMeta(compassMeta);
-
-        ItemStack feather = new ItemStack(Material.FEATHER);
-        ItemMeta featherMeta = feather.getItemMeta();
-        featherMeta.customName(Component.text("Change your fly speed", ColorType.SUBTEXT.getColor())
-                .decoration(TextDecoration.BOLD, false)
-                .decoration(TextDecoration.ITALIC, false));
-        featherMeta.lore(List.of(Component.text("Right-click to reduce fly speed by 50%", ColorType.SPECIAL_2.getColor()).decoration(TextDecoration.ITALIC, false), Component.text("Left-click to increase fly speed by 50%", ColorType.SPECIAL_2.getColor()).decoration(TextDecoration.ITALIC, false)));
-        feather.setItemMeta(featherMeta);
-
-        spec.getInventory().setItem(0, compass);
-        spec.getInventory().setItem(1, feather);
-
-        Objects.requireNonNull(spec.getAttribute(Attribute.MAX_HEALTH)).setBaseValue(20);
-        spec.heal(20);
-
-        spec.setFoodLevel(20);
+        giveSpectatorTool(spec);
 
         Bukkit.getOnlinePlayers().forEach(loopPlayer -> {
             loopPlayer.hidePlayer(plugin, spec);
