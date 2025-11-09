@@ -55,7 +55,7 @@ public class BowPVP {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, PotionEffect.INFINITE_DURATION, 255, true, false));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, PotionEffect.INFINITE_DURATION, 255, true, false));
 
-                player.teleport(new Location(world, 1.5, 128, 0.5));
+                player.teleport(new Location(world, 1.5, 169, 0.5));
             }
         }
 
