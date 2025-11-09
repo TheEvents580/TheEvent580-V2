@@ -141,14 +141,6 @@ public class ArmsRaceTasks {
                         new Mode7(plugin);
                     }
 
-                    for (PlayerManager playerManager : Players.getOnlinePlayerList()){
-                        Player player = playerManager.getOnlinePlayer();
-
-                        if (player != null){
-                            player.setGlowing(false);
-                        }
-                    }
-
                     this.cancel();
                 }
 
