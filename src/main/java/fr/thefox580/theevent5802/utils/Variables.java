@@ -15,7 +15,7 @@ public class Variables {
         return variables.getOrDefault(name, null);
     }
 
-    public static void setVariable(String name, Object value) {
+    public static <T> void setVariable(String name, T value) {
         if (variables.containsKey(name)){
             variables.replace(name, value);
         } else {
