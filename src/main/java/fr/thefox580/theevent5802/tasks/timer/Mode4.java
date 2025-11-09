@@ -2,6 +2,7 @@ package fr.thefox580.theevent5802.tasks.timer;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.games.arms_race.ArmsRace;
+import fr.thefox580.theevent5802.games.bow_pvp.BowPVP;
 import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
 import fr.thefox580.theevent5802.games.finder.Finder;
 import fr.thefox580.theevent5802.games.parkour.Parkour;
@@ -74,7 +75,7 @@ public class Mode4 implements Runnable{
                 //case MULTILAP ->
                 case BUILD_MASTERS -> BuildMasters.startPreGame(plugin);
                 case ARMS_RACE -> ArmsRace.startPreGame(plugin);
-                //case BOW_PVP ->
+                case BOW_PVP -> BowPVP.startPreGame(plugin);
             }
 
             task.cancel();

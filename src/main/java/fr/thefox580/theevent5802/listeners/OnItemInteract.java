@@ -27,7 +27,7 @@ public class OnItemInteract implements Listener {
             if (event.getPlayer().getWorld().getName().equals("world") || event.getPlayer().getAllowFlight()){
                 event.setCancelled(true);
             }
-        } else if (event.getPlayer().getAllowFlight()){
+        } else if (event.getPlayer().getAllowFlight() && !event.getPlayer().isOp()){
             event.setCancelled(true);
         } else if (List.of(Game.MULTILAP.getGameCondition(), Game.BUILD_MASTERS.getGameCondition(),
                 Game.BOW_PVP.getGameCondition(), Game.ARMS_RACE.getGameTime()).contains((int) Variables.getVariable("jeu_condi"))){

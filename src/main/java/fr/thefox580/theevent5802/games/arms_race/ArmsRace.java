@@ -34,13 +34,15 @@ public class ArmsRace {
             world.setGameRule(GameRule.KEEP_INVENTORY, true);
         }
 
-        for (PlayerManager playerManager : Players.getOnlinePlayerList()){
+        for (PlayerManager playerManager : Online.getOnlinePlayers()){
             Player player = playerManager.getOnlinePlayer();
 
             if (player != null){
                 player.getInventory().clear();
-                Points.addGamePoints(player, Math.round(150*Points.getMultiplier()));
-                playerWeapon.put(player, 1);
+                if (playerManager.isPlayer()){
+                    Points.addGamePoints(player, Math.round(150*Points.getMultiplier()));
+                    playerWeapon.put(player, 1);
+                }
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, PotionEffect.INFINITE_DURATION, 255, true, false));
 
                 player.teleport(new Location(world, 17.5, 129, 10.5));
@@ -51,6 +53,8 @@ public class ArmsRace {
         Variables.setVariable("jeu", (int) Variables.getVariable("jeu") +1);
         Variables.setVariable("jeu_nom", Game.ARMS_RACE.getName());
         Variables.setVariable("jeu_logo", Game.ARMS_RACE.getIcon());
+
+        Spectators.readySpectatorsGame();
 
         ArmsRaceTasks.preGameTask(plugin);
 

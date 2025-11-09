@@ -113,6 +113,23 @@ public class OnDeath implements Listener {
                     ArmsRace.randomRespawn(victim, fromKnife);
                 }
             }.runTaskLater(plugin, 2L);
+        } else if (Variables.equals("jeu_condi", Game.BOW_PVP.getGameCondition())){
+            if (killer != null){
+                Material weapon = killer.getInventory().getItemInMainHand().getType();
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        BowPVP.respawnPlayer(victim, killer, weapon);
+                    }
+                }.runTaskLater(plugin, 2L);
+            } else {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        BowPVP.respawnPlayer(victim);
+                    }
+                }.runTaskLater(plugin, 2L);
+            }
         }
 
     }
