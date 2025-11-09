@@ -1,6 +1,7 @@
 package fr.thefox580.theevent5802.listeners;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
+import fr.thefox580.theevent5802.games.bow_pvp.BowPVP;
 import fr.thefox580.theevent5802.games.tag.Tag;
 import fr.thefox580.theevent5802.games.trials.Trials;
 import fr.thefox580.theevent5802.games.trials.TrialsTasks;
@@ -97,6 +98,10 @@ public class OnDamage implements Listener {
                     if (Tag.getTagger().getUniqueId() == damager.getUniqueId()){
                         Tag.setTagger(player);
                     }
+                }
+            } else if (Variables.equals("jeu_condi", Game.BOW_PVP.getGameCondition())){
+                if (BowPVP.isPlayerInvincible(player)){
+                    event.setCancelled(true);
                 }
             }
         } else if (List.of(Timer.TimerEnum.SHOW_GAMES, Timer.TimerEnum.TP_TO_GAME, Timer.TimerEnum.PRE_GAME).contains(Timer.getEnum())){

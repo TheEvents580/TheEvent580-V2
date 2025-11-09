@@ -78,7 +78,7 @@ public class OnJoin implements Listener {
 
         if (playerManager == null){
 
-            plugin.getLogger().info("Player Manager for " + player.getName() + " wasn't found, creating one");
+            plugin.getLogger().warning("Player Manager for " + player.getName() + " wasn't found, creating one");
 
             boolean isStaff = false;
             boolean isAdmin = false;
@@ -92,48 +92,35 @@ public class OnJoin implements Listener {
 
             if (player.hasPermission("group.spectators")){ //If the player is a spectator
                 Spectators.addSpectator(player, isStaff, isAdmin);
-                playerManager = Spectators.getPlayerManager(player);
             }
 
             else if (player.hasPermission("group.rouge")) { //If the player is in red team
                 Players.addPlayer(player, Team.RED, isStaff, isAdmin);
-                playerManager = Players.getPlayerManager(player);
 
             }
             else if (player.hasPermission("group.orange")) { //If the player is in orange team
                 Players.addPlayer(player, Team.ORANGE, isStaff, isAdmin);
-                playerManager = Players.getPlayerManager(player);
 
             }
             else if (player.hasPermission("group.jaune")) { //If the player is in yellow team
                 Players.addPlayer(player, Team.YELLOW, isStaff, isAdmin);
-                playerManager = Players.getPlayerManager(player);
 
             }
             else if (player.hasPermission("group.vert")) { //If the player is in lime / green team
                 Players.addPlayer(player, Team.LIME, isStaff, isAdmin);
-                playerManager = Players.getPlayerManager(player);
 
             }
             else if (player.hasPermission("group.bleu_clair")) { //If the player is in light blue team
                 Players.addPlayer(player, Team.LIGHT_BLUE, isStaff, isAdmin);
-                playerManager = Players.getPlayerManager(player);
-
             }
             else if (player.hasPermission("group.bleu")) { //If the player is in blue team
                 Players.addPlayer(player, Team.BLUE, isStaff, isAdmin);
-                playerManager = Players.getPlayerManager(player);
-
             }
             else if (player.hasPermission("group.violet")) { //If the player is in purple team
                 Players.addPlayer(player, Team.PURPLE, isStaff, isAdmin);
-                playerManager = Players.getPlayerManager(player);
-
             }
             else if (player.hasPermission("group.rose")) { //If the player is in pink team
                 Players.addPlayer(player, Team.PINK, isStaff, isAdmin);
-                playerManager = Players.getPlayerManager(player);
-
             }
             else { //Else if the player isn't in a team
                 for (Player p : Bukkit.getOnlinePlayers()) { //Loop all players
@@ -151,39 +138,32 @@ public class OnJoin implements Listener {
 
         player.getInventory().clear();
 
-        if (Spectators.isSpectator(player)){
-            plugin.getLogger().info("Player " + player.getName() + " is a spectator");
-            if (playerManager != null){
-                if (Variables.equals("jeu_condi", 0)){
-                    Spectators.readySpectatorLobby(playerManager);
-                } else {
-                    Spectators.readySpectatorGame(playerManager);
-                }
-            } else {
-                plugin.getLogger().severe("PLAYER MANAGER FOR " + player.getName() + " WAS NOT FOUND!!!");
-            }
-        } else {
-            plugin.getLogger().info("Player " + player.getName() + " is a player");
-            if (Variables.equals("jeu_condi", 0)){
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        player.performCommand("spawn");
-                    }
-                }.runTaskLater(plugin, 2*20L);
-            }
-        }
-
         new BukkitRunnable() {
             @Override
             public void run() {
                 if (Variables.equals("jeu_condi", Game.FINDER.getGameCondition()) || Variables.equals("jeu_condi", Game.BUILD_MASTERS.getGameCondition())){
                     player.setGameMode(GameMode.SURVIVAL);
                 } else {
+                    PlayerManager playerManager = Online.getPlayerManager(player);
+                    if (Spectators.isSpectator(player)){
+                        plugin.getLogger().info("Player " + player.getName() + " is a spectator");
+                        if (playerManager != null){
+                            if (Variables.equals("jeu_condi", Game.HUB.getGameCondition())){
+                                Spectators.readySpectatorLobby(playerManager);
+                            } else {
+                                Spectators.readySpectatorGame(playerManager);
+                            }
+                        }
+                    } else {
+                        plugin.getLogger().info("Player " + player.getName() + " is a player");
+                        if (Variables.equals("jeu_condi", Game.HUB.getGameCondition())){
+                            player.performCommand("spawn");
+                        }
+                    }
                     player.setGameMode(GameMode.ADVENTURE);
                 }
             }
-        }.runTaskLater(plugin, 2*20L);
+        }.runTaskLater(plugin, 20L);
 
         playerManager = Online.getPlayerManager(player);
 

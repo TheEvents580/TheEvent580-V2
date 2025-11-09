@@ -133,4 +133,12 @@ public class PlayerManager{
                 .append(head)
                 .append(Component.text(" " + getName(), getColorType().getColor()));
     }
+
+    public boolean isPlayer(){
+        return Players.isPlayer(player);
+    }
+
+    public boolean isSpectator(){
+        return !isPlayer();
+    }
 }
