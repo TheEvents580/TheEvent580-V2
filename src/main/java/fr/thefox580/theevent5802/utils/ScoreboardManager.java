@@ -91,25 +91,25 @@ public class ScoreboardManager {
             }
             case 8 -> {
                 if (player.hasPermission("group.spectators")) {
+                    board.updateLine(5, Component.text("Waiting for other players", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
+                } else {
+                    if (player.getInventory().getHelmet() != null && player.getInventory().getHelmet().getType() == Material.NETHERITE_HELMET) {
+                        board.updateLine(5, Component.text("You are not invincible", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
+                    } else {
+                        Component invincibilityTime = BowPVP.getPlayerInvincibilityTimeComp(player);
+                        board.updateLine(5, Component.text("You are invincible for : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
+                                .append(invincibilityTime));
+                    }
+                }
+            }
+            case 9 -> {
+                if (player.hasPermission("group.spectators")) {
                     board.updateLine(5, Component.text("Total Completed Builds : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
                             .append(Component.text(BuildMasters.getTotalCompletedBuild(), ColorType.SUBTEXT.getColor()).decoration(TextDecoration.BOLD, false)));
                 } else {
                     Component timeLeft = Objects.requireNonNull(Players.getPlayerManager(player)).getTimer().timeLeft();
                     board.updateLine(5, Component.text("Time Left : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
                             .append(timeLeft));
-                }
-            }
-            case 9 -> {
-                if (player.hasPermission("group.spectators")) {
-                    board.updateLine(5, Component.text("Waiting for other players", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
-                } else {
-                    if (player.getInventory().getHelmet() != null && player.getInventory().getHelmet().getType() == Material.NETHERITE_HELMET) {
-                        board.updateLine(5, Component.text("You are not invincible", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
-                    } else {
-                        Component invincibilityTime = BowPVP.getPlayerInvincibilityTime(player);
-                        board.updateLine(5, Component.text("You are invincible for : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
-                                .append(invincibilityTime));
-                    }
                 }
             }
             case 10 ->
@@ -122,17 +122,19 @@ public class ScoreboardManager {
                 if (player.hasPermission("group.spectators")) {
                     ArrayList<Player> topPlayers = ArmsRace.getFurthestPlayers();
                     if (topPlayers.size() == 1) {
-                        board.updateLine(5, Component.text("Player in lead : ", ColorType.SUBTEXT.getColor(), TextDecoration.BOLD)
+                        board.updateLine(5, Component.text("Player in lead : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
                                 .append(Component.text(topPlayers.getFirst().getName(), Objects.requireNonNull(Players.getPlayerManager(topPlayers.getFirst())).getTeam().getColorType().getColor()))
-                                .append(Component.text(" with ", ColorType.SUBTEXT.getColor()))
-                                .append(Component.text(ArmsRace.getPlayerKills(topPlayers.getFirst()), ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD))
-                                .append(Component.text(" kills", ColorType.SUBTEXT.getColor())));
+                                .append(Component.text(" with ", ColorType.SPECIAL_2.getColor()))
+                                .append(Component.text(ArmsRace.getPlayerKills(topPlayers.getFirst()), ColorType.SUBTEXT.getColor(), TextDecoration.BOLD))
+                                .append(Component.text(" kills", ColorType.SPECIAL_2.getColor())));
+                    } else if (topPlayers.size() > 1) {
+                        board.updateLine(5, Component.text("Players in lead : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
+                                .append(Component.text(topPlayers.size() + " players", ColorType.SUBTEXT.getColor()))
+                                .append(Component.text(" with ", ColorType.SPECIAL_2.getColor()))
+                                .append(Component.text(ArmsRace.getPlayerKills(topPlayers.getFirst()), ColorType.SUBTEXT.getColor(), TextDecoration.BOLD))
+                                .append(Component.text(" kills", ColorType.SPECIAL_2.getColor())));
                     } else {
-                        board.updateLine(5, Component.text("Players in lead : ", ColorType.SUBTEXT.getColor(), TextDecoration.BOLD)
-                                .append(Component.text(topPlayers.size() + " players", ColorType.SPECIAL_2.getColor()))
-                                .append(Component.text(" with ", ColorType.SUBTEXT.getColor()))
-                                .append(Component.text(ArmsRace.getPlayerKills(topPlayers.getFirst()), ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD))
-                                .append(Component.text(" kills", ColorType.SUBTEXT.getColor())));
+                        board.updateLine(5, Component.text("Waiting for the game to start.", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
                     }
                 } else {
                     board.updateLine(5, Component.text("Next weapon : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
@@ -140,7 +142,7 @@ public class ScoreboardManager {
                 }
             }
             case 13 -> {
-                if (FinderSets.isGoldenLocked()){
+                if (FinderSets.isGoldenLocked()) {
                     board.updateLine(5, Component.text("Current Item Set : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
                             .append(Component.text(FinderSets.getCurrentItemSetName(), ColorType.SUBTEXT.getColor())));
                 } else {
@@ -161,6 +163,14 @@ public class ScoreboardManager {
                                 .append(Component.text(playersMissing, ColorType.SUBTEXT.getColor()).decoration(TextDecoration.BOLD, false))
                                 .append(Component.text(" players", ColorType.SPECIAL_2.getColor())));
                     }
+                } else {
+                    if (Timer.getEnum() == Timer.TimerEnum.END) {
+                        board.updateLine(5, Component.text("Thanks for playing / watching!", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
+                    } else if (Timer.getEnum() == Timer.TimerEnum.STARTING_SOON) {
+                        board.updateLine(5, Component.text("The event is starting soon!", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
+                    } else {
+                        board.updateLine(5, Component.text("The event is running!", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
+                    }
                 }
             }
         }
@@ -169,7 +179,7 @@ public class ScoreboardManager {
 
         List<Map.Entry<Player, Integer>> playersSorted = Points.getTopEvent();
 
-        if (Objects.equals(jeuCondi, 0)){
+        if (jeuCondi == 0){
             board.updateLine(7, Component.text("Top 3 Event :", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
         } else {
             playersSorted = Points.getTopGame();
@@ -220,7 +230,7 @@ public class ScoreboardManager {
                             .append(Component.text("工 ", ColorType.TEXT.getColor()))
                             .append(Component.text(": ", ColorType.SPECIAL_1.getColor(), TextDecoration.BOLD))
                             .append(Component.text(Points.formatPoints(Points.getPoints(player)), ColorType.SUBTEXT.getColor()).decoration(TextDecoration.BOLD, false)));
-            if (Objects.equals(jeuCondi, 0)){
+            if (jeuCondi == 0){
                 board.updateLine(13, Component.text("Your all-time ", ColorType.SPECIAL_1.getColor(), TextDecoration.BOLD)
                         .append(Component.text("工 ", ColorType.TEXT.getColor()))
                         .append(Component.text(": ", ColorType.SPECIAL_1.getColor(), TextDecoration.BOLD))

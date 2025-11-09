@@ -200,6 +200,8 @@ public class Points implements CommandExecutor, TabCompleter {
             current_game_points = 0;
         }
         playerContainer.set(new NamespacedKey(plugin, "game_points"), PersistentDataType.INTEGER, current_game_points+points);
+
+        player.playSound(player, "custom:coins", SoundCategory.VOICE, 1f, 1f);
     }
 
     public static void removeGamePoints(Player player, int points){

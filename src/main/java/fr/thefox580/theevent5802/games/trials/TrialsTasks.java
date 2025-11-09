@@ -1,6 +1,7 @@
 package fr.thefox580.theevent5802.games.trials;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
+import fr.thefox580.theevent5802.tasks.timer.Mode10;
 import fr.thefox580.theevent5802.tasks.timer.Mode7;
 import fr.thefox580.theevent5802.utils.*;
 import net.kyori.adventure.text.Component;
@@ -223,7 +224,7 @@ public class TrialsTasks {
                 } else if (Timer.getSeconds() == 0) {
 
                     if (Variables.equals("jeu", 6)) {
-                        //new Mode10(plugin);
+                        new Mode10(plugin);
                     } else {
                         new Mode7(plugin);
                     }

@@ -20,7 +20,7 @@ public class SpawnParkour {
         for (PlayerManager playerManager : Online.getOnlinePlayers()){
 
             if (playerManager.getParkourCompletion() > 0){
-                unsortedPlayers.put(playerManager.getOnlinePlayer(), playerManager.getParkourCompletion());
+                unsortedPlayers.put(playerManager.getOnlinePlayer(), Integer.valueOf(playerManager.getParkourCompletion()));
             }
         }
 
@@ -33,7 +33,7 @@ public class SpawnParkour {
 
         while (sorted.size() < 10){
             Map<Player, Integer> nonePlayer = new HashMap<>();
-            nonePlayer.put(Bukkit.getPlayer("TheFox580"), -1);
+            nonePlayer.put(Bukkit.getPlayer("TheFox580"), Integer.valueOf(-1));
             sorted.add(nonePlayer.entrySet().stream().toList().getFirst());
         }
 

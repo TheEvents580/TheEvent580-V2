@@ -94,9 +94,9 @@ public class OnWorldInteract implements Listener {
                     float before = player.getFlySpeed();
                     int percentageBefore = Math.round(player.getFlySpeed()*1000)-Math.round((player.getFlySpeed()-0.1f)*500);
 
-                    if (event.getAction() == Action.LEFT_CLICK_AIR && player.getFlySpeed() < 0.5f){
+                    if (event.getAction().isRightClick() && player.getFlySpeed() < 0.5f){
                         player.setFlySpeed(player.getFlySpeed()+0.1f);
-                    } else if (event.getAction() == Action.RIGHT_CLICK_AIR && player.getFlySpeed() >= 0.2f){
+                    } else if (event.getAction().isLeftClick() && player.getFlySpeed() >= 0.2f){
                         player.setFlySpeed(player.getFlySpeed()-0.1f);
                     }
                     int percentageAfter = Math.round(player.getFlySpeed()*1000)-Math.round((player.getFlySpeed()-0.1f)*500);
@@ -362,6 +362,21 @@ public class OnWorldInteract implements Listener {
                     return;
                 }
                 player.sendMessage(Component.text("Sorry, but the villagers are not requesting for this item currently... ", ColorType.MC_RED.getColor()));
+            } else if (Variables.equals("jeu_condi", Game.BUILD_MASTERS.getGameCondition())){
+                String timeString = entity.getName().substring(5, 7).replaceAll(" ", "");
+                int time = Integer.parseInt(timeString);
+                if (time < 30){
+                    time *= 60;
+                }
+
+                PlayerManager playerManager = Online.getPlayerManager(player);
+
+                if (playerManager.getTimer().getSeconds() > time*3){
+                    BuildMasters.openGiveTimeMenu(player, time, 1);
+                } else {
+
+                    player.sendMessage(Component.text("You didn't have enough time to send it to other players (You need at least " + Conversions.convertSecondsToTimeOptimized(time*3) + ")", ColorType.MC_RED.getColor()));
+                }
             }
         }
     }

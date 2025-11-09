@@ -4,19 +4,16 @@ import com.fren_gor.ultimateAdvancementAPI.advancement.BaseAdvancement;
 import com.fren_gor.ultimateAdvancementAPI.advancement.display.AdvancementFrameType;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.commands.Minecraftle;
+import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
 import fr.thefox580.theevent5802.games.finder.FinderSets;
 import fr.thefox580.theevent5802.tasks.timer.Mode1;
-import fr.thefox580.theevent5802.utils.BossbarManager;
-import fr.thefox580.theevent5802.utils.ColorType;
-import fr.thefox580.theevent5802.utils.Variables;
+import fr.thefox580.theevent5802.utils.*;
 import me.clip.placeholderapi.libs.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -30,10 +27,7 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class OnInventoryInteract implements Listener {
 
@@ -74,7 +68,7 @@ public class OnInventoryInteract implements Listener {
                             }
                             assert item != null;
                             if (item.getType() != Material.AIR) {
-                                config.set("minecraftle_game_tries." + player.getUniqueId(), config.getInt("minecraftle_game_tries." + player.getUniqueId()) + 1);
+                                config.set("minecraftle_game_tries." + player.getUniqueId(), Optional.of(config.getInt("minecraftle_game_tries." + player.getUniqueId()) + 1));
                                 if (Objects.equals(event.getCurrentItem().getType().getItemTranslationKey(), config.getString("minecraftle_game." + player.getUniqueId()))) {
                                     player.closeInventory();
                                     if (player.getWorld().getName().equals("world")) {
@@ -252,15 +246,66 @@ public class OnInventoryInteract implements Listener {
                             player.sendMessage(Component.text("This player does not exist", ColorType.MC_RED.getColor()));
                         }
                     } else if (event.getCurrentItem().getType() == Material.LIME_CARPET){
-                        player.closeInventory(InventoryCloseEvent.Reason.TELEPORT);
                         Bukkit.dispatchCommand(player, "specmenu 2");
                     } else if (event.getCurrentItem().getType() == Material.ORANGE_CARPET){
-                        player.closeInventory(InventoryCloseEvent.Reason.TELEPORT);
                         Bukkit.dispatchCommand(player, "specmenu");
                     }
                 }
-            }
-            else if (event.getClickedInventory().getType() == player.getInventory().getType() && Objects.equals(Variables.getVariable("jeu_condi"), 0)) {
+            } else if (PlainTextComponentSerializer.plainText().serialize(event.getView().title()).contains("Give ")){
+                event.setCancelled(true);
+                if (event.getCurrentItem() != null){
+                    String timeString = PlainTextComponentSerializer.plainText().serialize(event.getView().title()).substring(5, 7).replaceAll(" ", "");
+                    int time = Integer.parseInt(timeString);
+                    if (time < 30){
+                        time *= 60;
+                    }
+                    if (event.getCurrentItem().getType() == Material.LIME_CARPET){
+                        BuildMasters.openGiveTimeMenu(player, time, 2);
+                    } else if (event.getCurrentItem().getType() == Material.ORANGE_CARPET){
+                        BuildMasters.openGiveTimeMenu(player, time, 1);
+                    } else if (event.getCurrentItem().getType() == Material.PLAYER_HEAD){
+
+                        PlayerManager senderManager = Online.getPlayerManager(player);
+                        PlayerTimer senderTimer = senderManager.getTimer();
+
+                        if (senderTimer.getSeconds() > time*3){
+
+                            SkullMeta receiverMeta = (SkullMeta) event.getCurrentItem().getItemMeta();
+
+                            OfflinePlayer receiver = Bukkit.getOfflinePlayer(Objects.requireNonNull(Objects.requireNonNull(receiverMeta.getPlayerProfile()).getId()));
+
+                            if (receiver.isOnline()){
+
+                                PlayerManager receiverManager = Online.getPlayerManager(receiver.getPlayer());
+                                PlayerTimer receiverTimer = receiverManager.getTimer();
+
+                                for (int toRemove = time; toRemove > 0; toRemove--){
+                                    senderTimer.remove1Second();
+                                    receiverTimer.add1Second();
+                                }
+
+                                player.sendMessage(Component.text("Sucessfully gave " + PlainTextComponentSerializer.plainText().serialize(event.getView().title()).substring(5) + " to", ColorType.MC_LIME.getColor())
+                                        .append(receiverManager.playerComponent())
+                                        .append(Component.text("!", ColorType.MC_LIME.getColor())));
+
+                                Objects.requireNonNull(receiverManager.getOnlinePlayer()).sendMessage(Component.text("You received " + PlainTextComponentSerializer.plainText().serialize(event.getView().title()).substring(5) + " from", ColorType.MC_LIME.getColor())
+                                        .append(senderManager.playerComponent())
+                                        .append(Component.text("!", ColorType.MC_LIME.getColor())));
+                            } else {
+                                player.sendMessage(Component.text("There was an error retrieving this player, if this error persists, contact TheFox580.", ColorType.MC_RED.getColor()));
+                            }
+
+                            player.closeInventory(InventoryCloseEvent.Reason.PLUGIN);
+
+                        } else {
+                            player.sendMessage(Component.text("You didn't have enough time to send it to other players (You need at least " + Conversions.convertSecondsToTimeOptimized(time*3) + ")", ColorType.MC_RED.getColor()));
+                        }
+
+
+
+                    }
+                }
+            } else if (event.getClickedInventory().getType() == player.getInventory().getType() && Variables.equals("jeu_condi", Game.HUB.getGameCondition())) {
                 if (event.getSlotType() == InventoryType.SlotType.ARMOR){
                     event.setCancelled(true);
                 }

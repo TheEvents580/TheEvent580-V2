@@ -136,9 +136,9 @@ public class OnPlayerMove implements Listener {
                     }
                 }
             }
-        } else if (player.getWorld().getName().equals("Build_Masters")){
-            if (player.getX() > 3000){
-                Material launcher = player.getLocation().add(0, 1-0.06250, 0).getBlock().getType();
+        } else if (player.getWorld().equals(BuildMasters.getWorld())){
+            if (player.getZ() > 3000){
+                Material launcher = player.getLocation().clone().add(0, -0.06250, 0).getBlock().getType();
                 if (BuildMasters.getLaunchersBlocks().contains(launcher)){
                     player.removePotionEffect(PotionEffectType.JUMP_BOOST);
                     player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 2, 1, false, false, false));

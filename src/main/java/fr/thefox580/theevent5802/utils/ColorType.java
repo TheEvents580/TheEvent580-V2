@@ -44,7 +44,13 @@ public enum ColorType {
     BOSSBAR(TextColor.color(240, 240, 104), false),
     GOLD(TextColor.color(255, 215, 0), false),
     SILVER(TextColor.color(192, 192, 192), false),
-    BRONZE(TextColor.color(205, 127, 50), false);
+    BRONZE(TextColor.color(205, 127, 50), false),
+    ARMS_RACE_BLANK_EVEN(TextColor.color(240, 240, 108), false),
+    ARMS_RACE_BLANK_ODD(TextColor.color(240, 240, 112), false),
+    ARMS_RACE_BLANK_LAST(TextColor.color(240, 240, 116), false),
+    ARMS_RACE_DONE_EVEN(TextColor.color(240, 240, 120), false),
+    ARMS_RACE_DONE_ODD(TextColor.color(240, 240, 124), false),
+    ARMS_RACE_DONE_LAST(TextColor.color(240, 240, 128), false);
 
     private final TextColor color;
     private final boolean isCustomColorCompatible;

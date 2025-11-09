@@ -20,12 +20,7 @@ repositories {
         name = "neonRepositoryReleases"
         url = "https://repo.superneon4ik.me/releases"
     }
-    maven {
-        url = 'https://nexus.frengor.com/repository/public/'
-    }
-    maven {
-        url = 'https://jitpack.io'
-    }
+    maven { url 'https://jitpack.io' }
     maven {
         name = 'citizens-repo'
         url = 'https://maven.citizensnpcs.co/repo'
@@ -48,7 +43,7 @@ dependencies {
     compileOnly 'me.clip:placeholderapi:2.11.6'
     compileOnly 'net.citizensnpcs:citizens-main:2.0.37-SNAPSHOT'
     compileOnly 'me.clip:placeholderapi:2.11.6'
-    compileOnly 'com.frengor:ultimateadvancementapi:2.6.0'
+    compileOnly 'com.github.decentsoftware-eu:decentholograms:2.9.7'
 
 
     //implementation "me.superneon4ik:NoxesiumUtils:2.0.0"

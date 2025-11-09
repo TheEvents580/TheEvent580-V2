@@ -2,7 +2,7 @@ package fr.thefox580.theevent5802.utils;
 
 public class TotalEventTime {
 
-    private static int seconds = 18312;
+    private static int seconds = 5*3600 + 5*60 + 12;
 
     public static int getSeconds(){
         return seconds;

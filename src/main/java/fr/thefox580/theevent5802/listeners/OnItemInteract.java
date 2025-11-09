@@ -1,6 +1,7 @@
 package fr.thefox580.theevent5802.listeners;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
+import fr.thefox580.theevent5802.utils.Game;
 import fr.thefox580.theevent5802.utils.Spectators;
 import fr.thefox580.theevent5802.utils.Timer;
 import fr.thefox580.theevent5802.utils.Variables;
@@ -26,9 +27,10 @@ public class OnItemInteract implements Listener {
             if (event.getPlayer().getWorld().getName().equals("world") || event.getPlayer().getAllowFlight()){
                 event.setCancelled(true);
             }
-        } else if (event.getPlayer().getAllowFlight()){
+        } else if (event.getPlayer().getAllowFlight() && !event.getPlayer().isOp()){
             event.setCancelled(true);
-        } else if (List.of(5, 8, 9, 12).contains((int) Variables.getVariable("jeu_condi"))){
+        } else if (List.of(Game.MULTILAP.getGameCondition(), Game.BUILD_MASTERS.getGameCondition(),
+                Game.BOW_PVP.getGameCondition(), Game.ARMS_RACE.getGameTime()).contains((int) Variables.getVariable("jeu_condi"))){
             event.setCancelled(true);
         } else if (Timer.getEnum() == Timer.TimerEnum.VOTING){
             event.setCancelled(true);
