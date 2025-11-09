@@ -44,6 +44,7 @@ public class Mode7 implements Runnable{
                 loopPlayer.stopAllSounds();
                 loopPlayer.removePotionEffect(PotionEffectType.INVISIBILITY);
                 loopPlayer.removePotionEffect(PotionEffectType.SPEED);
+                loopPlayer.removePotionEffect(PotionEffectType.NIGHT_VISION);
                 loopPlayer.playSound(loopPlayer.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, SoundCategory.VOICE, 2, 1);
                 loopPlayer.showTitle(Title.title(
                         Component.text("Game Over", ColorType.MC_RED.getColor()),
@@ -76,7 +77,7 @@ public class Mode7 implements Runnable{
             Map<Player, Integer> unsortedPlayers = new HashMap<>();
 
             for (PlayerManager playerManager : Players.getOnlinePlayerList()){
-                unsortedPlayers.put(playerManager.getOnlinePlayer(), Points.getGamePoints(Objects.requireNonNull(playerManager.getOnlinePlayer())));
+                unsortedPlayers.put(playerManager.getOnlinePlayer(), Integer.valueOf(Points.getGamePoints(Objects.requireNonNull(playerManager.getOnlinePlayer()))));
             }
 
             allPlayers = Points.getTop(unsortedPlayers, Players.getMaxPlayerCount());
