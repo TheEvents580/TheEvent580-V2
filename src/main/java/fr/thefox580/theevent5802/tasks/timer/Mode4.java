@@ -3,6 +3,9 @@ package fr.thefox580.theevent5802.tasks.timer;
 import com.fren_gor.ultimateAdvancementAPI.advancement.BaseAdvancement;
 import com.fren_gor.ultimateAdvancementAPI.advancement.display.AdvancementFrameType;
 import fr.thefox580.theevent5802.TheEvent580_2;
+import fr.thefox580.theevent5802.games.arms_race.ArmsRace;
+import fr.thefox580.theevent5802.games.bow_pvp.BowPVP;
+import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
 import fr.thefox580.theevent5802.games.finder.Finder;
 import fr.thefox580.theevent5802.games.parkour.Parkour;
 import fr.thefox580.theevent5802.games.tag.Tag;
@@ -91,12 +94,15 @@ public class Mode4 implements Runnable{
                     createGameAdvancement("Tip : If you fall off the map, you'll get tped back to your last checkpoint.");
                 }
                 case BUILD_MASTERS -> {
+                    BuildMasters.startPreGame(plugin);
                     createGameAdvancement("Nobody finished that game since the mall arrived, have you?");
                 }
                 case ARMS_RACE -> {
+                    ArmsRace.startPreGame(plugin);
                     createGameAdvancement("Kill people but don't get killed.");
                 }
                 case BOW_PVP -> {
+                    BowPVP.startPreGame(plugin);
                     createGameAdvancement("SHOOT EVERYONE.");
                 }
             }
