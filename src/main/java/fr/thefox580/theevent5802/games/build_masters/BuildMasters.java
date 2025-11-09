@@ -89,6 +89,8 @@ public class BuildMasters {
         Variables.setVariable("jeu_nom", Game.BUILD_MASTERS.getName());
         Variables.setVariable("jeu_logo", Game.BUILD_MASTERS.getIcon());
 
+        Spectators.readySpectatorsGame();
+
 
         BuildMastersTasks.preGameTask(plugin);
 

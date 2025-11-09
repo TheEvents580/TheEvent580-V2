@@ -52,6 +52,8 @@ public class ArmsRace {
         Variables.setVariable("jeu_nom", Game.ARMS_RACE.getName());
         Variables.setVariable("jeu_logo", Game.ARMS_RACE.getIcon());
 
+        Spectators.readySpectatorsGame();
+
         ArmsRaceTasks.preGameTask(plugin);
 
     }

@@ -66,6 +66,8 @@ public class Parkour {
             playerCheckpoint.put(playerManager.getOnlinePlayer(), new Location(Bukkit.getWorld("parkour"), 139.5, 129, 201.5, -90, 0));
         }
 
+        Spectators.readySpectatorsGame();
+
         ParkourTasks.preGameTask(plugin);
     }
 
