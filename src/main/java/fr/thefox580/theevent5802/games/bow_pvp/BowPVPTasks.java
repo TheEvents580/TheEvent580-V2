@@ -10,6 +10,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -18,6 +21,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Objects;
 
 public class BowPVPTasks {
 
@@ -187,6 +191,11 @@ public class BowPVPTasks {
                         if (playerManager.isAlive(plugin)){
                             Player player = playerManager.getOnlinePlayer();
                             if (player != null){
+
+                                if (player.getY() < 90){
+                                    player.damage(Objects.requireNonNull(player.getAttribute(Attribute.MAX_HEALTH)).getValue() + 2, DamageSource.builder(DamageType.OUT_OF_WORLD).build());
+                                }
+
                                 if (topPlayers.contains(player)){
                                     if (!player.isGlowing()){
                                         player.setGlowing(true);
