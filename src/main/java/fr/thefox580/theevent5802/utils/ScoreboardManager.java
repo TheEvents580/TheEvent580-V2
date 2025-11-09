@@ -127,7 +127,7 @@ public class ScoreboardManager {
                                 .append(Component.text(" with ", ColorType.SPECIAL_2.getColor()))
                                 .append(Component.text(ArmsRace.getPlayerKills(topPlayers.getFirst()), ColorType.SUBTEXT.getColor(), TextDecoration.BOLD))
                                 .append(Component.text(" kills", ColorType.SPECIAL_2.getColor())));
-                    } else if (topPlayers.size() > 1){
+                    } else if (topPlayers.size() > 1) {
                         board.updateLine(5, Component.text("Players in lead : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
                                 .append(Component.text(topPlayers.size() + " players", ColorType.SUBTEXT.getColor()))
                                 .append(Component.text(" with ", ColorType.SPECIAL_2.getColor()))
@@ -142,7 +142,7 @@ public class ScoreboardManager {
                 }
             }
             case 13 -> {
-                if (FinderSets.isGoldenLocked()){
+                if (FinderSets.isGoldenLocked()) {
                     board.updateLine(5, Component.text("Current Item Set : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
                             .append(Component.text(FinderSets.getCurrentItemSetName(), ColorType.SUBTEXT.getColor())));
                 } else {
@@ -163,6 +163,14 @@ public class ScoreboardManager {
                                 .append(Component.text(playersMissing, ColorType.SUBTEXT.getColor()).decoration(TextDecoration.BOLD, false))
                                 .append(Component.text(" players", ColorType.SPECIAL_2.getColor())));
                     }
+                } else {
+                    if (Timer.getEnum() == Timer.TimerEnum.END) {
+                        board.updateLine(5, Component.text("Thanks for playing / watching!", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
+                    } else if (Timer.getEnum() == Timer.TimerEnum.STARTING_SOON) {
+                        board.updateLine(5, Component.text("The event is starting soon!", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
+                    } else {
+                        board.updateLine(5, Component.text("The event is running!", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
+                    }
                 }
             }
         }
@@ -171,7 +179,7 @@ public class ScoreboardManager {
 
         List<Map.Entry<Player, Integer>> playersSorted = Points.getTopEvent();
 
-        if (Objects.equals(jeuCondi, 0)){
+        if (jeuCondi == 0){
             board.updateLine(7, Component.text("Top 3 Event :", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
         } else {
             playersSorted = Points.getTopGame();
@@ -222,7 +230,7 @@ public class ScoreboardManager {
                             .append(Component.text("工 ", ColorType.TEXT.getColor()))
                             .append(Component.text(": ", ColorType.SPECIAL_1.getColor(), TextDecoration.BOLD))
                             .append(Component.text(Points.formatPoints(Points.getPoints(player)), ColorType.SUBTEXT.getColor()).decoration(TextDecoration.BOLD, false)));
-            if (Objects.equals(jeuCondi, 0)){
+            if (jeuCondi == 0){
                 board.updateLine(13, Component.text("Your all-time ", ColorType.SPECIAL_1.getColor(), TextDecoration.BOLD)
                         .append(Component.text("工 ", ColorType.TEXT.getColor()))
                         .append(Component.text(": ", ColorType.SPECIAL_1.getColor(), TextDecoration.BOLD))
