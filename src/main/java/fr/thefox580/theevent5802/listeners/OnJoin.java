@@ -1,5 +1,7 @@
 package fr.thefox580.theevent5802.listeners;
 
+import com.fren_gor.ultimateAdvancementAPI.advancement.BaseAdvancement;
+import com.fren_gor.ultimateAdvancementAPI.events.PlayerLoadingCompletedEvent;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.utils.*;
 import net.kyori.adventure.text.Component;
@@ -173,6 +175,31 @@ public class OnJoin implements Listener {
             event.joinMessage(Component.text("")); //Setup join message
         }
 
+    }
+
+
+
+    @EventHandler
+    public void playerCompleteLoadingEvent(PlayerLoadingCompletedEvent event){
+        Player player = event.getPlayer();
+
+        plugin.getInstances().getAdvancementAPI().getProgressionTab().showTab(player);
+        plugin.getInstances().getAdvancementAPI().getCustomTab().showTab(player);
+
+        int game = 0;
+        if (game < (int) Variables.getVariable("jeu")){
+            int offset = 1;
+            if ((int) Variables.getVariable("jeu") > 3){
+                offset = 2;
+            }
+            while (game < (int) Variables.getVariable("jeu") + offset){
+                BaseAdvancement adv = plugin.getInstances().getAdvancementAPI().getProgressionAdvancement(game);
+                if (!adv.isGranted(player)){
+                    adv.grant(player);
+                }
+                game++;
+            }
+        }
     }
 
     @NotNull

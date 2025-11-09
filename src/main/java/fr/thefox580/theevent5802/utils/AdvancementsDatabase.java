@@ -59,7 +59,7 @@ public class AdvancementsDatabase {
         Document docAdv = doc.get("advancements", Document.class);
 
         docAdv.forEach((String id, Object value) -> {
-            playerAdvancement.setAdvancementCompletion(Advancements.getAdvancementById(Integer.getInteger(id)), (Boolean) value);
+            playerAdvancement.setAdvancementCompletion(AdvancementsEnum.getAdvancementById(Integer.getInteger(id)), (Boolean) value);
         });
 
         return playerAdvancement;
