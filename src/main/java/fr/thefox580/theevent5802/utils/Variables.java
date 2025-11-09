@@ -23,7 +23,7 @@ public class Variables {
         }
     }
 
-    public static boolean equals(String variableName, Object valueToCheck){
+    public static <T> boolean equals(String variableName, T valueToCheck){
         return Objects.equals(getVariable(variableName), valueToCheck);
     }
 
