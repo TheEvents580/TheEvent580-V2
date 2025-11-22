@@ -26,7 +26,7 @@ public enum Game {
     TAG("Tag", ColorType.MC_LIME, "\uE004", true, 11, 12*60),
     ARMS_RACE("Arms Race", ColorType.MC_PURPLE, "\uE007", true, 12, 15*60),
     FINDER("Finder", ColorType.MC_YELLOW, "\uE003", true, 13, 15*60),
-    MULTIRACE("Multi Race", ColorType.MC_AQUA, "?", true, 14, 15*60);
+    MULTIRACE("Multi Race", ColorType.MC_AQUA, "?", false, 14, 10*60);
 
     private final String name;
     private final ColorType color;
