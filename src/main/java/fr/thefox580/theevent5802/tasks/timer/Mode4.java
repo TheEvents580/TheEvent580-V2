@@ -72,7 +72,7 @@ public class Mode4 implements Runnable{
                 case PARKOUR -> Parkour.startPreGame(plugin);
                 case FINDER -> Finder.startPreGame(plugin);
                 case TAG -> Tag.startPreGame(plugin);
-                //case MULTILAP ->
+                //case ?? ->
                 case BUILD_MASTERS -> BuildMasters.startPreGame(plugin);
                 case ARMS_RACE -> ArmsRace.startPreGame(plugin);
                 case BOW_PVP -> BowPVP.startPreGame(plugin);
