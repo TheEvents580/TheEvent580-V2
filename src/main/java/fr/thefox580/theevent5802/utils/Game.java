@@ -5,28 +5,29 @@ import java.util.List;
 
 public enum Game {
 
-    HUB("Hub", ColorType.TEXT, "", false, 0, -1),
+    HUB("Hub", ColorType.TEXT, "", false, 0, -1, 0),
     @Deprecated
-    DROPPER("Dropper", ColorType.MC_RED, "?", false, 1, 10*60),
-    PARKOUR("Parkour", ColorType.MC_ORANGE, "\uE002", true, 2, 10*60),
+    DROPPER("Dropper", ColorType.MC_RED, "?", false, 1, 10*60, 1),
+    PARKOUR("Parkour", ColorType.MC_ORANGE, "\uE002", true, 2, 10*60, 1),
     @Deprecated
-    BINGO("Bingo", ColorType.MC_YELLOW, "\uE003", false, 3, 20*60),
+    BINGO("Bingo", ColorType.MC_YELLOW, "\uE003", false, 3, 20*60, 1),
     @Deprecated
-    FIND_THE_BUTTON("Find The Button", ColorType.MC_LIME, "?", false, 4, 12*60+30),
+    FIND_THE_BUTTON("Find The Button", ColorType.MC_LIME, "?", false, 4, 12*60+30, 1),
     @Deprecated
-    RACES("Races", ColorType.MC_AQUA, "?", false, 5, 10*60),
-    MULTILAP("Multilap", ColorType.MC_AQUA, "\uE005", false, 5, 10*60),
+    RACES("Races", ColorType.MC_AQUA, "?", false, 5, 10*60, 3),
+    MULTILAP("Multilap", ColorType.MC_AQUA, "\uE005", false, 5, 10*60, 1),
     @Deprecated
-    SURVIVAL_GAMES("Survival Games", ColorType.MC_PURPLE, "\uE007", false, 6, -1),
+    SURVIVAL_GAMES("Survival Games", ColorType.MC_PURPLE, "\uE007", false, 6, -1, 1),
     @Deprecated
-    LABYRINTH("Labyrinth", ColorType.MC_PURPLE, "?", false, 7, 10*60),
-    BOW_PVP("Bow PVP", ColorType.MC_PINK, "\uE008", true, 8, 10*60),
-    BUILD_MASTERS("Build Masters", ColorType.MC_BLUE, "\uE006", true, 9, 60*60),
-    TRIALS("Trials", ColorType.MC_RED, "\uE001", true, 10, 10*60),
-    TAG("Tag", ColorType.MC_LIME, "\uE004", true, 11, 12*60),
-    ARMS_RACE("Arms Race", ColorType.MC_PURPLE, "\uE007", true, 12, 15*60),
-    FINDER("Finder", ColorType.MC_YELLOW, "\uE003", true, 13, 15*60),
-    MULTIRACE("Multi Race", ColorType.MC_AQUA, "?", false, 14, 10*60);
+    LABYRINTH("Labyrinth", ColorType.MC_PURPLE, "?", false, 7, 10*60, 1),
+    BOW_PVP("Bow PVP", ColorType.MC_PINK, "\uE008", true, 8, 10*60, 1),
+    BUILD_MASTERS("Build Masters", ColorType.MC_BLUE, "\uE006", true, 9, 60*60, 1),
+    TRIALS("Trials", ColorType.MC_RED, "\uE001", true, 10, 10*60, 1),
+    TAG("Tag", ColorType.MC_LIME, "\uE004", true, 11, 12*60, 1),
+    ARMS_RACE("Arms Race", ColorType.MC_PURPLE, "\uE007", true, 12, 15*60, 1),
+    FINDER("Finder", ColorType.MC_YELLOW, "\uE003", true, 13, 15*60, 1),
+    MULTIRACE("Multi Race", ColorType.MC_AQUA, "?", false, 14, 10*60, 1),
+    SPLEEF("Spleef", ColorType.MC_AQUA, "?", true, 15, 5*60, 3);
 
     private final String name;
     private final ColorType color;
@@ -34,14 +35,16 @@ public enum Game {
     private final boolean isPlayed;
     private final int gameCondition;
     private final int gameTime;
+    private final int roundCount;
 
-    Game(String name, ColorType color, String icon, boolean isPlayed, int gameCondition, int gameTime){
+    Game(String name, ColorType color, String icon, boolean isPlayed, int gameCondition, int gameTime, int roundCount){
         this.name = name;
         this.color = color;
         this.icon = icon;
         this.isPlayed = isPlayed;
         this.gameCondition = gameCondition;
         this.gameTime = gameTime;
+        this.roundCount = roundCount;
     }
 
     public String getName() {
@@ -66,6 +69,14 @@ public enum Game {
 
     public int getGameTime() {
         return gameTime;
+    }
+
+    public int getRoundCount() {
+        return roundCount;
+    }
+
+    public boolean isMultipleRounds(){
+        return roundCount > 1;
     }
 
     public static List<Game> playedGames(){

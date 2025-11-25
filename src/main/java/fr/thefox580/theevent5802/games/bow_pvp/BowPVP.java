@@ -69,18 +69,6 @@ public class BowPVP {
         BowPVPTasks.preGameTask(plugin);
     }
 
-    public static int nbPlayersAlive(){
-        int count = 0;
-
-        for (PlayerManager playerManager : Players.getOnlinePlayerList()){
-            if (playerManager.isAlive(plugin)){
-                count++;
-            }
-        }
-
-        return count;
-    }
-
     public static List<Player> topPlayers(){
         List<Player> topPlayers = new ArrayList<>();
 

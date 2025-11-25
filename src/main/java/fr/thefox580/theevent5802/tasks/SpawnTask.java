@@ -34,7 +34,7 @@ public class SpawnTask implements Runnable{
                 if (player.getLocation().getY() < 4.5){
                     Block block = new Location(player.getWorld(), player.getX(), -6, player.getZ()).getBlock();
                     if (block.getType() == Material.STRUCTURE_BLOCK){
-                        player.spawnParticle(Particle.END_ROD, player.getLocation(), 3, 0.1 , 0, 0.1, 0.1);
+                        player.spawnParticle(Particle.END_ROD, player.getLocation(), 3, 0.1 , 0, 0.1, 0.1, null, true);
                         player.removePotionEffect(PotionEffectType.LEVITATION);
                         player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 2, 2, false, false, false));
                     }

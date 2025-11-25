@@ -183,7 +183,7 @@ public class BowPVPTasks {
                 if (Timer.getSeconds() == 0){
                     this.cancel();
                 } else {
-                    if (BowPVP.nbPlayersAlive() <= 1){
+                    if (Players.nbPlayersAlive() <= 1){
                         Timer.setSeconds(0);
                     }
 
