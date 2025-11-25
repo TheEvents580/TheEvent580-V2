@@ -7,9 +7,7 @@ import fr.thefox580.theevent5802.utils.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
-import org.bukkit.Bukkit;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -91,6 +89,13 @@ public class SpleefTasks {
                             .append(Component.text("] ", ColorType.TEXT.getColor()))
                             .append(Component.text(Game.SPLEEF.getName(), Game.SPLEEF.getColorType().getColor(), TextDecoration.BOLD))
                             .append(Component.text(" | Round " + Spleef.getCurrentRound() + "/3 |  is starting now.", ColorType.TEXT.getColor()).decoration(TextDecoration.BOLD, false)));
+
+
+                    for (int x = 10; x>-11; x--){
+                        for (int z = 10; z>-11; z--){
+                            new Location(Bukkit.getWorld("Spleef"), x, 255, z).getBlock().setType(Material.AIR);
+                        }
+                    }
 
                     mainGameTask(plugin);
                     actionBarTask(plugin);
@@ -175,9 +180,9 @@ public class SpleefTasks {
             @Override
             public void run() {
 
-                //if (Timer.getSeconds() == 0){
-                //    this.cancel();
-                //}
+                if (Timer.getSeconds() == 0){
+                    this.cancel();
+                }
 
                 for (PlayerManager playerManager : Online.getOnlinePlayers()){
                     Player player = playerManager.getOnlinePlayer();
@@ -200,11 +205,11 @@ public class SpleefTasks {
             @Override
             public void run() {
 
-                //if (Timer.getSeconds() == 0){
-                //    this.cancel();
-                //} else if (Players.nbPlayersAlive() <= 1){
-                //    Timer.setSeconds(0);
-                //}
+                if (Timer.getSeconds() == 0){
+                    this.cancel();
+                } else if (Players.nbPlayersAlive() <= 1){
+                    Timer.setSeconds(0);
+                }
 
                 for (PlayerManager playerManager : Online.getOnlinePlayers()){
                     Player player = playerManager.getOnlinePlayer();
