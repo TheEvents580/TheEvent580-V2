@@ -42,6 +42,8 @@ public class Spectators implements CommandExecutor, TabCompleter {
                     return false;
                 }
                 usernameList.add(args[1]);
+                Bukkit.getOfflinePlayer(args[1]).setWhitelisted(true);
+                Bukkit.reloadWhitelist();
                 plugin.getConfig().set("spectators", usernameList);
                 plugin.saveConfig();
                 sender.sendMessage(Component.text("Added " + args[1] + " to the spectator list!", ColorType.MC_LIME.getColor()));
@@ -51,6 +53,8 @@ public class Spectators implements CommandExecutor, TabCompleter {
                 List<String> usernameList = plugin.getConfig().getStringList("spectators");
                 if (usernameList.contains(args[1])) {
                     usernameList.remove(args[1]);
+                    Bukkit.getOfflinePlayer(args[1]).setWhitelisted(false);
+                    Bukkit.reloadWhitelist();
                     plugin.getConfig().set("spectators", usernameList);
                     plugin.saveConfig();
                     sender.sendMessage(Component.text("Removed " + args[1] + " from the spectator list!", ColorType.MC_LIME.getColor()));
