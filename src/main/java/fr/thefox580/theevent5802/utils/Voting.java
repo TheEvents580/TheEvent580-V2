@@ -2,6 +2,8 @@ package fr.thefox580.theevent5802.utils;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 
 import javax.swing.*;
@@ -26,6 +28,57 @@ public class Voting {
 
     public static void removeGame(Game game){
         gameList.remove(game);
+
+        Material glass = Material.LIGHT_GRAY_STAINED_GLASS;
+        Material concrete = Material.LIGHT_GRAY_CONCRETE;
+
+        switch (game){
+            case TRIALS -> {
+                glass = Material.RED_STAINED_GLASS;
+                concrete = Material.RED_CONCRETE;
+            }
+            case PARKOUR -> {
+                glass = Material.ORANGE_STAINED_GLASS;
+                concrete = Material.ORANGE_CONCRETE;
+            }
+            case FINDER -> {
+                glass = Material.YELLOW_STAINED_GLASS;
+                concrete = Material.YELLOW_CONCRETE;
+            }
+            case TAG -> {
+                glass = Material.LIME_STAINED_GLASS;
+                concrete = Material.LIME_CONCRETE;
+            }
+            case SPLEEF -> {
+                glass = Material.LIGHT_BLUE_STAINED_GLASS;
+                concrete = Material.LIGHT_BLUE_CONCRETE;
+            }
+            case BUILD_MASTERS -> {
+                glass = Material.BLUE_STAINED_GLASS;
+                concrete = Material.BLUE_CONCRETE;
+            }
+            case ARMS_RACE -> {
+                glass = Material.PURPLE_STAINED_GLASS;
+                concrete = Material.PURPLE_CONCRETE;
+            }
+            case BOW_PVP -> {
+                glass = Material.PINK_STAINED_GLASS;
+                concrete = Material.PINK_CONCRETE;
+            }
+        }
+
+        for (int x = -9; x<10; x++){
+            for (int y = 236; y<273; y++){
+                for (int z = -9; z<10; z++){
+                    Location blockToReplace = new Location(Bukkit.getWorld("world"), x, y, z);
+                    if (blockToReplace.getBlock().getType() == concrete){
+                        blockToReplace.getBlock().setType(Material.LIGHT_GRAY_CONCRETE);
+                    } else if (blockToReplace.getBlock().getType() == glass){
+                        blockToReplace.getBlock().setType(Material.LIGHT_GRAY_STAINED_GLASS);
+                    }
+                }
+            }
+        }
     }
 
     public static void resetVotes(){
@@ -74,12 +127,14 @@ public class Voting {
         int max = 0;
 
         for (Game game : votes.keySet()){
-            if (votes.get(game) > max){
-                max = votes.get(game);
-                chosenGames = new ArrayList<>();
-                chosenGames.add(game);
-            } else if (votes.get(game) == max){
-                chosenGames.add(game);
+            if (game != Game.HUB){
+                if (votes.get(game) > max){
+                    max = votes.get(game);
+                    chosenGames = new ArrayList<>();
+                    chosenGames.add(game);
+                } else if (votes.get(game) == max){
+                    chosenGames.add(game);
+                }
             }
         }
 
