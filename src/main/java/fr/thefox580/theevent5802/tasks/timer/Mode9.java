@@ -1,9 +1,9 @@
 package fr.thefox580.theevent5802.tasks.timer;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
-import fr.thefox580.theevent5802.utils.Points;
 import fr.thefox580.theevent5802.utils.Timer;
 import fr.thefox580.theevent5802.utils.Variables;
+import fr.thefox580.theevent5802.utils.Voting;
 import org.bukkit.*;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -26,11 +26,7 @@ public class Mode9 implements Runnable{
     public void run() {
 
         if (Timer.getSeconds() == 5){
-            if (Variables.equals("jeu", 4)){
-                Points.setMultiplier(1.5f);
-            } else if (Variables.equals("jeu", 6)){
-                Points.setMultiplier(2f);
-            }
+            Voting.updateMultiplier();
         } else if (Timer.getSeconds() == 0) {
             Variables.setVariable("jeu", (int) Variables.getVariable("jeu") + 1);
 
