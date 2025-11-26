@@ -34,7 +34,6 @@ public class Points implements CommandExecutor, TabCompleter {
 
         playerContainer.set(new NamespacedKey(plugin, "points"), PersistentDataType.INTEGER, 0);
         playerContainer.set(new NamespacedKey(plugin, "game_points"), PersistentDataType.INTEGER, 0);
-        playerContainer.set(new NamespacedKey(plugin, "total_points_event"), PersistentDataType.INTEGER, 0);
 
         Object totalPoints = Variables.getVariable("total_points."+player.getUniqueId());
 
@@ -49,9 +48,11 @@ public class Points implements CommandExecutor, TabCompleter {
     public static void resetPoints(Player player){
         PersistentDataContainer playerContainer = player.getPersistentDataContainer();
 
+        int totalPoints = getTotalPoints(player);
+        playerContainer.set(new NamespacedKey(plugin, "total_points"), PersistentDataType.INTEGER, totalPoints-Math.max(0, getPoints(player)));
+
         playerContainer.set(new NamespacedKey(plugin, "points"), PersistentDataType.INTEGER, 0);
         playerContainer.set(new NamespacedKey(plugin, "game_points"), PersistentDataType.INTEGER, 0);
-        playerContainer.set(new NamespacedKey(plugin, "total_points_event"), PersistentDataType.INTEGER, 0);
     }
 
     public static List<Map.Entry<Player, Integer>> getTopEvent(){
