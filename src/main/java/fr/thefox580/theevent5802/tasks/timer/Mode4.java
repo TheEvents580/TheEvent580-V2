@@ -57,6 +57,8 @@ public class Mode4 implements Runnable{
 
         else if (Timer.getSeconds() == 0){
 
+            Voting.resetVotes();
+
             Bukkit.getOnlinePlayers().forEach(player -> {
                 player.removePotionEffect(PotionEffectType.LEVITATION);
                 PersistentDataContainer playerContainer = player.getPersistentDataContainer();

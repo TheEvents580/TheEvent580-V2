@@ -210,6 +210,8 @@ public class OnInventoryInteract implements Listener {
 
                     new Mode1(plugin);
 
+                    Voting.addAllGames();
+
                     player.closeInventory();
                 } else if (event.getCurrentItem().getType() == Material.RED_CONCRETE){
                     player.closeInventory();
