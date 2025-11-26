@@ -103,6 +103,8 @@ public class OnDamage implements Listener {
                 if (BowPVP.isPlayerInvincible(player)){
                     event.setCancelled(true);
                 }
+            } else if (Variables.equals("jeu_condi", Game.SPLEEF.getGameCondition())){
+                event.setCancelled(true);
             }
         } else if (List.of(Timer.TimerEnum.SHOW_GAMES, Timer.TimerEnum.TP_TO_GAME, Timer.TimerEnum.PRE_GAME).contains(Timer.getEnum())){
                 event.setCancelled(true);

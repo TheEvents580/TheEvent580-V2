@@ -70,6 +70,18 @@ public class Players implements CommandExecutor, TabCompleter {
         return playerList.size();
     }
 
+    public static int nbPlayersAlive(){
+        int count = 0;
+
+        for (PlayerManager playerManager : getOnlinePlayerList()){
+            if (playerManager.isAlive(plugin)){
+                count++;
+            }
+        }
+
+        return count;
+    }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
 

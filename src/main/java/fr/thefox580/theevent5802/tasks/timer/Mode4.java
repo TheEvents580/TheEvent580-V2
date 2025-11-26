@@ -6,6 +6,7 @@ import fr.thefox580.theevent5802.games.bow_pvp.BowPVP;
 import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
 import fr.thefox580.theevent5802.games.finder.Finder;
 import fr.thefox580.theevent5802.games.parkour.Parkour;
+import fr.thefox580.theevent5802.games.spleef.Spleef;
 import fr.thefox580.theevent5802.games.tag.Tag;
 import fr.thefox580.theevent5802.games.trials.Trials;
 import fr.thefox580.theevent5802.utils.*;
@@ -72,7 +73,7 @@ public class Mode4 implements Runnable{
                 case PARKOUR -> Parkour.startPreGame(plugin);
                 case FINDER -> Finder.startPreGame(plugin);
                 case TAG -> Tag.startPreGame(plugin);
-                //case ?? ->
+                case SPLEEF -> Spleef.startPreGame(plugin);
                 case BUILD_MASTERS -> BuildMasters.startPreGame(plugin);
                 case ARMS_RACE -> ArmsRace.startPreGame(plugin);
                 case BOW_PVP -> BowPVP.startPreGame(plugin);

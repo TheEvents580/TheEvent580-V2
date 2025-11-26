@@ -205,7 +205,7 @@ public class Mode3 implements Runnable {
             case ORANGE_CONCRETE -> Voting.castGameVote(Game.PARKOUR, chestplate);
             case YELLOW_CONCRETE -> Voting.castGameVote(Game.FINDER, chestplate);
             case LIME_CONCRETE -> Voting.castGameVote(Game.TAG, chestplate);
-            case LIGHT_BLUE_CONCRETE -> Voting.castGameVote(Game.MULTILAP, chestplate);
+            case LIGHT_BLUE_CONCRETE -> Voting.castGameVote(Game.SPLEEF, chestplate);
             case BLUE_CONCRETE -> Voting.castGameVote(Game.BUILD_MASTERS, chestplate);
             case PURPLE_CONCRETE -> Voting.castGameVote(Game.ARMS_RACE, chestplate);
             case PINK_CONCRETE -> Voting.castGameVote(Game.BOW_PVP, chestplate);
