@@ -1,5 +1,7 @@
 package fr.thefox580.theevent5802.listeners;
 
+import com.fren_gor.ultimateAdvancementAPI.advancement.BaseAdvancement;
+import com.fren_gor.ultimateAdvancementAPI.advancement.display.AdvancementFrameType;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.commands.Minecraftle;
 import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
@@ -211,6 +213,20 @@ public class OnInventoryInteract implements Listener {
                     new Mode1(plugin);
 
                     Voting.addAllGames();
+
+
+                    BaseAdvancement adv = plugin.getInstances().getAdvancementAPI().createAdvancement(
+                            "start",
+                            Material.LIME_CONCRETE,
+                            "Starting soon!",
+                            AdvancementFrameType.TASK,
+                            false,
+                            "TheEvent580 is starting",
+                            "in 3 minutes");
+
+                    for (Player loopPlayer : Bukkit.getOnlinePlayers()){
+                        adv.grant(loopPlayer);
+                    }
 
                     player.closeInventory();
                 } else if (event.getCurrentItem().getType() == Material.RED_CONCRETE){
