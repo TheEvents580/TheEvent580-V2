@@ -34,6 +34,7 @@ public class Mode1 implements Runnable {
         Timer.setSeconds(2*60+59);
         Timer.setMaxSeconds(2*60+59);
         Timer.setEnum(Timer.TimerEnum.START);
+        Timer.setPaused(false);
     }
 
     @Override

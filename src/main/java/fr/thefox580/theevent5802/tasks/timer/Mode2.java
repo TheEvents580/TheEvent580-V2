@@ -45,7 +45,7 @@ public class Mode2 implements Runnable {
                 Objects.requireNonNull(loopPlayer.getOnlinePlayer()).showTitle(Title.title(Component.text("This Episode's minigames are :",
                                 ColorType.RAINBOW.getColor()),
                         Component.text(Game.TRIALS.getIcon(),ColorType.NO_SHADOW.getColor())
-                                .append(Component.text("Trials", Game.TRIALS.getColorType().getColor())),
+                                .append(Component.text(" Trials", Game.TRIALS.getColorType().getColor())),
                         Title.Times.times(Duration.ofMillis(0), Duration.ofSeconds(5), Duration.ofSeconds(0))));
                 loopPlayer.getOnlinePlayer().sendMessage(Component.text('[')
                         .append(Component.text("Decision Crystal", ColorType.TITLE.getColor(), TextDecoration.BOLD))
@@ -59,7 +59,7 @@ public class Mode2 implements Runnable {
                 Objects.requireNonNull(loopPlayer.getOnlinePlayer()).showTitle(Title.title(Component.text("This Episode's minigames are :",
                                 ColorType.RAINBOW.getColor()),
                         Component.text(Game.PARKOUR.getIcon(),ColorType.NO_SHADOW.getColor())
-                                .append(Component.text("Parkour", Game.PARKOUR.getColorType().getColor())),
+                                .append(Component.text(" Parkour", Game.PARKOUR.getColorType().getColor())),
                         Title.Times.times(Duration.ofMillis(0), Duration.ofSeconds(5), Duration.ofSeconds(0))));
                 loopPlayer.getOnlinePlayer().sendMessage(Component.text('[')
                         .append(Component.text("Decision Crystal", ColorType.TITLE.getColor(), TextDecoration.BOLD))
@@ -73,7 +73,7 @@ public class Mode2 implements Runnable {
                 Objects.requireNonNull(loopPlayer.getOnlinePlayer()).showTitle(Title.title(Component.text("This Episode's minigames are :",
                                 ColorType.RAINBOW.getColor()),
                         Component.text(Game.FINDER.getIcon(),ColorType.NO_SHADOW.getColor())
-                                .append(Component.text("Finder", Game.FINDER.getColorType().getColor()))
+                                .append(Component.text(" Finder", Game.FINDER.getColorType().getColor()))
                                 .append(Component.text(" [NEW]", ColorType.RAINBOW.getColor())),
                         Title.Times.times(Duration.ofMillis(0), Duration.ofSeconds(5), Duration.ofSeconds(0))));
                 loopPlayer.getOnlinePlayer().sendMessage(Component.text('[')
@@ -89,7 +89,7 @@ public class Mode2 implements Runnable {
                 Objects.requireNonNull(loopPlayer.getOnlinePlayer()).showTitle(Title.title(Component.text("This Episode's minigames are :",
                                 ColorType.RAINBOW.getColor()),
                         Component.text(Game.TAG.getIcon(),ColorType.NO_SHADOW.getColor())
-                                .append(Component.text("Tag", Game.TAG.getColorType().getColor())),
+                                .append(Component.text(" Tag", Game.TAG.getColorType().getColor())),
                         Title.Times.times(Duration.ofMillis(0), Duration.ofSeconds(5), Duration.ofSeconds(0))));
                 loopPlayer.getOnlinePlayer().sendMessage(Component.text('[')
                         .append(Component.text("Decision Crystal", ColorType.TITLE.getColor(), TextDecoration.BOLD))
@@ -102,13 +102,15 @@ public class Mode2 implements Runnable {
             for (PlayerManager loopPlayer : Online.getOnlinePlayers()){
                 Objects.requireNonNull(loopPlayer.getOnlinePlayer()).showTitle(Title.title(Component.text("This Episode's minigames are :",
                                 ColorType.RAINBOW.getColor()),
-                        Component.text(Game.MULTILAP.getIcon(),ColorType.NO_SHADOW.getColor())
-                                .append(Component.text("Multilap", Game.MULTILAP.getColorType().getColor())),
+                        Component.text(Game.SPLEEF.getIcon(),ColorType.NO_SHADOW.getColor())
+                                .append(Component.text(" Multilap", Game.SPLEEF.getColorType().getColor()))
+                                .append(Component.text(" [NEW]", ColorType.RAINBOW.getColor())),
                         Title.Times.times(Duration.ofMillis(0), Duration.ofSeconds(5), Duration.ofSeconds(0))));
                 loopPlayer.getOnlinePlayer().sendMessage(Component.text('[')
                         .append(Component.text("Decision Crystal", ColorType.TITLE.getColor(), TextDecoration.BOLD))
                         .append(Component.text("] ", ColorType.TEXT.getColor()))
-                        .append(Component.text("Multilap", Game.MULTILAP.getColorType().getColor())));
+                        .append(Component.text("Spleef", Game.SPLEEF.getColorType().getColor()))
+                        .append(Component.text(" [NEW]", ColorType.RAINBOW.getColor())));
             }
 
         } else if (Timer.getSeconds() == 13){
@@ -117,7 +119,7 @@ public class Mode2 implements Runnable {
                 Objects.requireNonNull(loopPlayer.getOnlinePlayer()).showTitle(Title.title(Component.text("This Episode's minigames are :",
                                 ColorType.RAINBOW.getColor()),
                         Component.text(Game.BUILD_MASTERS.getIcon(),ColorType.NO_SHADOW.getColor())
-                                .append(Component.text("Build Masters", Game.BUILD_MASTERS.getColorType().getColor())),
+                                .append(Component.text(" Build Masters", Game.BUILD_MASTERS.getColorType().getColor())),
                         Title.Times.times(Duration.ofMillis(0), Duration.ofSeconds(5), Duration.ofSeconds(0))));
                 loopPlayer.getOnlinePlayer().sendMessage(Component.text('[')
                         .append(Component.text("Decision Crystal", ColorType.TITLE.getColor(), TextDecoration.BOLD))
@@ -131,7 +133,7 @@ public class Mode2 implements Runnable {
                 Objects.requireNonNull(loopPlayer.getOnlinePlayer()).showTitle(Title.title(Component.text("This Episode's minigames are :",
                                 ColorType.RAINBOW.getColor()),
                         Component.text(Game.ARMS_RACE.getIcon(),ColorType.NO_SHADOW.getColor())
-                                .append(Component.text("Arms Race", Game.ARMS_RACE.getColorType().getColor())),
+                                .append(Component.text(" Arms Race", Game.ARMS_RACE.getColorType().getColor())),
                         Title.Times.times(Duration.ofMillis(0), Duration.ofSeconds(5), Duration.ofSeconds(0))));
                 loopPlayer.getOnlinePlayer().sendMessage(Component.text('[')
                         .append(Component.text("Decision Crystal", ColorType.TITLE.getColor(), TextDecoration.BOLD))
@@ -145,7 +147,7 @@ public class Mode2 implements Runnable {
                 Objects.requireNonNull(loopPlayer.getOnlinePlayer()).showTitle(Title.title(Component.text("This Episode's minigames are :",
                                 ColorType.RAINBOW.getColor()),
                         Component.text(Game.BOW_PVP.getIcon(),ColorType.NO_SHADOW.getColor())
-                                .append(Component.text("Bow PVP", Game.BOW_PVP.getColorType().getColor())),
+                                .append(Component.text(" Bow PVP", Game.BOW_PVP.getColorType().getColor())),
                         Title.Times.times(Duration.ofMillis(0), Duration.ofSeconds(5), Duration.ofSeconds(0))));
                 loopPlayer.getOnlinePlayer().sendMessage(Component.text('[')
                         .append(Component.text("Decision Crystal", ColorType.TITLE.getColor(), TextDecoration.BOLD))

@@ -12,10 +12,10 @@ import java.util.*;
 public class Voting {
 
 
-    private static final List<Game> gameList = new ArrayList<>();
+    private static List<Game> gameList = new ArrayList<>();
     private static Map<Game, Integer> votes = new HashMap<>();
-    private static int noVote;
-    private static int alreadyPlayedVote;
+    private static int noVote = 0;
+    private static int alreadyPlayedVote = 0;
 
     public static void addAllGames(){
         gameList.addAll(Game.playedGames());
@@ -84,7 +84,7 @@ public class Voting {
         noVote = 0;
         alreadyPlayedVote = 0;
 
-        votes = new HashMap<>();
+        votes.clear();
 
         for (Game game : Game.values()){
             if (gameList.contains(game)){
@@ -126,10 +126,11 @@ public class Voting {
         int max = 0;
 
         for (Game game : votes.keySet()){
+
             if (game != Game.HUB){
                 if (votes.get(game) > max){
                     max = votes.get(game);
-                    chosenGames = new ArrayList<>();
+                    chosenGames.clear();
                     chosenGames.add(game);
                 } else if (votes.get(game) == max){
                     chosenGames.add(game);

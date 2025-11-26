@@ -35,6 +35,8 @@ public class Mode3 implements Runnable {
         Timer.setSeconds(40);
         Timer.setMaxSeconds(40);
         Timer.setEnum(Timer.TimerEnum.VOTING);
+
+        Voting.resetVotes();
     }
 
     @Override
@@ -117,6 +119,8 @@ public class Mode3 implements Runnable {
 
             chosenGames = Voting.getChosenGame();
 
+            Bukkit.broadcast(Component.text("chosenGames has " + chosenGames.size() + " games"));
+
             if (chosenGames.size() > 1){
                 Bukkit.broadcast(Component.text('[')
                         .append(Component.text("Decision Crystal", ColorType.TITLE.getColor(), TextDecoration.BOLD))
@@ -138,9 +142,9 @@ public class Mode3 implements Runnable {
                                     .append(Component.text(game.getName(), game.getColorType().getColor(), TextDecoration.BOLD)));
                         }
                     }
-                }
 
-                chosenGames = Voting.getRandomChosenGame(chosenGames);
+                    chosenGames = Voting.getRandomChosenGame(chosenGames);
+                }
             }
 
         } else if (Timer.getSeconds() == 3) {
