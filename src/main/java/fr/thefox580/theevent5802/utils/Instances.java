@@ -20,13 +20,12 @@ public class Instances {
 
     public Instances(TheEvent580_2 plugin){
         this.plugin = plugin;
-        initializeDatabases();
     }
 
     private void initializeDatabases(){
         this.variablesDatabase = new VariablesDatabase(plugin);
-        this.statsDatabase = new StatsDatabase(plugin);
-        this.advancementsDatabase = new AdvancementsDatabase(plugin);
+        //this.statsDatabase = new StatsDatabase(plugin);
+        //this.advancementsDatabase = new AdvancementsDatabase(plugin);
     }
 
     public void initialize(){
@@ -40,6 +39,7 @@ public class Instances {
         this.advancements = new Advancements(plugin);
 
         placeholderAPIExpansion.register();
+        initializeDatabases();
     }
 
     public VariablesDatabase getVariablesDatabase(){

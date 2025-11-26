@@ -25,12 +25,12 @@ public class Advancements {
         UltimateAdvancementAPI api = UltimateAdvancementAPI.getInstance(plugin);
         advancementProgressionTab = api.createAdvancementTab("theevent580_progression");
         AdvancementDisplay rootProgressionDisplay = new AdvancementDisplay(Material.EMERALD_BLOCK, "Welcome to TheEvent580", AdvancementFrameType.TASK, false, false, 0, 0, "Get ready, the event ", "is starting soon.");
-        rootProgression = new RootAdvancement(advancementProgressionTab, "rootProgression", rootProgressionDisplay, "textures/block/stone.png");
+        rootProgression = new RootAdvancement(advancementProgressionTab, "root_progression", rootProgressionDisplay, "textures/block/stone.png");
         advancementProgressionTab.registerAdvancements(rootProgression);
 
         advancementCustomTab = api.createAdvancementTab("theevent580_custom");
         AdvancementDisplay rootCustomDisplay = new AdvancementDisplay(Material.EMERALD_BLOCK, "Want more fun?", AdvancementFrameType.TASK, false, false, 0, 0, "Try to complete as many advancements as you can!");
-        rootCustom = new RootAdvancement(advancementCustomTab, "rootProgression", rootCustomDisplay, "textures/block/stone.png");
+        rootCustom = new RootAdvancement(advancementCustomTab, "root_progression", rootCustomDisplay, "textures/block/stone.png");
         advancementCustomTab.registerAdvancements(rootCustom);
 
         createCustomAdvancementsTab();

@@ -47,7 +47,7 @@ dependencies {
     compileOnly 'net.citizensnpcs:citizens-main:2.0.37-SNAPSHOT'
     compileOnly 'me.clip:placeholderapi:2.11.6'
     compileOnly 'com.github.decentsoftware-eu:decentholograms:2.9.7'
-    compileOnly 'com.frengor:ultimateadvancementapi:2.6.0'
+    compileOnly 'com.frengor:ultimateadvancementapi:2.7.1'
 
 
     //implementation "me.superneon4ik:NoxesiumUtils:2.0.0"

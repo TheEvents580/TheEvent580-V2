@@ -33,8 +33,9 @@ public class AdvancementsDatabase {
                 .serverApi(serverApi)
                 .build();
 
-        client = MongoClients.create(settings);
+        MongoClient client = MongoClients.create(settings);
         this.database = client.getDatabase("advancements");
+        this.client = client;
 
         this.stats = this.database.getCollection("Season 1");
     }
@@ -67,7 +68,6 @@ public class AdvancementsDatabase {
     }
 
     public void shutdown(){
-        this.database.drop();
         this.client.close();
     }
 }
