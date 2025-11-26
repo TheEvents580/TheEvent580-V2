@@ -92,6 +92,8 @@ public class Players implements CommandExecutor, TabCompleter {
                     sender.sendMessage(Component.text(args[1] + " already is a player!", ColorType.MC_LIME.getColor()));
                     return false;
                 }
+                Bukkit.getOfflinePlayer(args[1]).setWhitelisted(true);
+                Bukkit.reloadWhitelist();
                 usernameList.add(args[1]);
                 plugin.getConfig().set("players", usernameList);
                 plugin.saveConfig();
@@ -102,6 +104,8 @@ public class Players implements CommandExecutor, TabCompleter {
                 List<String> usernameList = plugin.getConfig().getStringList("players");
                 if (usernameList.contains(args[1])) {
                     usernameList.remove(args[1]);
+                    Bukkit.getOfflinePlayer(args[1]).setWhitelisted(false);
+                    Bukkit.reloadWhitelist();
                     plugin.getConfig().set("players", usernameList);
                     plugin.saveConfig();
                     sender.sendMessage(Component.text("Removed " + args[1] + " from the player list!", ColorType.MC_LIME.getColor()));
