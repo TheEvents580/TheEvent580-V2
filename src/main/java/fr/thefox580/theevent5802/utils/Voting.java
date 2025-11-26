@@ -16,7 +16,6 @@ public class Voting {
     private static Map<Game, Integer> votes = new HashMap<>();
     private static int noVote;
     private static int alreadyPlayedVote;
-    private static float multiplier = 1;
 
     public static void addAllGames(){
         gameList.addAll(Game.playedGames());
@@ -177,16 +176,14 @@ public class Voting {
         return message;
     }
 
-    public static float getMultiplier(){
-        return multiplier;
-    }
-
     public static void updateMultiplier(){
-        multiplier = switch ((int) Variables.getVariable("jeu")){
+        float multiplier = switch ((int) Variables.getVariable("jeu")){
             case 4, 5 -> 1.5f;
             case 6 -> 2f;
             default -> 1f;
         };
+
+        Points.setMultiplier(multiplier);
 
     }
 
