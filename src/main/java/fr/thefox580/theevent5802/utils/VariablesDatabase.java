@@ -35,8 +35,6 @@ public class VariablesDatabase {
         this.database = client.getDatabase("variables");
 
         this.vars = this.database.getCollection("Season 1");
-
-        getVariables(true);
     }
 
     public void addVariables(){
