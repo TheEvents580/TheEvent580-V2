@@ -58,7 +58,6 @@ public class VariablesDatabase {
     }
 
     public void shutdown(){
-        this.database.drop();
         this.client.close();
     }
 }
