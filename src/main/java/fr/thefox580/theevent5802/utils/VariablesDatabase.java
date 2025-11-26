@@ -17,7 +17,7 @@ public class VariablesDatabase {
 
     private final MongoClient client;
     private final MongoDatabase database;
-    private final MongoCollection<Document> stats;
+    private final MongoCollection<Document> vars;
 
     public VariablesDatabase(TheEvent580_2 plugin) {
         this.plugin = plugin;
@@ -34,7 +34,9 @@ public class VariablesDatabase {
         client = MongoClients.create(settings);
         this.database = client.getDatabase("variables");
 
-        this.stats = this.database.getCollection("Season 1");
+        this.vars = this.database.getCollection("Season 1");
+
+        getVariables(true);
     }
 
     public void addVariables(){
@@ -42,15 +44,15 @@ public class VariablesDatabase {
         this.database.runCommand(new Document("ping", 1));
         plugin.getLogger().info("Pinged your deployment. You successfully connected to MongoDB!");
 
-        this.stats.deleteOne(new Document("_id", "7"));
-        this.stats.insertOne(plugin.getInstances().getVariables().sendVariablesDoc());
+        this.vars.deleteOne(new Document("_id", "7"));
+        this.vars.insertOne(plugin.getInstances().getVariables().sendVariablesDoc());
     }
 
     public void getVariables(boolean force) {
         // Send a ping to confirm a successful connection
         this.database.runCommand(new Document("ping", 1));
         plugin.getLogger().info("Pinged your deployment. You successfully connected to MongoDB!");
-        Document doc = this.stats.find(new Document("_id", "7")).first();
+        Document doc = this.vars.find(new Document("_id", "7")).first();
         if (doc == null) {
             return;
         }
