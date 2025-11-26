@@ -150,6 +150,10 @@ public class ScoreboardManager {
                             .append(Component.text(FinderSets.getCurrentItemSetName(), ColorType.RAINBOW.getColor())));
                 }
             }
+            case 15 -> {
+                board.updateLine(5, Component.text("Players Left : ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
+                        .append(Component.text(Players.nbPlayersAlive() + "/" + Players.getMaxPlayerCount(), ColorType.SUBTEXT.getColor())));
+            }
             default -> {
                 if (Players.getPlayerCount() < Players.getMaxPlayerCount()) {
                     int playersMissing = Players.getMaxPlayerCount() - Players.getPlayerCount();
