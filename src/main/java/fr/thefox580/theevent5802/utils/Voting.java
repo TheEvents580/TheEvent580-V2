@@ -178,7 +178,9 @@ public class Voting {
 
     public static void updateMultiplier(){
         float multiplier = switch ((int) Variables.getVariable("jeu")){
-            case 4, 5 -> 1.5f;
+            case 2 -> 1.25f;
+            case 3, 4 -> 1.5f;
+            case 5 -> 1.75f;
             case 6 -> 2f;
             default -> 1f;
         };
