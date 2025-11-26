@@ -8,12 +8,10 @@ import fr.thefox580.theevent5802.games.bow_pvp.BowPVP;
 import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
 import fr.thefox580.theevent5802.games.finder.Finder;
 import fr.thefox580.theevent5802.games.parkour.Parkour;
+import fr.thefox580.theevent5802.games.spleef.Spleef;
 import fr.thefox580.theevent5802.games.tag.Tag;
 import fr.thefox580.theevent5802.games.trials.Trials;
-import fr.thefox580.theevent5802.utils.Game;
-import fr.thefox580.theevent5802.utils.Players;
-import fr.thefox580.theevent5802.utils.Timer;
-import fr.thefox580.theevent5802.utils.Voting;
+import fr.thefox580.theevent5802.utils.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
@@ -90,8 +88,9 @@ public class Mode4 implements Runnable{
                     Tag.startPreGame(plugin);
                     createGameAdvancement("QUICK RUN!!!!!!!!!!!!!1!!!!!!!!!!");
                 }
-                case MULTILAP -> {
-                    createGameAdvancement("Tip : If you fall off the map, you'll get tped back to your last checkpoint.");
+                case SPLEEF -> {
+                    Spleef.startPreGame(plugin);
+                    createGameAdvancement("Tip : Make other player fall.");
                 }
                 case BUILD_MASTERS -> {
                     BuildMasters.startPreGame(plugin);
@@ -114,13 +113,25 @@ public class Mode4 implements Runnable{
 
     private void createGameAdvancement(String description){
 
+        String desc = String.valueOf((int) Variables.getVariable("jeu"));
+
+        if ((int) Variables.getVariable("jeu") == 1){
+            desc += "st";
+        } else if ((int) Variables.getVariable("jeu") == 2){
+            desc += "nd";
+        } else if ((int) Variables.getVariable("jeu") == 2){
+            desc += "rd";
+        } else {
+            desc += "th";
+        }
+
         BaseAdvancement adv = plugin.getInstances().getAdvancementAPI().createAdvancement(
-                "game1",
+                "game" + (int) Variables.getVariable("jeu"),
                 game.getMaterialBlock(),
-                "Game 1 : " + game.getIcon() + " " + game.getName(),
+                "Game " + Variables.getVariable("jeu") + " : " + game.getIcon() + " " + game.getName(),
                 AdvancementFrameType.CHALLENGE,
                 false,
-                "The 1st game is " + game.getName() + " ",
+                "The " + desc + " game is " + game.getName() + " ",
                 description);
 
         for (Player player : Bukkit.getOnlinePlayers()){
