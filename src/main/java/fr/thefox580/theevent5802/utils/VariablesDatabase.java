@@ -15,6 +15,7 @@ public class VariablesDatabase {
 
     private final TheEvent580_2 plugin;
 
+    private final MongoClient client;
     private final MongoDatabase database;
     private final MongoCollection<Document> stats;
 
@@ -30,8 +31,8 @@ public class VariablesDatabase {
                 .serverApi(serverApi)
                 .build();
 
-        MongoClient mongoClient = MongoClients.create(settings);
-        this.database = mongoClient.getDatabase("variables");
+        client = MongoClients.create(settings);
+        this.database = client.getDatabase("variables");
 
         this.stats = this.database.getCollection("Season 1");
     }
@@ -54,5 +55,10 @@ public class VariablesDatabase {
             return;
         }
         plugin.getInstances().getVariables().retrieveVariables(doc, force);
+    }
+
+    public void shutdown(){
+        this.database.drop();
+        this.client.close();
     }
 }

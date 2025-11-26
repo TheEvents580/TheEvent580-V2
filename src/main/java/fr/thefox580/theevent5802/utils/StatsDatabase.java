@@ -18,6 +18,7 @@ public class StatsDatabase {
 
     private final TheEvent580_2 plugin;
 
+    private final MongoClient client;
     private final MongoDatabase database;
     private MongoCollection<Document> stats;
 
@@ -33,8 +34,8 @@ public class StatsDatabase {
                 .serverApi(serverApi)
                 .build();
 
-        MongoClient mongoClient = MongoClients.create(settings);
-        this.database = mongoClient.getDatabase("Season_1");
+        client = MongoClients.create(settings);
+        this.database = client.getDatabase("Season_1");
 
         AtomicBoolean collectionExists = new AtomicBoolean(false);
         this.database.listCollectionNames().forEach(collection -> {
@@ -102,6 +103,11 @@ public class StatsDatabase {
             this.database.createCollection(Objects.requireNonNull(plugin.getConfig().getString("episode")));
         }
         this.stats = this.database.getCollection(Objects.requireNonNull(plugin.getConfig().getString("episode")));
+    }
+
+    public void shutdown(){
+        this.database.drop();
+        this.client.close();
     }
 }
 

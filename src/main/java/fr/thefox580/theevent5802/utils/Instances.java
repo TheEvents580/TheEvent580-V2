@@ -7,6 +7,7 @@ public class Instances {
 
     private VariablesDatabase variablesDatabase;
     private StatsDatabase statsDatabase;
+    private AdvancementsDatabase advancementsDatabase;
     private Spectators spectators;
     private Variables variables;
     private BossbarManager bossbars;
@@ -23,6 +24,7 @@ public class Instances {
     private void initializeDatabases(){
         this.variablesDatabase = new VariablesDatabase(plugin);
         this.statsDatabase = new StatsDatabase(plugin);
+        this.advancementsDatabase = new AdvancementsDatabase(plugin);
     }
 
     public void initialize(){
@@ -43,6 +45,10 @@ public class Instances {
 
     public StatsDatabase getStatsDatabase(){
         return statsDatabase;
+    }
+
+    public AdvancementsDatabase getAdvancementsDatabase(){
+        return advancementsDatabase;
     }
 
     public Spectators getSpectators(){
