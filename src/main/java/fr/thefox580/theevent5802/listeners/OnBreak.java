@@ -2,8 +2,7 @@ package fr.thefox580.theevent5802.listeners;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
-import fr.thefox580.theevent5802.utils.Game;
-import fr.thefox580.theevent5802.utils.Variables;
+import fr.thefox580.theevent5802.utils.*;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,8 +13,11 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class OnBreak implements Listener {
 
+    private final TheEvent580_2 plugin;
+
     public OnBreak(TheEvent580_2 plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        this.plugin = plugin;
     }
 
     @EventHandler
@@ -44,6 +46,17 @@ public class OnBreak implements Listener {
                         if (event.getBlock().getY() != 128){
                             event.setCancelled(true);
                         }
+                    }
+                }
+            } else if (Variables.equals("jeu_condi", Game.SPLEEF.getGameCondition())){
+                event.setDropItems(false);
+                if (!Online.getPlayerManager(player).isAlive(plugin)){
+                    event.setCancelled(true);
+                } else {
+                    if (Timer.getEnum() != Timer.TimerEnum.IN_GAME){
+                        event.setCancelled(true);
+                    } else {
+                        event.setDropItems(false);
                     }
                 }
             }

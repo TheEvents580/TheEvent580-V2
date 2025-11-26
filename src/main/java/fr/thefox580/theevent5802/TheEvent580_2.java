@@ -41,6 +41,10 @@ public final class TheEvent580_2 extends JavaPlugin {
 
         PluginStart.stopTasks();
 
+        instances.getStatsDatabase().shutdown();
+        instances.getVariablesDatabase().shutdown();
+        instances.getAdvancementsDatabase().shutdown();
+
         this.getLogger().info("TheEvent580's plugin stopped"); //Send a message on plugin stop
     }
 

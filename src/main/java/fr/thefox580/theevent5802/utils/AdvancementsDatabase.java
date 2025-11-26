@@ -17,6 +17,7 @@ public class AdvancementsDatabase {
 
     private final TheEvent580_2 plugin;
 
+    private final MongoClient client;
     private final MongoDatabase database;
     private final MongoCollection<Document> stats;
 
@@ -32,8 +33,8 @@ public class AdvancementsDatabase {
                 .serverApi(serverApi)
                 .build();
 
-        MongoClient mongoClient = MongoClients.create(settings);
-        this.database = mongoClient.getDatabase("advancements");
+        client = MongoClients.create(settings);
+        this.database = client.getDatabase("advancements");
 
         this.stats = this.database.getCollection("Season 1");
     }
@@ -63,5 +64,10 @@ public class AdvancementsDatabase {
         });
 
         return playerAdvancement;
+    }
+
+    public void shutdown(){
+        this.database.drop();
+        this.client.close();
     }
 }
