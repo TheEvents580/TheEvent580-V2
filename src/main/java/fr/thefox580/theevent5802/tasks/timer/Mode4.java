@@ -1,5 +1,7 @@
 package fr.thefox580.theevent5802.tasks.timer;
 
+import com.fren_gor.ultimateAdvancementAPI.advancement.BaseAdvancement;
+import com.fren_gor.ultimateAdvancementAPI.advancement.display.AdvancementFrameType;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.games.arms_race.ArmsRace;
 import fr.thefox580.theevent5802.games.bow_pvp.BowPVP;
@@ -14,6 +16,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
@@ -71,18 +74,70 @@ public class Mode4 implements Runnable{
             });
 
             switch (game){
-                case TRIALS -> Trials.startPreGame(plugin);
-                case PARKOUR -> Parkour.startPreGame(plugin);
-                case FINDER -> Finder.startPreGame(plugin);
-                case TAG -> Tag.startPreGame(plugin);
-                case SPLEEF -> Spleef.startPreGame(plugin);
-                case BUILD_MASTERS -> BuildMasters.startPreGame(plugin);
-                case ARMS_RACE -> ArmsRace.startPreGame(plugin);
-                case BOW_PVP -> BowPVP.startPreGame(plugin);
+                case TRIALS -> {
+                    Trials.startPreGame(plugin);
+                    createGameAdvancement("You better complete those tasks!");
+                }
+                case PARKOUR -> {
+                    Parkour.startPreGame(plugin);
+                    createGameAdvancement("Don't fail your jumps!");
+                }
+                case FINDER -> {
+                    Finder.startPreGame(plugin);
+                    createGameAdvancement("Did you get those blocks?");
+                }
+                case TAG -> {
+                    Tag.startPreGame(plugin);
+                    createGameAdvancement("QUICK RUN!!!!!!!!!!!!!1!!!!!!!!!!");
+                }
+                case SPLEEF -> {
+                    Spleef.startPreGame(plugin);
+                    createGameAdvancement("Tip : Make other player fall.");
+                }
+                case BUILD_MASTERS -> {
+                    BuildMasters.startPreGame(plugin);
+                    createGameAdvancement("Nobody finished that game since the mall arrived, have you?");
+                }
+                case ARMS_RACE -> {
+                    ArmsRace.startPreGame(plugin);
+                    createGameAdvancement("Kill people but don't get killed.");
+                }
+                case BOW_PVP -> {
+                    BowPVP.startPreGame(plugin);
+                    createGameAdvancement("SHOOT EVERYONE.");
+                }
             }
 
             task.cancel();
         }
 
+    }
+
+    private void createGameAdvancement(String description){
+
+        String desc = String.valueOf((int) Variables.getVariable("jeu"));
+
+        if ((int) Variables.getVariable("jeu") == 1){
+            desc += "st";
+        } else if ((int) Variables.getVariable("jeu") == 2){
+            desc += "nd";
+        } else if ((int) Variables.getVariable("jeu") == 2){
+            desc += "rd";
+        } else {
+            desc += "th";
+        }
+
+        BaseAdvancement adv = plugin.getInstances().getAdvancementAPI().createAdvancement(
+                "game" + (int) Variables.getVariable("jeu"),
+                game.getMaterialBlock(),
+                "Game " + Variables.getVariable("jeu") + " : " + game.getIcon() + " " + game.getName(),
+                AdvancementFrameType.CHALLENGE,
+                false,
+                "The " + desc + " game is " + game.getName() + " ",
+                description);
+
+        for (Player player : Bukkit.getOnlinePlayers()){
+            adv.grant(player);
+        }
     }
 }

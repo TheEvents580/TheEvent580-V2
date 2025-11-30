@@ -1,5 +1,6 @@
 package fr.thefox580.theevent5802.listeners;
 
+import com.fren_gor.ultimateAdvancementAPI.advancement.BaseAdvancement;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
 import fr.thefox580.theevent5802.games.finder.Finder;
@@ -243,6 +244,13 @@ public class OnWorldInteract implements Listener {
                                 .append(Component.text("] You've been teleported to the spawn!", ColorType.TEXT.getColor())));
                     }
                 }
+            }
+        }
+        else if (event.getClickedBlock().getType() == Material.LEVER){
+            BaseAdvancement parkourAdv = plugin.getInstances().getAdvancementAPI().getCustomAdvancement(AdvancementsEnum.HEROBRINE);
+            if (!parkourAdv.isGranted(player)){
+                parkourAdv.grant(player);
+                plugin.getInstances().getAdvancementAPI().getCounterAdvancement().incrementProgression(player);
             }
         } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK){
             if (event.getClickedBlock() == null){

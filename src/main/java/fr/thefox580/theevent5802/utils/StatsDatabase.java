@@ -34,8 +34,9 @@ public class StatsDatabase {
                 .serverApi(serverApi)
                 .build();
 
-        client = MongoClients.create(settings);
+        MongoClient client = MongoClients.create(settings);
         this.database = client.getDatabase("Season_1");
+        this.client = client;
 
         AtomicBoolean collectionExists = new AtomicBoolean(false);
         this.database.listCollectionNames().forEach(collection -> {

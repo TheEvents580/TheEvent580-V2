@@ -33,8 +33,9 @@ public class AdvancementsDatabase {
                 .serverApi(serverApi)
                 .build();
 
-        client = MongoClients.create(settings);
+        MongoClient client = MongoClients.create(settings);
         this.database = client.getDatabase("advancements");
+        this.client = client;
 
         this.stats = this.database.getCollection("Season 1");
     }
@@ -60,7 +61,7 @@ public class AdvancementsDatabase {
         Document docAdv = doc.get("advancements", Document.class);
 
         docAdv.forEach((String id, Object value) -> {
-            playerAdvancement.setAdvancementCompletion(Advancements.getAdvancementById(Integer.getInteger(id)), (Boolean) value);
+            playerAdvancement.setAdvancementCompletion(AdvancementsEnum.getAdvancementById(Integer.getInteger(id)), (Boolean) value);
         });
 
         return playerAdvancement;

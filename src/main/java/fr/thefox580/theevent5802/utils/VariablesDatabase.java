@@ -31,8 +31,10 @@ public class VariablesDatabase {
                 .serverApi(serverApi)
                 .build();
 
-        client = MongoClients.create(settings);
+
+        MongoClient client = MongoClients.create(settings);
         this.database = client.getDatabase("variables");
+        this.client = client;
 
         this.vars = this.database.getCollection("Season 1");
     }

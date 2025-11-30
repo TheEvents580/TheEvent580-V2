@@ -15,6 +15,7 @@ public class Instances {
     private Players players;
     private BlockGame blockGame;
     private TheEvent580Expansion placeholderAPIExpansion;
+    private Advancements advancements;
 
     public Instances(TheEvent580_2 plugin){
         this.plugin = plugin;
@@ -35,6 +36,7 @@ public class Instances {
         this.players = new Players(plugin);
         this.blockGame = new BlockGame(plugin);
         this.placeholderAPIExpansion = new TheEvent580Expansion(plugin);
+        this.advancements = new Advancements(plugin);
 
         placeholderAPIExpansion.register();
     }
@@ -71,6 +73,10 @@ public class Instances {
 
     public BlockGame getBlockGame(){
         return blockGame;
+    }
+
+    public Advancements getAdvancementAPI(){
+        return advancements;
     }
 
 }

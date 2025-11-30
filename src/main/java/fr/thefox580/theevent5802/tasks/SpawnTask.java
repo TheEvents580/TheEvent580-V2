@@ -1,5 +1,6 @@
 package fr.thefox580.theevent5802.tasks;
 
+import com.fren_gor.ultimateAdvancementAPI.advancement.BaseAdvancement;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.commands.Spawn;
 import fr.thefox580.theevent5802.utils.*;
@@ -17,10 +18,12 @@ import java.util.List;
 
 public class SpawnTask implements Runnable{
 
+    private final TheEvent580_2 plugin;
     private final BukkitTask task;
     private final List<Integer> modes = List.of(0, 1, 7, 8, 10, 11);
 
     public SpawnTask(TheEvent580_2 plugin){
+        this.plugin = plugin;
         this.task = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, 1L);
         PluginStart.addTaskToList(task);
     }
@@ -79,6 +82,12 @@ public class SpawnTask implements Runnable{
                     player.sendMessage(Component.text(PlaceholderAPI.setPlaceholders(player, "%theevent580_parkour.solo%"), ColorType.SUBTEXT.getColor()));
 
                     SpawnParkour.updateText();
+
+                    BaseAdvancement parkourAdv = plugin.getInstances().getAdvancementAPI().getCustomAdvancement(AdvancementsEnum.HUBPARKOUR);
+                    if (!parkourAdv.isGranted(player)){
+                        parkourAdv.grant(player);
+                        plugin.getInstances().getAdvancementAPI().getCounterAdvancement().incrementProgression(player);
+                    }
 
                 }
             }
