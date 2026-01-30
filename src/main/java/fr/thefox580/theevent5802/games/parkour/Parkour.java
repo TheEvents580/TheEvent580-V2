@@ -10,18 +10,20 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class Parkour {
-    private static final Map<Player, Integer> playerPoints = new HashMap<>();
-    private static final Map<Player, Float> playerMults = new HashMap<>();
-    private static final Map<Player, Integer> playerMainLevel = new HashMap<>();
-    private static final Map<Player, Integer> playerSubLevel = new HashMap<>();
-    private static final Map<Player, Location> playerCheckpoint = new HashMap<>();
-    private static final Map<Player, Boolean> playerSkipped = new HashMap<>();
+    private static final Map<UUID, Integer> playerPoints = new HashMap<>();
+    private static final Map<UUID, Float> playerMults = new HashMap<>();
+    private static final Map<UUID, Integer> playerMainLevel = new HashMap<>();
+    private static final Map<UUID, Integer> playerSubLevel = new HashMap<>();
+    private static final Map<UUID, Location> playerCheckpoint = new HashMap<>();
+    private static final Map<UUID, Boolean> playerSkipped = new HashMap<>();
 
     /**
      * Method to call to start the pre-game setup
@@ -34,17 +36,14 @@ public class Parkour {
 
         Bukkit.getOnlinePlayers().forEach(player -> {
             player.teleport(new Location(Bukkit.getWorld("parkour"), 131.5, 129, 201.5, -90, 0));
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    player.setGameMode(GameMode.ADVENTURE);
-                    Bukkit.getOnlinePlayers().forEach(otherPlayer -> {
-                        if (otherPlayer.getUniqueId() != player.getUniqueId()){
-                            player.hidePlayer(plugin, otherPlayer);
-                        }
-                    });
-                }
-            }.runTaskLater(plugin, 20L);
+            player.setGameMode(GameMode.ADVENTURE);
+            if (Players.isPlayer(player)){
+                Bukkit.getOnlinePlayers().forEach(otherPlayer -> {
+                    if (otherPlayer.getUniqueId() != player.getUniqueId()){
+                        player.hidePlayer(plugin, otherPlayer);
+                    }
+                });
+            }
         });
 
 
@@ -57,16 +56,22 @@ public class Parkour {
         playerMults.clear();
         playerMainLevel.clear();
         playerSubLevel.clear();
+        playerSkipped.clear();
+        playerCheckpoint.clear();
 
         for (PlayerManager playerManager : Players.getOnlinePlayerList()){
-            playerPoints.put(playerManager.getOnlinePlayer(), Math.round(120 * Points.getMultiplier()));
-            playerMults.put(playerManager.getOnlinePlayer(), 1f);
-            playerMainLevel.put(playerManager.getOnlinePlayer(), 1);
-            playerSubLevel.put(playerManager.getOnlinePlayer(), 1);
-            playerCheckpoint.put(playerManager.getOnlinePlayer(), new Location(Bukkit.getWorld("parkour"), 139.5, 129, 201.5, -90, 0));
+            Player player = playerManager.getOnlinePlayer();
+            if (player != null){
+                playerPoints.put(player.getUniqueId(), Math.round(120 * Points.getMultiplier()));
+                playerMults.put(player.getUniqueId(), 1f);
+                setMainLevel(player, 1);
+                setSubLevel(player, 1);
+                playerCheckpoint.put(player.getUniqueId(), new Location(Bukkit.getWorld("parkour"), 139.5, 129, 201.5, -90, 0));
+                playerSkipped.put(player.getUniqueId(), false);
+            } else {
+                Bukkit.broadcast(Component.text("Player " + playerManager.getOfflinePlayer().getName() + " is null.", ColorType.MC_RED.getColor()));
+            }
         }
-
-        Spectators.readySpectatorsGame();
 
         ParkourTasks.preGameTask(plugin);
     }
@@ -91,7 +96,7 @@ public class Parkour {
      * @return The main level the player is at
      */
     public static int getMainLevel(Player player){
-        return playerMainLevel.get(player);
+        return playerMainLevel.get(player.getUniqueId());
     }
 
     /**
@@ -100,7 +105,7 @@ public class Parkour {
      * @param mainLevel The new main level.
      */
     public static void setMainLevel(Player player, int mainLevel){
-        playerMainLevel.put(player, mainLevel);
+        playerMainLevel.put(player.getUniqueId(), mainLevel);
     }
 
     /**
@@ -117,7 +122,7 @@ public class Parkour {
      * @return The sublevel the player is at
      */
     public static int getSubLevel(Player player){
-        return playerSubLevel.get(player);
+        return playerSubLevel.get(player.getUniqueId());
     }
 
     /**
@@ -126,7 +131,7 @@ public class Parkour {
      * @param subLevel The new sublevel.
      */
     public static void setSubLevel(Player player, int subLevel){
-        playerSubLevel.put(player, subLevel);
+        playerSubLevel.put(player.getUniqueId(), subLevel);
     }
 
     /**
@@ -136,7 +141,7 @@ public class Parkour {
      * @return The amount of coins a player has gotten.
      */
     public static int getPlayerPoints(Player player){
-        return playerPoints.get(player);
+        return playerPoints.get(player.getUniqueId());
     }
 
     /**
@@ -146,7 +151,7 @@ public class Parkour {
      * @param points The amount of points you want to add.
      */
     public static void addPlayerPoints(Player player, int points){
-        playerPoints.put(player, playerPoints.get(player) + points);
+        playerPoints.put(player.getUniqueId(), playerPoints.get(player.getUniqueId()) + points);
     }
 
     /**
@@ -156,7 +161,7 @@ public class Parkour {
      * @param points The amount of points you want to remove.
      */
     public static void removePlayerPoints(Player player, int points){
-        playerPoints.put(player, playerPoints.get(player) - points);
+        playerPoints.put(player.getUniqueId(), playerPoints.get(player.getUniqueId()) - points);
     }
 
     /**
@@ -164,7 +169,7 @@ public class Parkour {
      * @return The multiplier a player has.
      */
     public static float getPlayerMult(Player player){
-        return playerMults.get(player);
+        return playerMults.get(player.getUniqueId());
     }
 
     /**
@@ -173,7 +178,7 @@ public class Parkour {
      * @param mult The multiplier we want to add.
      */
     public static void addPlayerMult(Player player, float mult){
-        playerMults.put(player, playerMults.get(player) + mult);
+        playerMults.put(player.getUniqueId(), Math.round(playerMults.get(player.getUniqueId())*100 + mult*100)/100f);
     }
 
     /**
@@ -181,7 +186,7 @@ public class Parkour {
      * @return The location of the checkpoint of the player.
      */
     public static Location getPlayerCheckpoint(Player player){
-        return playerCheckpoint.get(player);
+        return playerCheckpoint.get(player.getUniqueId());
     }
 
     /**
@@ -189,7 +194,7 @@ public class Parkour {
      * @param player The player who we want to update the checkpoint location from.
      */
     public static void setPlayerCheckpoint(Player player){
-        playerCheckpoint.put(player, player.getLocation());
+        playerCheckpoint.put(player.getUniqueId(), player.getLocation());
     }
 
     /**
@@ -197,7 +202,7 @@ public class Parkour {
      * @return true if the player has skipped a level in the last 10 seconds, false otherwise.
      */
     public static boolean hasPlayerSkipped(Player player){
-        return playerSkipped.get(player);
+        return playerSkipped.get(player.getUniqueId());
     }
 
     /**
@@ -206,12 +211,16 @@ public class Parkour {
      * @param player The player who skipped a level.
      */
     public static void setPlayerSkipped(Player player, TheEvent580_2 plugin){
-        playerSkipped.put(player, true);
+        playerSkipped.put(player.getUniqueId(), true);
         removePlayerPoints(player, 5);
+        setSubLevel(player,getSubLevel(player) + 1);
 
         ItemStack skip = player.getActiveItem();
 
         if (skip.getType() == Material.CARROT_ON_A_STICK){
+            ItemMeta skipMeta =  skip.getItemMeta();
+            skipMeta.getUseCooldown().setCooldownSeconds(10f);
+            skip.setItemMeta(skipMeta);
             player.setCooldown(skip, 10*20);
         }
 
@@ -225,7 +234,7 @@ public class Parkour {
         new BukkitRunnable() {
             @Override
             public void run() {
-                playerSkipped.put(player, false);
+                playerSkipped.put(player.getUniqueId(), false);
             }
         }.runTaskLater(plugin, 10*20L);
     }

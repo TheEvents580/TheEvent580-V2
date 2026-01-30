@@ -25,7 +25,15 @@ public class ParkourTasks {
             @Override
             public void run() {
 
-                if (Timer.getSeconds() == 60){
+                if (Timer.getSeconds() > 60){
+
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "execute in minecraft:parkour run fill 134 131 203 134 129 199 barrier_block");
+                    Bukkit.getOnlinePlayers().forEach(player -> {
+                        player.setGameMode(GameMode.ADVENTURE);
+                    });
+
+                } else if (Timer.getSeconds() == 60){
+                    Spectators.readySpectatorsGame();
                     Bukkit.getOnlinePlayers().forEach(player -> player.showTitle(Title.title(
                             Component.text(Game.PARKOUR.getIcon(), ColorType.NO_SHADOW.getColor())
                                     .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor())),
@@ -107,6 +115,8 @@ public class ParkourTasks {
                         }
                     });
 
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "execute in minecraft:parkour run fill 134 131 203 134 129 199 air");
+
                     mainGameTask(plugin);
                     this.cancel();
                 }
@@ -151,7 +161,7 @@ public class ParkourTasks {
                                         if (player.getInventory().contains(Material.CARROT_ON_A_STICK)){
                                             player.getInventory().clear();
                                         }
-                                        if (Parkour.getPlayerCheckpoint(player).x()+32 <= player.getX() && withinBounds(player.getLocation())){
+                                        if (Math.floor(Parkour.getPlayerCheckpoint(player).x())+32 <= player.getX() && withinBounds(player.getLocation())){
                                             Parkour.addPlayerMult(player, 1.3f);
                                             Spectators.readySpectatorGame(playerManager);
                                             Players.getOnlinePlayerList().forEach(otherPlayerManager -> {
@@ -183,8 +193,8 @@ public class ParkourTasks {
                                             });
                                         }
                                     } else {
-                                        if (Parkour.getPlayerCheckpoint(player).x()+16 <= player.getX() && withinBounds(player.getLocation())){
-                                            if (Parkour.hasPlayerSkipped(player)){
+                                        if (Math.floor(Parkour.getPlayerCheckpoint(player).x())+16 <= player.getX() && withinBounds(player.getLocation())){
+                                            if (!Parkour.hasPlayerSkipped(player)){
                                                 switch (Parkour.getMainLevel(player)){
                                                     case 1 -> Parkour.addPlayerMult(player, 0.1f);
                                                     case 2 -> Parkour.addPlayerMult(player, 0.2f);
@@ -201,16 +211,17 @@ public class ParkourTasks {
                                                     .append(Parkour.getMainLevelComp(player))
                                                     .append(Component.text(" sub-level completed! New multiplier : 必"+ Parkour.getPlayerMult(player) +"!", ColorType.TEXT.getColor())));
 
+                                            Parkour.setSubLevel(player,Parkour.getSubLevel(player) + 1);
+
                                             if (Parkour.getSubLevel(player) == 7){
-                                                Parkour.setMainLevel(player,Parkour.getMainLevel(player) + 1);
-                                                Parkour.setSubLevel(player,0);
                                                 Bukkit.broadcast(Component.text("[")
                                                         .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
                                                         .append(Component.text("] " + player.getName() + " finished all ", ColorType.TEXT.getColor()))
                                                         .append(Parkour.getMainLevelComp(player))
                                                         .append(Component.text(" levels!", ColorType.TEXT.getColor())));
+                                                Parkour.setMainLevel(player,Parkour.getMainLevel(player) + 1);
+                                                Parkour.setSubLevel(player,1);
                                             }
-                                            Parkour.setSubLevel(player,Parkour.getSubLevel(player) + 1);
                                         }
                                     }
                                 }
