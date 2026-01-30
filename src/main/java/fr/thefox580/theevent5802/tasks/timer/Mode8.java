@@ -44,6 +44,8 @@ public class Mode8 implements Runnable{
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"fill 3 247 -8 3 247 8 air replace redstone_block");
         } else if (Timer.getSeconds() == 0) {
 
+            task.cancel();
+
             Spectators.readySpectatorsDecision();
 
 
@@ -73,8 +75,6 @@ public class Mode8 implements Runnable{
             }
 
             new Mode9(plugin);
-
-            task.cancel();
         }
     }
 }

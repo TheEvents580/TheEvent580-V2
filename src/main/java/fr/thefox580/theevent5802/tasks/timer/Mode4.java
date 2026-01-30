@@ -57,6 +57,8 @@ public class Mode4 implements Runnable{
 
         else if (Timer.getSeconds() == 0){
 
+            task.cancel();
+
             Voting.resetVotes();
 
             Bukkit.getOnlinePlayers().forEach(player -> {
@@ -80,8 +82,6 @@ public class Mode4 implements Runnable{
                 case ARMS_RACE -> ArmsRace.startPreGame(plugin);
                 case BOW_PVP -> BowPVP.startPreGame(plugin);
             }
-
-            task.cancel();
         }
 
     }

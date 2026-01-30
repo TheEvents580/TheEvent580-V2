@@ -168,6 +168,9 @@ public class Mode10 implements Runnable{
             Leaderboard.getAllPlayers();
 
         } else if (Timer.getSeconds() == 0){
+
+            task.cancel();
+
             Timer.setEnum(Timer.TimerEnum.END);
 
             for (Player player : Bukkit.getOnlinePlayers()){
@@ -183,8 +186,6 @@ public class Mode10 implements Runnable{
                                 Duration.ofMillis(500)
                         )));
             }
-
-            task.cancel();
         }
 
     }

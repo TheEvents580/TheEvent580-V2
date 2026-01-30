@@ -28,7 +28,8 @@ public class Mode9 implements Runnable{
         if (Timer.getSeconds() == 5){
             Voting.updateMultiplier();
         } else if (Timer.getSeconds() == 0) {
-            Variables.setVariable("jeu", (int) Variables.getVariable("jeu") + 1);
+
+            task.cancel();
 
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fill 8 247 -8 -8 247 8 air");
 
@@ -47,8 +48,6 @@ public class Mode9 implements Runnable{
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fill 3 251 -8 3 251 8 air");
 
                     new Mode3(plugin);
-
-                    task.cancel();
 
                 }
             }.runTaskLater(plugin, 5L);

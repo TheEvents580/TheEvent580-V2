@@ -162,6 +162,9 @@ public class Mode1 implements Runnable {
                         Title.Times.times(Duration.ofSeconds(0), Duration.ofSeconds(3), Duration.ofSeconds(0))));
             }
         } else if (Timer.getSeconds() == 0){
+
+            task.cancel();
+
             for (Player player : Bukkit.getOnlinePlayers()){
                 player.showTitle(Title.title(Component.text("Event starting", ColorType.RAINBOW.getColor()),
                         Component.text("NOW", ColorType.MC_GREEN.getColor()),
@@ -189,7 +192,6 @@ public class Mode1 implements Runnable {
                 }
             }
             new Mode2(plugin);
-            task.cancel();
         }
     }
 }

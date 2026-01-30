@@ -61,7 +61,7 @@ public class Mode3 implements Runnable {
                     for (PlayerManager spectator : Spectators.getSpectatorOnlineList()){
                         Objects.requireNonNull(spectator.getOnlinePlayer()).sendMessage(Component.text('[')
                                 .append(Component.text("Decision Crystal", ColorType.TITLE.getColor(), TextDecoration.BOLD))
-                                .append(Component.text("] Player", ColorType.TEXT.getColor()))
+                                .append(Component.text("] Player ", ColorType.TEXT.getColor()))
                                 .append(Component.text(loopPlayer.getName(), loopPlayer.getColorType().getColor()))
                                 .append(Component.text(" received ", ColorType.TEXT.getColor()))
                                 .append(Component.text(powerup.getRarity().getName() + ' ', powerup.getRarity().getColor(), TextDecoration.BOLD))
@@ -72,7 +72,7 @@ public class Mode3 implements Runnable {
                     for (PlayerManager spectator : Spectators.getSpectatorOnlineList()){
                         Objects.requireNonNull(spectator.getOnlinePlayer()).sendMessage(Component.text('[')
                                 .append(Component.text("Decision Crystal", ColorType.TITLE.getColor(), TextDecoration.BOLD))
-                                .append(Component.text("] Player", ColorType.TEXT.getColor()))
+                                .append(Component.text("] Player ", ColorType.TEXT.getColor()))
                                 .append(Component.text(loopPlayer.getName(), loopPlayer.getColorType().getColor()))
                                 .append(Component.text(" didn't recieve anything...", ColorType.TEXT.getColor())));
                     }
@@ -95,13 +95,7 @@ public class Mode3 implements Runnable {
                         getBlockUnderEntity(chestplate, player);
                     }
 
-                    player.getInventory().remove(Material.CARROT_ON_A_STICK);
-                    player.getInventory().remove(Material.MINECART);
-                    player.getInventory().remove(Material.NETHERITE_SWORD);
-                    player.getInventory().remove(Material.CROSSBOW);
-                    player.getInventory().remove(Material.FOX_SPAWN_EGG);
-                    player.getInventory().remove(Material.DIAMOND_CHESTPLATE);
-                    player.getInventory().remove(Material.GOLDEN_CHESTPLATE);
+                    player.getInventory().clear();
                 }
             }
 
@@ -160,6 +154,8 @@ public class Mode3 implements Runnable {
 
         } else if (Timer.getSeconds() == 0){
 
+            task.cancel();
+
             Game chosenGame = chosenGames.getFirst();
             Bukkit.broadcast(Component.text('[')
                     .append(Component.text("Decision Crystal", ColorType.TITLE.getColor(), TextDecoration.BOLD))
@@ -195,7 +191,6 @@ public class Mode3 implements Runnable {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fill 3 251 -8 3 251 8 air");
 
                     new Mode4(plugin, chosenGame);
-                    task.cancel();
 
                 }
             }.runTaskLater(plugin, 5L);

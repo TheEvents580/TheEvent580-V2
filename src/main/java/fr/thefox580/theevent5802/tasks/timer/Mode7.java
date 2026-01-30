@@ -209,6 +209,8 @@ public class Mode7 implements Runnable{
 
         } else if (Timer.getSeconds() == 0){
 
+            task.cancel();
+
             Variables.setVariable("jeu_nom", Game.HUB.getName());
             Variables.setVariable("jeu_condi", Game.HUB.getGameCondition());
 
@@ -230,8 +232,6 @@ public class Mode7 implements Runnable{
             } else {
                 new Mode8(plugin, "normal");
             }
-
-            task.cancel();
         }
 
     }
@@ -243,7 +243,7 @@ public class Mode7 implements Runnable{
             Bukkit.broadcast(
                     Component.text("[")
                             .append(Component.text("Game Scores", ColorType.TITLE.getColor(), TextDecoration.BOLD))
-                            .append(Component.text("] 1st ", ColorType.TEXT.getColor()))
+                            .append(Component.text("] 1st: ", ColorType.TEXT.getColor()))
                             .append(Component.text(topPlayerManager.getTeam().getIcon(), ColorType.NO_SHADOW.getColor()))
                             .append(Component.text(" " + topPlayerManager.getName(), topPlayerManager.getColorType().getColor()))
                             .append(Component.text(" - " + Points.formatPoints(allPlayers.getFirst().getValue())))
@@ -258,7 +258,7 @@ public class Mode7 implements Runnable{
             Bukkit.broadcast(
                     Component.text("[")
                             .append(Component.text("Game Scores", ColorType.TITLE.getColor(), TextDecoration.BOLD))
-                            .append(Component.text("] 2nd ", ColorType.TEXT.getColor()))
+                            .append(Component.text("] 2nd: ", ColorType.TEXT.getColor()))
                             .append(Component.text(topPlayerManager.getTeam().getIcon(), ColorType.NO_SHADOW.getColor()))
                             .append(Component.text(" " + topPlayerManager.getName(), topPlayerManager.getColorType().getColor()))
                             .append(Component.text(" - " + Points.formatPoints(allPlayers.get(1).getValue())))
@@ -273,7 +273,7 @@ public class Mode7 implements Runnable{
             Bukkit.broadcast(
                     Component.text("[")
                             .append(Component.text("Game Scores", ColorType.TITLE.getColor(), TextDecoration.BOLD))
-                            .append(Component.text("] 3rd ", ColorType.TEXT.getColor()))
+                            .append(Component.text("] 3rd: ", ColorType.TEXT.getColor()))
                             .append(Component.text(topPlayerManager.getTeam().getIcon(), ColorType.NO_SHADOW.getColor()))
                             .append(Component.text(" " + topPlayerManager.getName(), topPlayerManager.getColorType().getColor()))
                             .append(Component.text(" - " + Points.formatPoints(allPlayers.get(2).getValue())))
