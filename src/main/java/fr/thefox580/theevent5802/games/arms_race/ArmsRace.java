@@ -31,7 +31,7 @@ public class ArmsRace {
         initializeWeapons();
 
         if (world != null){
-            world.setGameRule(GameRule.KEEP_INVENTORY, true);
+            world.setGameRule(GameRules.KEEP_INVENTORY, true);
         }
 
         for (PlayerManager playerManager : Online.getOnlinePlayers()){

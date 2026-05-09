@@ -38,7 +38,7 @@ public class BowPVP {
         BowPVP.plugin = plugin;
 
         if (world != null){
-            world.setGameRule(GameRule.KEEP_INVENTORY, true);
+            world.setGameRule(GameRules.KEEP_INVENTORY, true);
             world.getWorldBorder().setSize(83);
         }
 
@@ -208,7 +208,7 @@ public class BowPVP {
 
     public static void reduceWorldBorder(){
         if (world != null){
-            world.getWorldBorder().setSize(68, 60);
+            world.getWorldBorder().changeSize(68, 60);
         }
     }
 
