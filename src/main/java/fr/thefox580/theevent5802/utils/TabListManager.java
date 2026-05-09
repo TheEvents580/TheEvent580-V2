@@ -17,7 +17,7 @@ public class TabListManager {
 
             Component header = Component.text("");
 
-            Component title = Component.text("\n\n      TheEvent580 • Season 1 - Episode 7      ", ColorType.TITLE.getColor(), TextDecoration.BOLD);
+            Component title = Component.text("\n      TheEvent580 • Season 1 - Episode 7      ", ColorType.TITLE.getColor(), TextDecoration.BOLD);
             title = title.append(Component.text("\n\n\n").decoration(TextDecoration.BOLD, false));
 
             header = header.append(title);
@@ -52,7 +52,7 @@ public class TabListManager {
                 spectators = spectators.append(spectatorComponent.decoration(TextDecoration.BOLD, false));
             }
 
-            spectators = spectators.append(Component.text("\n\n"));
+            spectators = spectators.append(Component.text("\n\n\n"));
 
             header = header.append(spectators);
 
@@ -94,13 +94,11 @@ public class TabListManager {
                 players = players.append(playerComponent.decoration(TextDecoration.BOLD, false));
             }
 
-            players = players.append(Component.text("\n\n\n"));
+            players = players.append(Component.text("\n\n"));
 
             header = header.append(players);
 
-            Component blocker = Component.text("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-
-            player.sendPlayerListHeader(header.append(blocker));
+            player.sendPlayerListHeader(header);
         }
     }
 
