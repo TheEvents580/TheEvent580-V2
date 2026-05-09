@@ -18,7 +18,10 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.Objects;
+import java.util.UUID;
 
 
 public class OnJoin implements Listener {
@@ -31,7 +34,7 @@ public class OnJoin implements Listener {
     }
 
     @EventHandler
-    public void playerJoinsEvent(PlayerJoinEvent event){ //When a player joins the server
+    public void playerJoinsEvent(PlayerJoinEvent event) { //When a player joins the server
 
         Player player = event.getPlayer(); //Get the player
 
@@ -41,6 +44,20 @@ public class OnJoin implements Listener {
                     player.kick(Component.text("Sorry, but you're not allowed to join the server yet !", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)); //Kick the player for the following reason
                     return;
                 }
+            }
+        }
+
+        String url = plugin.getConfig().getString("rp-url");
+
+        if (url != null && !url.isEmpty()){
+            try {
+                URI uri = URI.create(url);
+                URL newUrl = uri.toURL();
+                byte[] hash = SHACalculator.createSha1(newUrl);
+
+                player.addResourcePack(UUID.randomUUID(), url, hash, MiniMessage.miniMessage().serialize( Component.text("You need the texture pack to play on TheEvent580", ColorType.TITLE.getColor(), TextDecoration.BOLD)), true);
+            } catch (Exception e) {
+                plugin.getLogger().severe(e.toString());
             }
         }
 
