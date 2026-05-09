@@ -17,7 +17,7 @@ public class UpdateBoardAndTab implements Runnable {
 
     @Override
     public void run() {
-        for (FastBoard board : ScoreboardManager.getBoards().values()){
+            for (FastBoard board : ScoreboardManager.getBoards().values()){
             ScoreboardManager.updateBoard(board);
         }
         TabListManager.sendCustomTab();
