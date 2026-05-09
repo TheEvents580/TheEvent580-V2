@@ -2,6 +2,9 @@ package fr.thefox580.theevent5802.utils;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -56,6 +59,15 @@ public class TheEvent580Expansion extends PlaceholderExpansion {
                 } else {
                     return "You have completed the parkour " + pManager.getParkourCompletion() + " times!";
                 }
+            } else if (identifier.equals("username")){
+                return MiniMessage.miniMessage().serialize(pManager.playerComponent());
+            } else if (identifier.equals("indiv_coins")){
+                Component message = Component.text("Your ", ColorType.SPECIAL_1.getColor(), TextDecoration.BOLD)
+                        .append(Component.text("工 ", ColorType.TEXT.getColor()))
+                        .append(Component.text(": ", ColorType.SPECIAL_1.getColor(), TextDecoration.BOLD))
+                        .append(Component.text(Points.formatPoints(Points.getPoints(player)), ColorType.SUBTEXT.getColor()).decoration(TextDecoration.BOLD, false));
+
+                return MiniMessage.miniMessage().serialize(message);
             }
         }
 
