@@ -2,8 +2,8 @@ package fr.thefox580.theevent5802.tasks.timer;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.utils.*;
-import me.clip.placeholderapi.libs.kyori.adventure.bossbar.BossBar;
-import me.clip.placeholderapi.libs.kyori.adventure.text.Component;
+import net.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -27,8 +27,8 @@ public class RemoveTime implements Runnable {
             BossBar countBossbar = BossbarManager.getBossbar("count");
             if (countBossbar != null){
                 BossbarManager.setBossbarProgression(countBossbar, (float) Timer.getSeconds() / Timer.getMaxSeconds());
-                BossbarManager.setBossbarText(countBossbar, Component.text("氣到惡",ColorTypeAlt.NO_SHADOW.getColor())
-                        .append(Component.text(Timer.getFormatedTimer(), ColorTypeAlt.BOSSBAR.getColor())));
+                BossbarManager.setBossbarText(countBossbar, Component.text("氣到惡",ColorType.NO_SHADOW.getColor())
+                        .append(Component.text(Timer.getFormatedTimer(), ColorType.BOSSBAR.getColor())));
             }
         }
     }

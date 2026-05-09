@@ -59,7 +59,7 @@ public class Instances {
         return variables;
     }
 
-    public BossbarManager getBossbars(){return bossbars;}
+    public BossbarManager getBossbarManager(){return bossbars;}
 
     public Points getPoints(){
         return points;

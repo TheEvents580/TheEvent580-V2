@@ -6,7 +6,7 @@ import fr.thefox580.theevent5802.games.build_masters.BuildMasters;
 import fr.thefox580.theevent5802.games.finder.FinderSets;
 import fr.thefox580.theevent5802.tasks.timer.Mode1;
 import fr.thefox580.theevent5802.utils.*;
-import me.clip.placeholderapi.libs.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;

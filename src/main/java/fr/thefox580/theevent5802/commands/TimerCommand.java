@@ -2,9 +2,9 @@ package fr.thefox580.theevent5802.commands;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.utils.BossbarManager;
-import fr.thefox580.theevent5802.utils.ColorTypeAlt;
+import fr.thefox580.theevent5802.utils.ColorType;
 import fr.thefox580.theevent5802.utils.Timer;
-import me.clip.placeholderapi.libs.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -35,8 +35,8 @@ public class TimerCommand implements CommandExecutor, TabCompleter {
                     assert countBossbar != null;
 
                     BossbarManager.setBossbarProgression(countBossbar, 0f);
-                    BossbarManager.setBossbarText(countBossbar, me.clip.placeholderapi.libs.kyori.adventure.text.Component.text("氣到惡", ColorTypeAlt.NO_SHADOW.getColor())
-                            .append(me.clip.placeholderapi.libs.kyori.adventure.text.Component.text("--:--", ColorTypeAlt.BOSSBAR.getColor())));
+                    BossbarManager.setBossbarText(countBossbar, Component.text("氣到惡", ColorType.NO_SHADOW.getColor())
+                            .append(Component.text("--:--", ColorType.BOSSBAR.getColor())));
                 }
                 case "resume" -> Timer.setPaused(false);
                 case "mode" -> {

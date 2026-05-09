@@ -4,7 +4,7 @@ import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.tasks.timer.Mode10;
 import fr.thefox580.theevent5802.tasks.timer.Mode7;
 import fr.thefox580.theevent5802.utils.*;
-import me.clip.placeholderapi.libs.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
@@ -182,7 +182,7 @@ public class BuildMastersTasks {
                 }
 
                 if (mallBossbar != null){
-                    BossbarManager.setBossbarText(mallBossbar, me.clip.placeholderapi.libs.kyori.adventure.text.Component.text("Refill in : " + (Timer.getSeconds() % 30), ColorTypeAlt.MC_BLUE.getColor()));
+                    BossbarManager.setBossbarText(mallBossbar, Component.text("Refill in : " + (Timer.getSeconds() % 30), ColorType.MC_BLUE.getColor()));
                     BossbarManager.setBossbarProgression(mallBossbar, (float) (Timer.getSeconds()%30) / 30);
                 }
 

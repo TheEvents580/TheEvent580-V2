@@ -1,9 +1,10 @@
 package fr.thefox580.theevent5802.utils;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
-import me.clip.placeholderapi.libs.kyori.adventure.text.Component;
-import me.clip.placeholderapi.libs.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.bossbar.BossBar;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -13,13 +14,15 @@ import java.util.Objects;
 public class BossbarManager {
 
     private static final Map<NamespacedKey, BossBar> bossbarMap = new HashMap<>();
-    private static TheEvent580_2 plugin = null;
+    private static TheEvent580_2 plugin;
 
     public BossbarManager(TheEvent580_2 plugin){
         BossbarManager.plugin = plugin;
-        BossBar countBossbar =  BossBar.bossBar(Component.text("惠上为", ColorTypeAlt.NO_SHADOW.getColor()).append(Component.text("Event is paused", ColorTypeAlt.BOSSBAR.getColor())), 0f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
+
+        BossBar countBossbar =  BossBar.bossBar(Component.text("惠上为", ColorType.NO_SHADOW.getColor()).append(Component.text("Event is paused", ColorType.BOSSBAR.getColor())), 0f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
         bossbarMap.put(new NamespacedKey(plugin, "count"), countBossbar);
-        BossBar mallBossbar =  BossBar.bossBar(Component.text("Refill in : ", ColorTypeAlt.MC_BLUE.getColor()), 0f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
+
+        BossBar mallBossbar =  BossBar.bossBar(Component.text("Refill in : ", ColorType.MC_BLUE.getColor()), 0f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
         bossbarMap.put(new NamespacedKey(plugin, "mall"), mallBossbar);
     }
 
@@ -38,9 +41,19 @@ public class BossbarManager {
 
     public static void setBossbarVisibility(BossBar bossbar, boolean visible){
         if (visible){
-            plugin.audience().all().showBossBar(bossbar);
+            Online.getOnlinePlayers().forEach(playerManager -> {
+                Player player = playerManager.getOnlinePlayer();
+                if (player != null){
+                    player.showBossBar(bossbar);
+                }
+            });
         } else {
-            plugin.audience().all().hideBossBar(bossbar);
+            Online.getOnlinePlayers().forEach(playerManager -> {
+                Player player = playerManager.getOnlinePlayer();
+                if (player != null){
+                    player.hideBossBar(bossbar);
+                }
+            });
         }
     }
 

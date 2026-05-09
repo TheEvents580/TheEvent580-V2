@@ -2,7 +2,7 @@ package fr.thefox580.theevent5802.games.build_masters;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.utils.*;
-import me.clip.placeholderapi.libs.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.*;
