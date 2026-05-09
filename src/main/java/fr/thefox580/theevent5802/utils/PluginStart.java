@@ -40,6 +40,8 @@ public record PluginStart(TheEvent580_2 plugin) {
         new SpecMenu(plugin);
         new Fly(plugin);
         new ShowBlocks(plugin);
+        new FixGlowing(plugin);
+        new Reset(plugin);
     }
 
     public void createListeners() {
