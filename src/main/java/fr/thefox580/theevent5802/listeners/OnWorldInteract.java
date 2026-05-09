@@ -6,6 +6,7 @@ import fr.thefox580.theevent5802.games.finder.Finder;
 import fr.thefox580.theevent5802.games.finder.FinderSets;
 import fr.thefox580.theevent5802.games.parkour.Parkour;
 import fr.thefox580.theevent5802.utils.*;
+import io.papermc.paper.event.player.PlayerItemFrameChangeEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
@@ -79,6 +80,16 @@ public class OnWorldInteract implements Listener {
     }
 
     @EventHandler
+    public void onItemFrameChangeEvent(PlayerItemFrameChangeEvent event){
+        Player player = event.getPlayer();
+        if (!Variables.equals("jeu_condi", Game.FINDER.getGameCondition())){
+            if (!player.isOp()){
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
     public void onPlayerClickEvent(PlayerInteractEvent event){
         Player player = event.getPlayer();
 
@@ -128,7 +139,7 @@ public class OnWorldInteract implements Listener {
             if (Timer.getEnum() == Timer.TimerEnum.VOTING){
                 if (player.getTargetEntity(5) instanceof Player grabbed){
                     player.getInventory().remove(Material.MINECART);
-                    player.addPassenger(player);
+                    player.addPassenger(grabbed);
 
                     PlayerManager playerManager = Online.getPlayerManager(player);
 
