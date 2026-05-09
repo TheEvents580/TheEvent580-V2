@@ -4,6 +4,7 @@ import com.destroystokyo.paper.profile.PlayerProfile;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -81,10 +82,14 @@ public enum Team {
         for (PlayerManager playerManager : Online.getOnlinePlayers()){
             Player player = playerManager.getOnlinePlayer();
             if (player != null && playerManager.getTeam() == this && !teamPlayers.contains(player) && teamPlayers.size() < 8){
-                if ((!spec && !player.getAllowFlight()) || player.getAllowFlight()) {
+                if (!player.getAllowFlight()) {
                     teamPlayers.add(player);
                 }
             }
+        }
+
+        for (HumanEntity humanEntity : gui.getViewers()){
+            humanEntity.sendMessage(teamPlayers.toString());
         }
 
         for (Player player : teamPlayers){
@@ -93,8 +98,10 @@ public enum Team {
 
             ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
             SkullMeta playerHeadMeta = (SkullMeta) playerHead.getItemMeta();
+
             playerHeadMeta.displayName(Component.text(getIcon() + " ", ColorType.TEXT.getColor()).decoration(TextDecoration.ITALIC, false)
                     .append(Component.text(player.getName(), getColorType().getColor())));
+
             if (playerProfile.getTextures().isEmpty()){
                 playerProfile.update().thenAccept(playerHeadMeta::setPlayerProfile);
             } else {
