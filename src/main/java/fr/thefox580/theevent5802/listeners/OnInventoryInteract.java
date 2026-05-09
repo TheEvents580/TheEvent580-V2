@@ -75,7 +75,7 @@ public class OnInventoryInteract implements Listener {
                                                 .append(Component.text("] " + player.getName() + " found "))
                                                 .append(Component.translatable(Objects.requireNonNull(config.getString("minecraftle_game." + player.getUniqueId())), ColorType.SPECIAL_1.getColor(), TextDecoration.BOLD))
                                                 .append(Component.text(" in ", ColorType.TEXT.getColor()))
-                                                .append(Component.text(config.getInt("minecraftle_game_tries." + player.getUniqueId()), ColorType.SPECIAL_1.getColor(), TextDecoration.BOLD))
+                                                .append(Component.text(config.getInt("minecraftle_game_tries." + player.getUniqueId()) + 1, ColorType.SPECIAL_1.getColor(), TextDecoration.BOLD))
                                                 .append(Component.text(" try.", ColorType.TEXT.getColor())));
                                     } else {
                                         player.sendMessage(Component.text("[")
@@ -83,8 +83,9 @@ public class OnInventoryInteract implements Listener {
                                                 .append(Component.text("] " + player.getName() + " found "))
                                                 .append(Component.translatable(Objects.requireNonNull(config.getString("minecraftle_game." + player.getUniqueId())), ColorType.SPECIAL_1.getColor(), TextDecoration.BOLD))
                                                 .append(Component.text(" in ", ColorType.TEXT.getColor()))
-                                                .append(Component.text(config.getInt("minecraftle_game_tries." + player.getUniqueId()), ColorType.SPECIAL_1.getColor(), TextDecoration.BOLD))
+                                                .append(Component.text(config.getInt("minecraftle_game_tries." + player.getUniqueId()) + 1, ColorType.SPECIAL_1.getColor(), TextDecoration.BOLD))
                                                 .append(Component.text(" try.", ColorType.TEXT.getColor()))
+                                                .append(Component.newline())
                                                 .append(Component.text("Sadly, your message hasn't been broadcasted to the whole server as some player are still playing.")));
                                     }
                                 } else {
