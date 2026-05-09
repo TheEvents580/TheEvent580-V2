@@ -84,7 +84,7 @@ public class Mode1 implements Runnable {
             }.runTaskLater(plugin, 2*20L);
         } else if (Timer.getSeconds() == 60+30){
             for (Player player : Bukkit.getOnlinePlayers()){
-                player.playSound(player.getLocation(), "custom:intro", SoundCategory.VOICE, 1, 1);
+                player.playSound(player.getLocation(), Musics.INTRO.getID(), SoundCategory.VOICE, 1, 1);
             }
         }else if (Timer.getSeconds() == 60){
             for (PlayerManager loopPlayer : Online.getOnlinePlayers()){
