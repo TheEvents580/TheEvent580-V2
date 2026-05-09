@@ -4,6 +4,7 @@ package fr.thefox580.theevent5802.utils;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -11,7 +12,7 @@ import java.util.UUID;
 public class PlayerStats {
 
     private UUID player_uuid;
-    private List<Score> scores = List.of();
+    private List<Score> scores = new ArrayList<>();
 
     public PlayerStats(UUID player_uuid){
         this.player_uuid = player_uuid;
@@ -31,6 +32,10 @@ public class PlayerStats {
 
     public void setScores(List<Score> scores) {
         this.scores = scores;
+    }
+
+    public void addScores(Score score){
+        scores.add(score);
     }
 
     public Document getScoreStats(){
