@@ -75,7 +75,7 @@ public class Minecraftle implements CommandExecutor {
 
         return new Material[]{
                 Material.ACTIVATOR_RAIL, Material.BARREL, Material.BOW, Material.BOWL, Material.BUCKET,
-                Material.BUNDLE, Material.CAMPFIRE, Material.CAULDRON, Material.CHAIN, Material.CHEST,
+                Material.BUNDLE, Material.CAMPFIRE, Material.CAULDRON, Material.IRON_CHAIN, Material.CHEST,
                 Material.CHISELED_BOOKSHELF, Material.CLOCK, Material.COAL_BLOCK, Material.COBBLESTONE_SLAB,
                 Material.COBBLESTONE_STAIRS, Material.COBBLESTONE_WALL, Material.COMPASS, Material.COMPOSTER,
                 Material.CRAFTING_TABLE, Material.DAYLIGHT_DETECTOR, Material.DIAMOND_AXE, Material.DIAMOND_BLOCK,
