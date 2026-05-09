@@ -18,7 +18,13 @@ import java.util.List;
 public class SpawnTask implements Runnable{
 
     private final BukkitTask task;
-    private final List<Integer> modes = List.of(0, 1, 7, 8, 10, 11);
+    private final List<Timer.TimerEnum> modes = List.of(
+            Timer.TimerEnum.STARTING_SOON,
+            Timer.TimerEnum.START,
+            Timer.TimerEnum.POST_GAME,
+            Timer.TimerEnum.INTERMISSION,
+            Timer.TimerEnum.POST_LAST_GAME,
+            Timer.TimerEnum.END);
 
     public SpawnTask(TheEvent580_2 plugin){
         this.task = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, 1L);
@@ -28,7 +34,7 @@ public class SpawnTask implements Runnable{
     @Override
     public void run() {
 
-        if (modes.contains(Timer.getEnum().getMode())){
+        if (modes.contains(Timer.getEnum())){
             for (Player player : Bukkit.getOnlinePlayers()){
 
                 if (player.getLocation().getY() < 4.5){
@@ -51,7 +57,7 @@ public class SpawnTask implements Runnable{
                 if (location_under.getBlock().getType() == Material.VERDANT_FROGLIGHT) {
                     player.teleport(new Location(player.getWorld(), 193.5, 69, -381.5, 0, 0));
                 } else if (location_under.getBlock().getType() == Material.OCHRE_FROGLIGHT){
-                  Spawn.tp(player);
+                    Spawn.tp(player);
                 } else if (location_under.getBlock().getType() == Material.DIRT_PATH || location_under.getBlock().getType() == Material.PETRIFIED_OAK_SLAB){
                     player.removePotionEffect(PotionEffectType.SPEED);
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 15, 1, false, false, false));
