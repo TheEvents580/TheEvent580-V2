@@ -61,6 +61,12 @@ public class OnJoin implements Listener {
             }
         }
 
+        for (Player viewer : Bukkit.getOnlinePlayers()){
+            for (Player other : Bukkit.getOnlinePlayers()){
+                viewer.unlistPlayer(other);
+            }
+        }
+
         SpawnParkour.updateText();
 
         player.setFlySpeed(0.1f);
