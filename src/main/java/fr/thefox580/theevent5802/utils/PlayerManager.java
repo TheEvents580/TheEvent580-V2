@@ -128,7 +128,7 @@ public class PlayerManager{
     }
 
     public Component playerComponent(){
-        Component head = Component.translatable("%nox_uuid%" + getUniqueId() + ",false,0,-1,1", "\uD83D\uDC64");
+        Component head = Component.translatable("%nox_uuid%" + getUniqueId() + ",false,0,-1,1", "\uD83D\uDC64").color(ColorType.TEXT.getColor());
         return Component.text(getTeam().getIcon() + " ", ColorType.NO_SHADOW.getColor())
                 .append(head)
                 .append(Component.text(" " + getName(), getColorType().getColor()));
