@@ -66,15 +66,15 @@ public class ScoreboardManager {
 
         switch (jeuCondi) {
             case 2 -> {
-                if (player.getAllowFlight()) { // Can fly = is done
-                    board.updateLine(5, Component.text("Waiting for other players", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
-                } else {
+                if (!player.getAllowFlight() && Players.isPlayer(player)) {
                     Component mainLevel = Parkour.getMainLevelComp(player);
                     Component subLevel = Parkour.getSubLevelComp(player);
                     board.updateLine(5, Component.text("Level ", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD)
                             .append(mainLevel)
                             .append(Component.text(" | ", ColorType.SUBTEXT.getColor()).decoration(TextDecoration.BOLD, false))
                             .append(subLevel));
+                } else {
+                    board.updateLine(5, Component.text("Waiting for other players", ColorType.SPECIAL_2.getColor(), TextDecoration.BOLD));
                 }
             }
             case 5 -> {
