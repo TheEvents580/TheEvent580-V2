@@ -118,3 +118,11 @@ commands:
       - "blocks"
       - "showblock"
     description: toggles if you see the block name above your hotbar or not
+
+  fixglowing:
+    permission: op
+    description: Removes glowing from all online players
+
+  reset:
+    permission: op
+    description: Resets the game
