@@ -230,6 +230,8 @@ public class Spectators implements CommandExecutor, TabCompleter {
         Player spec = spectator.getOnlinePlayer();
         assert spec != null;
 
+        spec.setGameMode(GameMode.ADVENTURE);
+
         spec.getInventory().clear();
 
         PersistentDataContainer playerContainer = spec.getPersistentDataContainer();
@@ -244,7 +246,6 @@ public class Spectators implements CommandExecutor, TabCompleter {
             }
         });
 
-        spec.setGameMode(GameMode.ADVENTURE);
         spec.setAllowFlight(true);
         Location pLoc = spec.getLocation();
         pLoc.setY(pLoc.y()-1);
@@ -261,12 +262,13 @@ public class Spectators implements CommandExecutor, TabCompleter {
         Player spec = spectator.getOnlinePlayer();
         assert spec != null;
 
+        spec.setGameMode(GameMode.ADVENTURE);
+
         PersistentDataContainer playerContainer = spec.getPersistentDataContainer();
         playerContainer.set(new NamespacedKey(plugin, "alive"), PersistentDataType.BOOLEAN, false);
 
         Bukkit.getOnlinePlayers().forEach(loopPlayer -> loopPlayer.hidePlayer(plugin, spec));
 
-        spec.setGameMode(GameMode.ADVENTURE);
         spec.setAllowFlight(true);
         spec.setFlying(false);
     }
@@ -280,6 +282,8 @@ public class Spectators implements CommandExecutor, TabCompleter {
     public static void readySpectatorLobby(PlayerManager spectator){
         Player spec = spectator.getOnlinePlayer();
         assert spec != null;
+
+        spec.setGameMode(GameMode.ADVENTURE);
 
         PersistentDataContainer playerContainer = spec.getPersistentDataContainer();
         playerContainer.set(new NamespacedKey(plugin, "alive"), PersistentDataType.BOOLEAN, true);
@@ -305,7 +309,6 @@ public class Spectators implements CommandExecutor, TabCompleter {
             feather.setItemMeta(featherMeta);
 
             spec.give(feather);
-            spec.setGameMode(GameMode.ADVENTURE);
         }
     }
 
