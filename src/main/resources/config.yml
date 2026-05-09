@@ -3,6 +3,8 @@ muted_chat : false
 mongobd_username : ""
 mongodb_password : ""
 
+rp-url: ""
+
 episode : "Episode 7"
 
 players:
