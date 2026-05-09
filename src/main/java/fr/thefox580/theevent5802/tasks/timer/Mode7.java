@@ -3,6 +3,7 @@ package fr.thefox580.theevent5802.tasks.timer;
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.games.parkour.Parkour;
 import fr.thefox580.theevent5802.utils.*;
+import fr.thefox580.theevent5802.utils.Timer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
@@ -15,10 +16,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Mode7 implements Runnable{
 
@@ -84,8 +82,10 @@ public class Mode7 implements Runnable{
             int place = 1;
 
             for (Map.Entry<Player, Integer> player : allPlayers){
-                player.getKey().sendMessage("");
-                Component message = Component.text("This game, you placed ");
+                Player actualPlayer = player.getKey();
+                Bukkit.getConsoleSender().sendMessage("Looping for " + actualPlayer.getName());
+
+                Component message = Component.newline().append(Component.text("This game, you placed "));
 
                 if (place == 1 || place == 21){
                     message = message.append(Component.text(place + "st "));
@@ -98,33 +98,32 @@ public class Mode7 implements Runnable{
                 }
 
                 message = message.append(Component.text("with " + Points.formatPoints(player.getValue()) + " "))
-                        .append(Component.text('工', ColorType.NO_SHADOW.getColor()));
+                        .append(Component.text('工', ColorType.NO_SHADOW.getColor()))
+                        .append(Component.newline());
 
-                player.getKey().sendMessage(message);
-                player.getKey().playSound(player.getKey().getLocation(), "custom:coins", 1, 1);
+                actualPlayer.sendMessage(message);
+                actualPlayer.playSound(actualPlayer.getLocation(), "custom:coins", 1, 1);
 
                 for (PlayerManager pM : Spectators.getSpectatorOnlineList()){
-                    Objects.requireNonNull(pM.getOnlinePlayer()).sendMessage(Component.text("To " + player.getKey().getName() + " : ")
+                    Objects.requireNonNull(pM.getOnlinePlayer()).sendMessage(Component.text("To " + actualPlayer.getName() + " : ")
                             .append(message));
                 }
 
-                Bukkit.getConsoleSender().sendMessage(Component.text("To " + player.getKey().getName() + " : ")
+                Bukkit.getConsoleSender().sendMessage(Component.text("To " + actualPlayer.getName() + " : ")
                                 .append(message));
 
-                PlayerManager playerManager = Players.getPlayerManager(player.getKey());
+                PlayerManager playerManager = Players.getPlayerManager(actualPlayer);
                 Game game = Game.getGameByGameCondition((int) Variables.getVariable("jeu_condi"));
 
                 if (playerManager != null && game != Game.HUB){
 
                     Score gameScore = new Score(game);
                     gameScore.setPoints(player.getValue());
-                    List<Score> playerScores = playerManager.getStats().getScores();
-                    playerScores.add(gameScore);
-                    playerManager.getStats().setScores(playerScores);
+                    playerManager.getStats().addScores(gameScore);
 
                 }
 
-                Points.addGamePointsToOverallPoints(player.getKey());
+                Points.addGamePointsToOverallPoints(actualPlayer);
 
                 place++;
             }
@@ -154,6 +153,11 @@ public class Mode7 implements Runnable{
 
         } else if (Timer.getSeconds() == 10){
 
+            Bukkit.broadcast(
+                    Component.text("[")
+                            .append(Component.text("Game Scores", ColorType.TITLE.getColor(), TextDecoration.BOLD))
+                            .append(Component.text("] You are placed :", ColorType.TEXT.getColor()).decoration(TextDecoration.BOLD, false)));
+
             List<Map.Entry<Player, Integer>> allPlayers = Leaderboard.getAllPlayers();
             int place = 1;
 
@@ -180,10 +184,13 @@ public class Mode7 implements Runnable{
                 place++;
             }
 
-            Bukkit.broadcast(
-                    Component.text("[")
-                            .append(Component.text("Game Scores", ColorType.TITLE.getColor(), TextDecoration.BOLD))
-                            .append(Component.text("] You are placed :", ColorType.TEXT.getColor()).decoration(TextDecoration.BOLD, false)));
+            for (PlayerManager playerManager : Spectators.getSpectatorOnlineList()){
+                Player player = playerManager.getOnlinePlayer();
+
+                if (player != null){
+                    player.sendMessage(Component.text("Probably last place, maybe even in the negatives."));
+                }
+            }
 
         } else if (Timer.getSeconds() == 2){
 
