@@ -49,7 +49,7 @@ public class OnPlayerMove implements Listener {
                 }
 
                 if (passengerOf != null){
-                    event.setCancelled(false);
+                    event.setCancelled(true);
                     player.showTitle(Title.title(Component.text(":(", ColorType.MC_RED.getColor()),
                             Component.text("You're stuck here until voting is over.",
                                     ColorType.MC_RED.getColor()), Title.Times.times(Duration.ZERO, Duration.ofSeconds(3), Duration.ZERO)));
