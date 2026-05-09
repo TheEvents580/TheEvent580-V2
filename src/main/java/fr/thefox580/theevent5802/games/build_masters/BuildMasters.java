@@ -2,6 +2,7 @@ package fr.thefox580.theevent5802.games.build_masters;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.utils.*;
+import fr.thefox580.theevent5802.utils.Timer;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -17,10 +18,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BuildMasters {
 
@@ -408,6 +406,11 @@ public class BuildMasters {
 
                     if (!item.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(plugin, "bought"))) {
 
+                        item.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(plugin, "bought"), PersistentDataType.BOOLEAN, true);
+                        ItemMeta meta = item.getItemMeta();
+                        meta.displayName(Objects.requireNonNull(meta.displayName()).append(Component.text(" (Bought)", ColorType.MC_LIME.getColor())));
+                        item.setItemMeta(meta);
+
                         if (List.of(Material.BLACK_CONCRETE, Material.CYAN_CONCRETE, Material.BLUE_CONCRETE,
                                 Material.BROWN_CONCRETE, Material.GRAY_CONCRETE, Material.GREEN_CONCRETE,
                                 Material.LIME_CONCRETE, Material.MAGENTA_CONCRETE, Material.ORANGE_CONCRETE,
@@ -493,7 +496,7 @@ public class BuildMasters {
             PlayerManager playerManager = Online.getPlayerManager(player);
 
             if (playerManager != null){
-                if (playerManager.getTimer().getSeconds() == 0){
+                if (playerManager.getTimer().getSeconds() > 0){
 
                     playerList.add(player);
 

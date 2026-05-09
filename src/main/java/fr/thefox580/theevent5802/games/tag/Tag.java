@@ -7,6 +7,7 @@ import net.kyori.adventure.title.Title;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -107,7 +108,7 @@ public class Tag {
         if (world != null) {
             world.getWorldBorder().changeSize(size, 30L);
 
-            Bukkit.broadcast(Component.text("Warning! Over the next 30 seconds, the world border will shrink to" + new DecimalFormat("###.##").format(size/ 91 * 100) + "%", ColorType.MC_RED.getColor()));
+            Bukkit.broadcast(Component.text("Warning! Over the next 30 seconds, the world border will shrink to" + new DecimalFormat("###").format(size/ 91 * 100) + "%", ColorType.MC_RED.getColor()));
         }
     }
 
@@ -125,6 +126,7 @@ public class Tag {
 
     public static void setTagger(Player player){
         if (tagger != null){
+            tagger.getInventory().setHelmet(ItemStack.of(Material.AIR));
             tagger.setGlowing(false);
             tagger.removePotionEffect(PotionEffectType.BLINDNESS);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tag nametag show " + tagger.getName() + " -s");
@@ -143,17 +145,19 @@ public class Tag {
             player.showTitle(Title.title(
                     Component.text(""),
                     Component.text("\uD83D\uDCA3 You got tagged \uD83D\uDCA3", ColorType.MC_RED.getColor())));
-        }
-        player.setGlowing(true);
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tag nametag hide " + player.getName() + " -s");
-        tagger = player;
-        switchUntilExplosion--;
-        if (timeUntilExplosion > 10){
-            timeUntilExplosion--;
-        }
 
-        if (switchUntilExplosion <= 0){
-            bombExploded();
+            player.getInventory().setHelmet(ItemStack.of(Material.TNT));
+            player.setGlowing(true);
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tag nametag hide " + player.getName() + " -s");
+            tagger = player;
+            switchUntilExplosion--;
+            if (timeUntilExplosion > 10){
+                timeUntilExplosion--;
+            }
+
+            if (switchUntilExplosion <= 0){
+                bombExploded();
+            }
         }
     }
 

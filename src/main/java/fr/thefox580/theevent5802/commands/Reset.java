@@ -2,10 +2,14 @@ package fr.thefox580.theevent5802.commands;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.utils.*;
+import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.NPC;
+import net.citizensnpcs.trait.SkinTrait;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -89,6 +93,12 @@ public class Reset implements CommandExecutor {
                 }
 
                 Spawn.tp(player);
+            }
+
+            for (int npcID = 8; npcID < 18; npcID++){
+                NPC npc = CitizensAPI.getNPCRegistry().getById(npcID);
+                npc.getOrAddTrait(SkinTrait.class).setSkinPersistent("QM", "RPxcif+B1vYlZgxQKcZaMdJMlDfOLuHMsG+bHLEUulkOVMZIRXcEIp/YGtgPHcEjZ8tqVDPE6E+mFqnpY03JPsz1aOrWvr3D4dx7ZEMtQE/drjD6c5tFdkPt8xJi4BP79xQsQJtSKZsCn0xRUfDKugmn0i0Waxaw5UFvGDkQbhYWC9lGwNcblIYqube/L/XAtnOiDKQ8zT0hdqsuJ5Ny5AveW3hxBv221/gmwrrPwdgYX5egApxirooaoB1vVULCfd7opBpSs7IGyp4jM5PlrU8TGUMDX7/oHh4GRG9f3NG2ccbftcg05eXxok7QVBHXMnP5o3r0V71l0tvj5VyqN/uiJDWqcmaLsCt2Qeu/3hMclTxGEm3IhWWXFWcWfkATfZ6hg+Kuk7bLBNcTExwj+veu5MIm8vTLp2MXkYCZ3zv6RzLolSyM7jGG3wAczGpY01HpaIMgkOA1SUMlmu1+pRJkTHDXPTC3XGyNaY4WzgkbBgvPOD0Z1052dtG9enbRLzhCpGNxV5N1nMiod6objHdXL4MUtiuT29ANcyHm7WHSm/f5cJ8qtrF9e3VYOnXECBGBym6DiTHY1V4nSnkCtXv8rQyrpo5XJdEzCDMyLkvxqbUj9+YTz9MkAqEngqZkpCzukXbEn3pIveXMD+oMV6ncRg27qrDPKphHuMFk5TM=", "ewogICJ0aW1lc3RhbXAiIDogMTYzNjEzNTYwNzkwOCwKICAicHJvZmlsZUlkIiA6ICJkZTE0MGFmM2NmMjM0ZmM0OTJiZTE3M2Y2NjA3MzViYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJTUlRlYW0iLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2NkOGYwMjUwMTc4NWQxNmIwOTNmNGQ2NTk2OThhNzlmY2Q1MGEwMDk0ZjUzMzQ5ZDQ4ZDY2MzJmYzZlMTMyZCIKICAgIH0KICB9Cn0=");
+                npc.setName(MiniMessage.miniMessage().serialize(Component.text("Top " + (npcID-7) + " - TBD", ColorType.SUBTEXT.getColor())));
             }
 
             return true;
