@@ -105,7 +105,7 @@ public class Tag {
     public static void setWorldSize(double size){
 
         if (world != null) {
-            world.getWorldBorder().setSize(size, 30L);
+            world.getWorldBorder().changeSize(size, 30L);
 
             Bukkit.broadcast(Component.text("Warning! Over the next 30 seconds, the world border will shrink to" + new DecimalFormat("###.##").format(size/ 91 * 100) + "%", ColorType.MC_RED.getColor()));
         }
