@@ -56,7 +56,7 @@ public class VariablesCommand implements CommandExecutor, TabCompleter {
                         case "bool" -> Variables.setVariable(strings[1], Boolean.valueOf(strings[2]));
                         default -> Variables.setVariable(strings[1], strings[2]);
                     }
-                    commandSender.sendMessage(Component.text("Variable  \"" + strings[1] + "\" has correctly been saved!", ColorType.MC_LIME.getColor()));
+                    commandSender.sendMessage(Component.text("Variable \"" + strings[1] + "\" has correctly been saved!", ColorType.MC_LIME.getColor()));
                 }
             }
         }
