@@ -1,6 +1,7 @@
 package fr.thefox580.theevent5802.utils;
 
 import fr.thefox580.theevent5802.TheEvent580_2;
+import fr.thefox580.theevent5802.games.parkour.Parkour;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
@@ -110,6 +111,11 @@ public class Points implements CommandExecutor, TabCompleter {
     }
 
     public static int getGamePoints(Player player){
+
+        if (Variables.equals("jeu_condi", 2)){
+            return Math.round(Parkour.getPlayerPoints(player) * Parkour.getPlayerMult(player));
+        }
+
         PersistentDataContainer playerContainer = player.getPersistentDataContainer();
 
         if (playerContainer.get(new NamespacedKey(plugin, "game_points"), PersistentDataType.INTEGER) != null){
@@ -319,7 +325,7 @@ public class Points implements CommandExecutor, TabCompleter {
                         .append(Component.text(player.getPlayer().getName(), playerManager.getTeam().getColorType().getColor(), TextDecoration.BOLD))
                         .append(Component.text( " has " + formatPoints(Points.getPoints(player.getPlayer())) + " 工", ColorType.TEXT.getColor())));
                 }
-                case "set_total" -> commandSender.sendMessage(Component.text( "Set" + player.getName() + "'s total points to : " + formatPoints(Points.setTotalPoints(Objects.requireNonNull(player.getPlayer()), Integer.parseInt(strings[2])))));
+                case "set_total" -> commandSender.sendMessage(Component.text( "Set " + player.getName() + "'s total points to : " + formatPoints(Points.setTotalPoints(Objects.requireNonNull(player.getPlayer()), Integer.parseInt(strings[2])))));
             }
             return true;
         }

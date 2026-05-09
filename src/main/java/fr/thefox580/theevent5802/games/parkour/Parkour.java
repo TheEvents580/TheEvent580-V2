@@ -4,10 +4,7 @@ import fr.thefox580.theevent5802.TheEvent580_2;
 import fr.thefox580.theevent5802.utils.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -230,6 +227,11 @@ public class Parkour {
         player.sendMessage(Component.text("[")
                 .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
                 .append(Component.text("] You will be able to skip again in 10 seconds!", ColorType.TEXT.getColor())));
+
+        World playerWorld = player.getWorld();
+
+        playerWorld.spawnParticle(Particle.TOTEM_OF_UNDYING, player.getLocation(), 30, 0.5, 1, 0.5, 0.1);
+        playerWorld.playSound(player.getLocation(), Sound.ITEM_TOTEM_USE, 0.25f,  1);
 
         new BukkitRunnable() {
             @Override

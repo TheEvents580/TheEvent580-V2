@@ -27,10 +27,16 @@ public class ParkourTasks {
 
                 if (Timer.getSeconds() > 60){
 
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "execute in minecraft:parkour run fill 134 131 203 134 129 199 barrier_block");
-                    Bukkit.getOnlinePlayers().forEach(player -> {
-                        player.setGameMode(GameMode.ADVENTURE);
-                    });
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "execute in minecraft:parkour run fill 134 131 203 134 129 199 barrier");
+                    for (PlayerManager playerManager : Online.getOnlinePlayers()){
+                        Player player = playerManager.getOnlinePlayer();
+                        if (player != null){
+                            player.setGameMode(GameMode.ADVENTURE);
+                            if (Spectators.isSpectator(player)){
+                                Spectators.readySpectatorGame(playerManager);
+                            }
+                        }
+                    }
 
                 } else if (Timer.getSeconds() == 60){
                     Spectators.readySpectatorsGame();
@@ -192,7 +198,7 @@ public class ParkourTasks {
                                                 }
                                             });
                                         }
-                                    } else {
+                                    } else if (Parkour.getMainLevel(player) < 4){
                                         if (Math.floor(Parkour.getPlayerCheckpoint(player).x())+16 <= player.getX() && withinBounds(player.getLocation())){
                                             if (!Parkour.hasPlayerSkipped(player)){
                                                 switch (Parkour.getMainLevel(player)){
@@ -213,7 +219,7 @@ public class ParkourTasks {
 
                                             Parkour.setSubLevel(player,Parkour.getSubLevel(player) + 1);
 
-                                            if (Parkour.getSubLevel(player) == 7){
+                                            if (Parkour.getSubLevel(player) >= 7){
                                                 Bukkit.broadcast(Component.text("[")
                                                         .append(Component.text(Game.PARKOUR.getName(), Game.PARKOUR.getColorType().getColor()))
                                                         .append(Component.text("] " + player.getName() + " finished all ", ColorType.TEXT.getColor()))
